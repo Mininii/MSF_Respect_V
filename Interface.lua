@@ -629,17 +629,17 @@ end
 		SetMemoryW(0x656EB0+(122 *2),Add,SMSkillBaseAtk3/2), -- 공격력
 		SetMemoryW(0x657678+(122 *2),Add,SMSkillFactorAtk3/2), -- 추가공격력
 })
-TriggerX(FP, {CD(OnlyMarineMode,1)}, {
-	SetMemoryW(0x656EB0+(0 *2),Add,2), -- 공격력
-	SetMemoryW(0x657678+(0 *2),Add,1), -- 추가공격력
-	SetMemoryW(0x656EB0+(1 *2),Add,HMBaseAtk/2), -- 공격력
-	SetMemoryW(0x657678+(1 *2),Add,HMFactorAtk/2), -- 추가공격력
-	SetMemoryW(0x656EB0+(2 *2),Add,SMBaseAtk/2), -- 공격력
-	SetMemoryW(0x657678+(2 *2),Add,SMFactorAtk/2), -- 추가공격력
-	SetMemoryW(0x656EB0+(3 *2),Add,RMBaseAtk/2), -- 공격력
-	SetMemoryW(0x657678+(3 *2),Add,RMFactorAtk/2), -- 추가공격력
-	
-})
+--TriggerX(FP, {CD(OnlyMarineMode,1)}, {
+--	SetMemoryW(0x656EB0+(0 *2),Add,2), -- 공격력
+--	SetMemoryW(0x657678+(0 *2),Add,1), -- 추가공격력
+--	SetMemoryW(0x656EB0+(1 *2),Add,HMBaseAtk/2), -- 공격력
+--	SetMemoryW(0x657678+(1 *2),Add,HMFactorAtk/2), -- 추가공격력
+--	SetMemoryW(0x656EB0+(2 *2),Add,SMBaseAtk/2), -- 공격력
+--	SetMemoryW(0x657678+(2 *2),Add,SMFactorAtk/2), -- 추가공격력
+--	SetMemoryW(0x656EB0+(3 *2),Add,RMBaseAtk/2), -- 공격력
+--	SetMemoryW(0x657678+(3 *2),Add,RMFactorAtk/2), -- 추가공격력
+--	
+--})
 
 	
 	end
