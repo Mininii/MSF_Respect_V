@@ -331,7 +331,7 @@
 	LimitX = CreateCcode()
 	LimitT = CreateCcodeArr(7)
 	LimitC = CreateCcode()
-	TriggerX(FP, {}, {Simple_SetLoc(0, 320,992-(64), 320,992-(64)),CreateUnit(1, 145, 11, FP),
+	TriggerX(FP, {}, {Simple_SetLoc(0, 320,992-(64), 320,992-(64)),CreateUnit(1, 145, 11, FP),CreateUnit(1, 158, 48, P7),
 	CreateUnit(1, 120, 42, P6),GiveUnits(All, 120, P6, 42, P9)})
 	for i = 0, 4 do
 		DoActions(FP, {

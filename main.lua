@@ -15,10 +15,10 @@ for dir in io.popen(EXTLUA):lines() do
      end
 end
 
-EXTLUA = "dir \""..Curdir.."\\SCR UseMap - MSF_Respect_V\\\" /b"
+EXTLUA = "dir \""..Curdir.."\\MSF_Respect_V\\\" /b"
 for dir in io.popen(EXTLUA):lines() do
      if dir:match "%.[Ll][Uu][Aa]$" and dir ~= "main.lua" then
-		InitEXTLua = assert(loadfile(Curdir.."MapSource\\SCR UseMap - MSF_Respect_V\\"..dir))
+		InitEXTLua = assert(loadfile(Curdir.."MSF_Respect_V\\"..dir))
 		InitEXTLua()
      end
 end
@@ -31,7 +31,7 @@ EVFMode = 1
 DLC_Project = 1 
 X4_Mode = 0
 MapText = {"\x04Marine Special Forces \x17R\x04espect \x17V","\x04Marine Special Forces \x17R\x04espect \x17V \x06L\x11I\x17B\x18E\x1CR\x0ET\x10Y"}
-TestSet(0)
+TestSet(2)
 FP = P8
 SetForces({P1,P2,P3,P4,P5},{P6,P7,P8},{},{},{P1,P2,P3,P4,P5,P6,P7,P8})
 SetFixedPlayer(FP)

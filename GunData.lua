@@ -40,13 +40,26 @@ function Include_GunData(Size,LineNum)
 		f_Read(FP,_Sub(BackupCp,15),CPos)
 		if DLC_Project == 1 then
 			Convert_CPosXY()
-			f_TempRepeatX({CD(GMode,3)}, 94, 1, nil, P8, {1024,LTime})
-			f_TempRepeatX({CD(GMode,3)}, 62, 10, 187, P8, {1024,LTime})
-			f_TempRepeatX({CD(GMode,3)}, 57, 10, 187, P8, {1024,LTime})
-			f_TempRepeatX({CD(GMode,3)}, 64, 10, 187, P8, {1024,LTime})
-			f_TempRepeatX({CD(GMode,3)}, 70, 10, 187, P8, {1024,LTime})
-			f_TempRepeatX({CD(GMode,3)}, 12, 10, 187, P8, {1024,LTime})
-			f_TempRepeatX({CD(GMode,3)}, 8, 10, 187, P8, {1024,LTime})
+			CMov(FP,MinMod,_Mod(_Div(GTime2,60000),2))
+			CIfX(FP,CV(MinMod,0))
+			CMov(FP,LTime,_Mul(_Mod(GTime,60),136),15)
+			CElseX()
+			CSub(FP,LTime,_Mov(8192),_Add(_Mul(_Mod(GTime,60),136),15))
+			CIfXEnd()
+			CSub(FP,LTime2,_Mov(8192),LTime)
+			CMov(FP,MinMod2,_Mod(_Div(GTime2,600000),2))
+			CIfX(FP,CV(MinMod2,0))
+			CMov(FP,WTime,_Mul(_Mod(_Div(GTime,60),10),200),24)
+			CElseX()
+			CSub(FP,WTime,_Mov(2048),_Add(_Mul(_Mod(_Div(GTime,60),10),200),24))
+			CIfXEnd()
+			f_TempRepeatX({CD(GMode,4)}, 94, 1, nil, P8, {WTime,LTime2})
+			f_TempRepeatX({CD(GMode,4)}, 62, 10, 187, P8, {WTime,LTime2})
+			f_TempRepeatX({CD(GMode,4)}, 57, 10, 187, P8, {WTime,LTime2})
+			f_TempRepeatX({CD(GMode,4)}, 64, 10, 187, P8, {WTime,LTime2})
+			f_TempRepeatX({CD(GMode,4)}, 70, 10, 187, P8, {WTime,LTime2})
+			f_TempRepeatX({CD(GMode,4)}, 12, 10, 187, P8, {WTime,LTime2})
+			f_TempRepeatX({CD(GMode,4)}, 8, 10, 187, P8, {WTime,LTime2})
 		end
 		f_Read(FP,BackupCp,GunID,"X",0xFF,1)
 		f_Read(FP,_Sub(BackupCp,6),GunPlayer,"X",0xFF)
@@ -298,45 +311,45 @@ function Gen2Gun(CUTable1,CUTable2,GunNm,ShapeHD,ShapeSC,ZunitSh1,ZunitShLV1,Zun
 		if RotateOption ==  1 then
 			G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,1)}, CUTable1, "ACAS", ShapeHD, 0, 0, nil, nil, P7)
 			G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,2)}, CUTable1, "ACAS", ShapeSC, 0, 0, nil, nil, P7)
-			G_CB_TSetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3)}, CUTable1, _G[ShapeSC], nil, {OwnerTable=P7,RotateTable="Main",RepeatType={"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"}})
+			G_CB_TSetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3,AtLeast)}, CUTable1, _G[ShapeSC], nil, {OwnerTable=P7,RotateTable="Main",RepeatType={"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"}})
 			G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,1)}, CUTable2, "ACAS", ShapeHD, 0, 0, nil, nil, P7)
 			G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,2)}, CUTable2, "ACAS", ShapeSC, 0, 0, nil, nil, P7)
-			G_CB_TSetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3)}, CUTable2, _G[ShapeSC], nil, {OwnerTable=P7,RotateTable="Main",RepeatType={"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"}})
+			G_CB_TSetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3,AtLeast)}, CUTable2, _G[ShapeSC], nil, {OwnerTable=P7,RotateTable="Main",RepeatType={"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"}})
 		else
 			G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,1)}, CUTable1, "ACAS", ShapeHD, 0, 0, nil, nil, P7)
 			G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,2)}, CUTable1, "ACAS", ShapeSC, 0, 0, nil, nil, P7)
-			G_CB_TSetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3)}, CUTable1, _G[ShapeSC], nil, {OwnerTable=P7,RepeatType={"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"}})
+			G_CB_TSetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3,AtLeast)}, CUTable1, _G[ShapeSC], nil, {OwnerTable=P7,RepeatType={"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"}})
 			G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,1)}, CUTable2, "ACAS", ShapeHD, 0, 0, nil, nil, P7)
 			G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,2)}, CUTable2, "ACAS", ShapeSC, 0, 0, nil, nil, P7)
-			G_CB_TSetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3)}, CUTable2, _G[ShapeSC], nil, {OwnerTable=P7,RepeatType={"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"}})
+			G_CB_TSetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3,AtLeast)}, CUTable2, _G[ShapeSC], nil, {OwnerTable=P7,RepeatType={"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"}})
 		end
 	
 		G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,2,AtMost)}, {55,53,54,46}, ZunitSh1,ZunitShLV1, 0, 0, nil, nil, P8)
 		G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,2,AtMost)}, {56,104,51,48}, ZunitSh2,ZunitShLV2, 0, 0, nil, nil, P8)
-		G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3)}, {55,53,54,46}, ZunitSh1,ZunitShLV1, 0, {"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"}, nil, nil, P8)
-		G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3)}, {56,104,51,48}, ZunitSh2,ZunitShLV2, 0, {"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"}, nil, nil, P8)
+		G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3,AtLeast)}, {55,53,54,46}, ZunitSh1,ZunitShLV1, 0, {"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"}, nil, nil, P8)
+		G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3,AtLeast)}, {56,104,51,48}, ZunitSh2,ZunitShLV2, 0, {"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"}, nil, nil, P8)
 		CIfEnd()
 	else
 		if RotateOption ==  1 then
 			G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,1)}, CUTable1, "ACAS", ShapeHD, 0, 0, nil, nil, P7)
 			G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,2)}, CUTable1, "ACAS", ShapeSC, 0, 0, nil, nil, P7)
-			G_CB_TSetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3)}, CUTable1, _G[ShapeSC], nil, {OwnerTable=P7,RotateTable="Main",RepeatType={"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"}})
+			G_CB_TSetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3,AtLeast)}, CUTable1, _G[ShapeSC], nil, {OwnerTable=P7,RotateTable="Main",RepeatType={"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"}})
 			G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,1)}, CUTable2, "ACAS", ShapeHD, 0, 0, nil, nil, P7)
 			G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,2)}, CUTable2, "ACAS", ShapeSC, 0, 0, nil, nil, P7)
-			G_CB_TSetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3)}, CUTable2, _G[ShapeSC], nil, {OwnerTable=P7,RotateTable="Main",RepeatType={"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"}})
+			G_CB_TSetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3,AtLeast)}, CUTable2, _G[ShapeSC], nil, {OwnerTable=P7,RotateTable="Main",RepeatType={"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"}})
 		else
 			G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,1)}, CUTable1, "ACAS", ShapeHD, 0, 0, nil, nil, P7)
 			G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,2)}, CUTable1, "ACAS", ShapeSC, 0, 0, nil, nil, P7)
-			G_CB_TSetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3)}, CUTable1, _G[ShapeSC], nil, {OwnerTable=P7,RepeatType={"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"}})
+			G_CB_TSetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3,AtLeast)}, CUTable1, _G[ShapeSC], nil, {OwnerTable=P7,RepeatType={"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"}})
 			G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,1)}, CUTable2, "ACAS", ShapeHD, 0, 0, nil, nil, P7)
 			G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,2)}, CUTable2, "ACAS", ShapeSC, 0, 0, nil, nil, P7)
-			G_CB_TSetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3)}, CUTable2, _G[ShapeSC], nil, {OwnerTable=P7,RepeatType={"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"}})
+			G_CB_TSetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3,AtLeast)}, CUTable2, _G[ShapeSC], nil, {OwnerTable=P7,RepeatType={"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"}})
 		end
 	
 		G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,2,AtMost)}, {55,53,54,46}, ZunitSh1,ZunitShLV1, 0, 0, nil, nil, P8)
 		G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,2,AtMost)}, {56,104,51,48}, ZunitSh2,ZunitShLV2, 0, 0, nil, nil, P8)
-		G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3)}, {55,53,54,46}, ZunitSh1,ZunitShLV1, 0, {"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"}, nil, nil, P8)
-		G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3)}, {56,104,51,48}, ZunitSh2,ZunitShLV2, 0, {"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"}, nil, nil, P8)
+		G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3,AtLeast)}, {55,53,54,46}, ZunitSh1,ZunitShLV1, 0, {"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"}, nil, nil, P8)
+		G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3,AtLeast)}, {56,104,51,48}, ZunitSh2,ZunitShLV2, 0, {"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"}, nil, nil, P8)
 		CIfEnd()
 	end
 end
@@ -346,29 +359,29 @@ function Gen2GunS(CUTable1,CUTable2,GunNm,ShapeHD,ShapeSC,ZunitSh1,ZunitSh2,Crea
 	if DLC_Project == 1 then
 		G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,1)}, CUTable1, "ACAS", ShapeHD, 0, 0, nil, nil, P7)
 		G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,2)}, CUTable1, "ACAS", ShapeSC, 0, 0, nil, nil, P7)
-		G_CB_TSetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3)}, CUTable1, _G[ShapeSC], nil, {OwnerTable=P7,RepeatType={"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"}})
+		G_CB_TSetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3,AtLeast)}, CUTable1, _G[ShapeSC], nil, {OwnerTable=P7,RepeatType={"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"}})
 		G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,1)}, CUTable2, "ACAS", ShapeHD, 0, 0, nil, nil, P7)
 		G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,2)}, CUTable2, "ACAS", ShapeSC, 0, 0, nil, nil, P7)
-		G_CB_TSetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3)}, CUTable2, _G[ShapeSC], nil, {OwnerTable=P7,RepeatType={"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"}})
+		G_CB_TSetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3,AtLeast)}, CUTable2, _G[ShapeSC], nil, {OwnerTable=P7,RepeatType={"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"}})
 	
 		G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,2,AtMost)}, {55,53,54,46}, "ACAS" ,ZunitSh1, 0, 0, nil, nil, P8)
 		G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,2,AtMost)}, {56,104,51,48}, "ACAS" ,ZunitSh2, 0, 0, nil, nil, P8)
-		G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3)}, {55,53,54,46}, "ACAS" ,ZunitSh1, 0, {"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"}, nil, nil, P8)
-		G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3)}, {56,104,51,48}, "ACAS" ,ZunitSh2, 0, {"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"}, nil, nil, P8)
-		f_TempRepeat({Gun_Line(6,AtLeast,1),CD(GMode,3)},CreateOneUnitID,1,14,P6)
+		G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3,AtLeast)}, {55,53,54,46}, "ACAS" ,ZunitSh1, 0, {"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"}, nil, nil, P8)
+		G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3,AtLeast)}, {56,104,51,48}, "ACAS" ,ZunitSh2, 0, {"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"}, nil, nil, P8)
+		f_TempRepeat({Gun_Line(6,AtLeast,1),CD(GMode,3,AtLeast)},CreateOneUnitID,1,14,P6)
 	else
 		G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,1)}, CUTable1, "ACAS", ShapeHD, 0, 0, nil, nil, P7)
 		G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,2)}, CUTable1, "ACAS", ShapeSC, 0, 0, nil, nil, P7)
-		G_CB_TSetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3)}, CUTable1, _G[ShapeSC], nil, {OwnerTable=P7,RepeatType={"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"}})
+		G_CB_TSetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3,AtLeast)}, CUTable1, _G[ShapeSC], nil, {OwnerTable=P7,RepeatType={"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"}})
 		G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,1)}, CUTable2, "ACAS", ShapeHD, 0, 0, nil, nil, P7)
 		G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,2)}, CUTable2, "ACAS", ShapeSC, 0, 0, nil, nil, P7)
-		G_CB_TSetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3)}, CUTable2, _G[ShapeSC], nil, {OwnerTable=P7,RepeatType={"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"}})
+		G_CB_TSetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3,AtLeast)}, CUTable2, _G[ShapeSC], nil, {OwnerTable=P7,RepeatType={"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"}})
 	
 		G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,2,AtMost)}, {55,53,54,46}, "ACAS" ,ZunitSh1, 0, 0, nil, nil, P8)
 		G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,2,AtMost)}, {56,104,51,48}, "ACAS" ,ZunitSh2, 0, 0, nil, nil, P8)
-		G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3)}, {55,53,54,46}, "ACAS" ,ZunitSh1, 0, {"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"}, nil, nil, P8)
-		G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3)}, {56,104,51,48}, "ACAS" ,ZunitSh2, 0, {"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"}, nil, nil, P8)
-		f_TempRepeat({Gun_Line(6,AtLeast,1),CD(GMode,3)},CreateOneUnitID,1,14,P6)
+		G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3,AtLeast)}, {55,53,54,46}, "ACAS" ,ZunitSh1, 0, {"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"}, nil, nil, P8)
+		G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3,AtLeast)}, {56,104,51,48}, "ACAS" ,ZunitSh2, 0, {"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"}, nil, nil, P8)
+		f_TempRepeat({Gun_Line(6,AtLeast,1),CD(GMode,3,AtLeast)},CreateOneUnitID,1,14,P6)
 	end
 
 	CIfEnd()
@@ -445,29 +458,29 @@ end
 		if DLC_Project == 1 then
 			G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,1)}, CUTable1, "ACAS", ShapeHD, 0, 0, nil, CenterXY, P7)
 			G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,2)}, CUTable1, "ACAS", ShapeSC, 0, 0, nil, CenterXY, P7)
-			G_CB_TSetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3)}, CUTable1, _G[ShapeSC], nil, {OwnerTable=P7,RepeatType={"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"},CenterXY=CenterXY})
+			G_CB_TSetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3,AtLeast)}, CUTable1, _G[ShapeSC], nil, {OwnerTable=P7,RepeatType={"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"},CenterXY=CenterXY})
 			G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,1)}, CUTable2, "ACAS", ShapeHD, 0, 0, nil, CenterXY, P7)
 			G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,2)}, CUTable2, "ACAS", ShapeSC, 0, 0, nil, CenterXY, P7)
-			G_CB_TSetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3)}, CUTable2, _G[ShapeSC], nil, {OwnerTable=P7,RepeatType={"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"},CenterXY=CenterXY})
+			G_CB_TSetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3,AtLeast)}, CUTable2, _G[ShapeSC], nil, {OwnerTable=P7,RepeatType={"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"},CenterXY=CenterXY})
 	
 			G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,2,AtMost)}, {55,53,54,46}, "ACAS" ,ZunitSh1, 0, 0, nil, CenterXY, P8)
 			G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,2,AtMost)}, {56,104,51,48}, "ACAS" ,ZunitSh2, 0, 0, nil, CenterXY, P8)
-			G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3)}, {55,53,54,46}, "ACAS" ,ZunitSh1, 0, {"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"}, nil, CenterXY, P8)
-			G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3)}, {56,104,51,48}, "ACAS" ,ZunitSh2, 0, {"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"}, nil, CenterXY, P8)
-			f_TempRepeat({Gun_Line(6,AtLeast,1),CD(GMode,3)},CreateOneUnitID,1,14,P6,CenterXY)
+			G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3,AtLeast)}, {55,53,54,46}, "ACAS" ,ZunitSh1, 0, {"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"}, nil, CenterXY, P8)
+			G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3,AtLeast)}, {56,104,51,48}, "ACAS" ,ZunitSh2, 0, {"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"}, nil, CenterXY, P8)
+			f_TempRepeat({Gun_Line(6,AtLeast,1),CD(GMode,3,AtLeast)},CreateOneUnitID,1,14,P6,CenterXY)
 		else
 			G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,1)}, CUTable1, "ACAS", ShapeHD, 0, 0, nil, CenterXY, P7)
 			G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,2)}, CUTable1, "ACAS", ShapeSC, 0, 0, nil, CenterXY, P7)
-			G_CB_TSetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3)}, CUTable1, _G[ShapeSC], nil, {OwnerTable=P7,RepeatType={"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"},CenterXY=CenterXY})
+			G_CB_TSetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3,AtLeast)}, CUTable1, _G[ShapeSC], nil, {OwnerTable=P7,RepeatType={"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"},CenterXY=CenterXY})
 			G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,1)}, CUTable2, "ACAS", ShapeHD, 0, 0, nil, CenterXY, P7)
 			G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,2)}, CUTable2, "ACAS", ShapeSC, 0, 0, nil, CenterXY, P7)
-			G_CB_TSetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3)}, CUTable2, _G[ShapeSC], nil, {OwnerTable=P7,RepeatType={"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"},CenterXY=CenterXY})
+			G_CB_TSetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3,AtLeast)}, CUTable2, _G[ShapeSC], nil, {OwnerTable=P7,RepeatType={"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"},CenterXY=CenterXY})
 	
 			G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,2,AtMost)}, {55,53,54,46}, "ACAS" ,ZunitSh1, 0, 0, nil, CenterXY, P8)
 			G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,2,AtMost)}, {56,104,51,48}, "ACAS" ,ZunitSh2, 0, 0, nil, CenterXY, P8)
-			G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3)}, {55,53,54,46}, "ACAS" ,ZunitSh1, 0, {"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"}, nil, CenterXY, P8)
-			G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3)}, {56,104,51,48}, "ACAS" ,ZunitSh2, 0, {"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"}, nil, CenterXY, P8)
-			f_TempRepeat({Gun_Line(6,AtLeast,1),CD(GMode,3)},CreateOneUnitID,1,14,P6,CenterXY)
+			G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3,AtLeast)}, {55,53,54,46}, "ACAS" ,ZunitSh1, 0, {"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"}, nil, CenterXY, P8)
+			G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3,AtLeast)}, {56,104,51,48}, "ACAS" ,ZunitSh2, 0, {"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"}, nil, CenterXY, P8)
+			f_TempRepeat({Gun_Line(6,AtLeast,1),CD(GMode,3,AtLeast)},CreateOneUnitID,1,14,P6,CenterXY)
 		end
 		CIfEnd()
 	end
@@ -643,23 +656,36 @@ end
 
 	CheckJump = def_sIndex()
 		CIf(FP,{Gun_Line(7,AtLeast,480)},{Gun_DoSuspend()})
-			CIf(FP, {CD(GMode,3)})
+			CIf(FP, {CD(GMode,3,AtLeast)})
 			CFor(FP, 0, 2048,64)
 			local NI = CForVariable()
+			local Chk = CreateCcode()
+			DoActionsX(FP,SetCD(Chk,0))
 			NIf(FP,{TTOR({GNm(1),GNm(3),GNm(5)})})
 			Simple_SetLocX(FP, 200, NI, 0, _Add(NI,64), 8192)
 			DoActions(FP, {KillUnitAt(All,nilunit,201,FP),Simple_SetLoc(201, 0, 0, 0, 0)})
-			NJumpX(FP, CheckJump,{Bring(Force1, AtLeast, 1, "Men", 201)},{MoveLocation(202, "Men", Force1, 201)})
+			NJumpX(FP, CheckJump,{CD(GMode,3),Bring(Force1, AtLeast, 1, "Men", 201)},{MoveLocation(202, "Men", Force1, 201),SetCD(Chk,1)})
+			NJumpX(FP, CheckJump,{CD(GMode,4),GNm(1),Bring(Force1, AtLeast, 1, 20, 201)},{MoveLocation(202, "Men", Force1, 201),SetCD(Chk,1)})
+			NJumpX(FP, CheckJump,{CD(GMode,4),GNm(3),Bring(Force1, AtLeast, 1, 10, 201)},{MoveLocation(202, "Men", Force1, 201),SetCD(Chk,1)})
+			for i = 0, 4 do
+				NJumpX(FP, CheckJump,{CD(GMode,4),GNm(5),Bring(i, AtLeast, 1, MarID[i+1], 201)},{MoveLocation(202, "Men", Force1, 201),SetCD(Chk,1)})
+			end
 			NIfEnd()
 			NIf(FP,{TTOR({GNm(2),GNm(4),GNm(6)})})
 			Simple_SetLocX(FP, 200, _Sub(_Mov(2048-64),NI), 0, _Sub(_Mov(2048),NI), 8192)
 			DoActions(FP, {KillUnitAt(All,nilunit,201,FP),Simple_SetLoc(201, 0, 0, 0, 0)})
-			NJumpX(FP, CheckJump,{Bring(Force1, AtLeast, 1, "Men", 201)},{MoveLocation(202, "Men", Force1, 201)})
+			NJumpX(FP, CheckJump,{CD(GMode,3),Bring(Force1, AtLeast, 1, "Men", 201)},{MoveLocation(202, "Men", Force1, 201),SetCD(Chk,1)})
+			NJumpX(FP, CheckJump,{CD(GMode,4),GNm(2),Bring(Force1, AtLeast, 1, 20, 201)},{MoveLocation(202, "Men", Force1, 201),SetCD(Chk,1)})
+			NJumpX(FP, CheckJump,{CD(GMode,4),GNm(4),Bring(Force1, AtLeast, 1, 10, 201)},{MoveLocation(202, "Men", Force1, 201),SetCD(Chk,1)})
+			for i = 0, 4 do
+				NJumpX(FP, CheckJump,{CD(GMode,4),GNm(6),Bring(i, AtLeast, 1, MarID[i+1], 201)},{MoveLocation(202, "Men", Force1, 201),SetCD(Chk,1)})
+			end
 			NIfEnd()
 			CForEnd()
 			NJumpXEnd(FP, CheckJump)--{RotatePlayer({DisplayTextX("Check",4)},HumanPlayers,FP)}
-			GetLocCenter(201, CPosX, CPosY)
 			--DisplayPrint(HumanPlayers, {"CPosX: ",CPosX,"  CPosY: ",CPosY})
+			TriggerX(FP,{CD(Chk,0)},{Simple_SetLoc(201, 1024, 1088, 1024, 1088)},{preserved})
+			GetLocCenter(201, CPosX, CPosY)
 			CNeg(FP,CPosX)
 			CAdd(FP,CPosX,32*64)
 			CNeg(FP,CPosY)
@@ -677,7 +703,7 @@ end
 				G_CB_SetSpawn({GNm(j)}, {k}, {"ACAS"}, {"CenCross2"}, "MAX", 129, nil, nil, P8,1)
 				end
 				for j,k in pairs(CenT3) do
-				G_CB_SetSpawn({GNm(j)}, {k}, {"ACAS"}, {"CenCross3"}, "MAX", 129, nil, nil, P8,1)
+				G_CB_SetSpawn({GNm(j),CD(GMode,4)}, {k}, {"ACAS"}, {"CenCross3"}, "MAX", 129, nil, nil, P8,1)
 				end
 				
 			end
@@ -755,26 +781,26 @@ end
 			if j == 8 then
 				G_CB_SetSpawn({CD(GMode,1),GNm(1),Gun_Line(7,AtLeast,240*(j-1))}, {k}, "ACAS", "GeneN1R", "MAX", 200, nil, {0,0}, P6,1)
 				G_CB_SetSpawn({CD(GMode,2),GNm(1),Gun_Line(7,AtLeast,240*(j-1))}, {k}, "ACAS", "GeneN1P", "MAX", 200, nil, {0,0}, P6,1)
-				G_CB_SetSpawn({CD(GMode,3),GNm(1),Gun_Line(7,AtLeast,240*(j-1))}, {k}, "ACAS", "GeneN1PS", "MAX", 200, nil, {0,0}, P6,1)
-				G_CB_SetSpawn({CD(GMode,3),GNm(1),Gun_Line(7,AtLeast,240*(j-1))}, {GeneCUTG1[j]}, "ACAS", "GeneN1", "MAX", nil, nil, {0,0}, P6,1)
+				G_CB_SetSpawn({CD(GMode,3,AtLeast),GNm(1),Gun_Line(7,AtLeast,240*(j-1))}, {k}, "ACAS", "GeneN1PS", "MAX", 200, nil, {0,0}, P6,1)
+				G_CB_SetSpawn({CD(GMode,4),GNm(1),Gun_Line(7,AtLeast,240*(j-1))}, {GeneCUTG1[j]}, "ACAS", "GeneN1", "MAX", nil, nil, {0,0}, P6,1)
 			else
 				G_CB_SetSpawn({CD(GMode,1),GNm(1),Gun_Line(7,AtLeast,240*(j-1))}, {k}, "ACAS", "GeneN1", "MAX", 200, nil, {0,0}, P6,1)
 				G_CB_SetSpawn({CD(GMode,2),GNm(1),Gun_Line(7,AtLeast,240*(j-1))}, {k}, "ACAS", "Gene1", "MAX", 200, nil, {0,0}, P6,1)
-				G_CB_SetSpawn({CD(GMode,3),GNm(1),Gun_Line(7,AtLeast,240*(j-1))}, {k}, "ACAS", "Gene1S", "MAX", 200, nil, {0,0}, P6,1)
-				G_CB_SetSpawn({CD(GMode,3),GNm(1),Gun_Line(7,AtLeast,240*(j-1))}, {GeneCUTG1[j]}, "ACAS", "Gene1S", "MAX", nil, nil, {0,0}, P6,1)
+				G_CB_SetSpawn({CD(GMode,3,AtLeast),GNm(1),Gun_Line(7,AtLeast,240*(j-1))}, {k}, "ACAS", "Gene1S", "MAX", 200, nil, {0,0}, P6,1)
+				G_CB_SetSpawn({CD(GMode,4),GNm(1),Gun_Line(7,AtLeast,240*(j-1))}, {GeneCUTG1[j]}, "ACAS", "Gene1S", "MAX", nil, nil, {0,0}, P6,1)
 			end
 		end
 		for j,k in pairs(GeneCUT2) do
 			if j == 8 then
 				G_CB_SetSpawn({CD(GMode,1),GNm(2),Gun_Line(7,AtLeast,240*(j-1))}, {k}, "ACAS", "GeneN2R", "MAX", 201, nil, {0,0}, P6,1)
 				G_CB_SetSpawn({CD(GMode,2),GNm(2),Gun_Line(7,AtLeast,240*(j-1))}, {k}, "ACAS", "GeneN2P", "MAX", 201, nil, {0,0}, P6,1)
-				G_CB_SetSpawn({CD(GMode,3),GNm(2),Gun_Line(7,AtLeast,240*(j-1))}, {k}, "ACAS", "GeneN2PS", "MAX", 201, nil, {0,0}, P6,1)
-				G_CB_SetSpawn({CD(GMode,3),GNm(2),Gun_Line(7,AtLeast,240*(j-1))}, {GeneCUTG2[j]}, "ACAS", "GeneN2", "MAX", nil, nil, {0,0}, P6,1)
+				G_CB_SetSpawn({CD(GMode,3,AtLeast),GNm(2),Gun_Line(7,AtLeast,240*(j-1))}, {k}, "ACAS", "GeneN2PS", "MAX", 201, nil, {0,0}, P6,1)
+				G_CB_SetSpawn({CD(GMode,4),GNm(2),Gun_Line(7,AtLeast,240*(j-1))}, {GeneCUTG2[j]}, "ACAS", "GeneN2", "MAX", nil, nil, {0,0}, P6,1)
 			else
 				G_CB_SetSpawn({CD(GMode,1),GNm(2),Gun_Line(7,AtLeast,240*(j-1))}, {k}, "ACAS", "GeneN2", "MAX", 201, nil, {0,0}, P6,1)
 				G_CB_SetSpawn({CD(GMode,2),GNm(2),Gun_Line(7,AtLeast,240*(j-1))}, {k}, "ACAS", "Gene2", "MAX", 201, nil, {0,0}, P6,1)
-				G_CB_SetSpawn({CD(GMode,3),GNm(2),Gun_Line(7,AtLeast,240*(j-1))}, {k}, "ACAS", "Gene2S", "MAX", 201, nil, {0,0}, P6,1)
-				G_CB_SetSpawn({CD(GMode,3),GNm(2),Gun_Line(7,AtLeast,240*(j-1))}, {GeneCUTG2[j]}, "ACAS", "Gene2S", "MAX", nil, nil, {0,0}, P6,1)
+				G_CB_SetSpawn({CD(GMode,3,AtLeast),GNm(2),Gun_Line(7,AtLeast,240*(j-1))}, {k}, "ACAS", "Gene2S", "MAX", 201, nil, {0,0}, P6,1)
+				G_CB_SetSpawn({CD(GMode,4),GNm(2),Gun_Line(7,AtLeast,240*(j-1))}, {GeneCUTG2[j]}, "ACAS", "Gene2S", "MAX", nil, nil, {0,0}, P6,1)
 			end
 		end
 		for j,k in pairs(GeneCUT3) do
@@ -789,16 +815,16 @@ end
 
 			if k == 102 or k == "Zero" then
 				G_CB_SetSpawn({CD(GMode,2),GNm(3),Gun_Line(7,AtLeast,240*(j-1))}, {k}, "ACAS", "GeneN3", "MAX", 202, nil, {0,0}, P6,1)
-				G_CB_SetSpawn({CD(GMode,3),GNm(3),Gun_Line(7,AtLeast,240*(j-1))}, {k}, "ACAS", "Gene3S", "MAX", 202, nil, {0,0}, P6,1)
-				G_CB_SetSpawn({CD(GMode,3),GNm(3),Gun_Line(7,AtLeast,240*(j-1))}, {GeneCUTG3[j]}, "ACAS", "Gene3S", "MAX", nil, nil, {0,0}, P6,1)
+				G_CB_SetSpawn({CD(GMode,3,AtLeast),GNm(3),Gun_Line(7,AtLeast,240*(j-1))}, {k}, "ACAS", "Gene3S", "MAX", 202, nil, {0,0}, P6,1)
+				G_CB_SetSpawn({CD(GMode,4),GNm(3),Gun_Line(7,AtLeast,240*(j-1))}, {GeneCUTG3[j]}, "ACAS", "Gene3S", "MAX", nil, nil, {0,0}, P6,1)
 			elseif j == 8 then
 				G_CB_SetSpawn({CD(GMode,2),GNm(3),Gun_Line(7,AtLeast,240*(j-1))}, {k}, "ACAS", "GeneN3P", "MAX", 202, nil, {0,0}, P6,1)
-				G_CB_SetSpawn({CD(GMode,3),GNm(3),Gun_Line(7,AtLeast,240*(j-1))}, {k}, "ACAS", "GeneN3PS", "MAX", 202, nil, {0,0}, P6,1)
-				G_CB_SetSpawn({CD(GMode,3),GNm(3),Gun_Line(7,AtLeast,240*(j-1))}, {GeneCUTG3[j]}, "ACAS", "GeneN3PS", "MAX", nil, nil, {0,0}, P6,1)
+				G_CB_SetSpawn({CD(GMode,3,AtLeast),GNm(3),Gun_Line(7,AtLeast,240*(j-1))}, {k}, "ACAS", "GeneN3PS", "MAX", 202, nil, {0,0}, P6,1)
+				G_CB_SetSpawn({CD(GMode,4),GNm(3),Gun_Line(7,AtLeast,240*(j-1))}, {GeneCUTG3[j]}, "ACAS", "GeneN3PS", "MAX", nil, nil, {0,0}, P6,1)
 			else
 				G_CB_SetSpawn({CD(GMode,2),GNm(3),Gun_Line(7,AtLeast,240*(j-1))}, {k}, "ACAS", "Gene3", "MAX", 202, nil, {0,0}, P6,1)
-				G_CB_SetSpawn({CD(GMode,3),GNm(3),Gun_Line(7,AtLeast,240*(j-1))}, {k}, "ACAS", "Gene3S", "MAX", 202, nil, {0,0}, P6,1)
-				G_CB_SetSpawn({CD(GMode,3),GNm(3),Gun_Line(7,AtLeast,240*(j-1))}, {GeneCUTG3[j]}, "ACAS", "Gene3S", "MAX", nil, nil, {0,0}, P6,1)
+				G_CB_SetSpawn({CD(GMode,3,AtLeast),GNm(3),Gun_Line(7,AtLeast,240*(j-1))}, {k}, "ACAS", "Gene3S", "MAX", 202, nil, {0,0}, P6,1)
+				G_CB_SetSpawn({CD(GMode,4),GNm(3),Gun_Line(7,AtLeast,240*(j-1))}, {GeneCUTG3[j]}, "ACAS", "Gene3S", "MAX", nil, nil, {0,0}, P6,1)
 			end
 		end
 	else
@@ -951,7 +977,7 @@ end
 			if DLC_Project==1 then
 				G_CB_SetSpawn({CD(GMode,1),GNm(j-1)}, {k,94}, KimrhegbArr3[j][1],KimrhegbArr3[j][2], "MAX", 168, nil, nil, P6,1)
 				G_CB_SetSpawn({CD(GMode,2),GNm(j-1)}, {k,94}, KimrhegbArr2[j][1],KimrhegbArr2[j][2], "MAX", 168, nil, nil, P6,1)
-				G_CB_SetSpawn({CD(GMode,3),GNm(j-1)}, {k,94}, KimrhegbArr4[j][1],KimrhegbArr4[j][2], "MAX", 168, nil, nil, P6,1)
+				G_CB_SetSpawn({CD(GMode,3,AtLeast),GNm(j-1)}, {k,94}, KimrhegbArr4[j][1],KimrhegbArr4[j][2], "MAX", 168, nil, nil, P6,1)
 			else
 				G_CB_SetSpawn({CD(GMode,1),GNm(j-1)}, {k,94}, KimrhegbArr3[j][1],KimrhegbArr3[j][2], "MAX", 187, nil, nil, P6,1)
 				G_CB_SetSpawn({CD(GMode,2,AtLeast),GNm(j-1)}, {k,94}, KimrhegbArr2[j][1],KimrhegbArr2[j][2], "MAX", 187, nil, nil, P6,1)
@@ -976,7 +1002,7 @@ end
 			if X4_Mode == 1 then
 				G_CB_SetSpawn({CD(GMode,1)}, {KimrhegbArr_1[j]}, KimrhegbArr3[j][1],KimrhegbArr3[j][2], "MAX", 203, nil, nil, P6,1)
 				G_CB_SetSpawn({CD(GMode,2)}, {KimrhegbArr_2[j]}, KimrhegbArr3[j][1],KimrhegbArr3[j][2], "MAX", 203, nil, nil, P6,1)
-				G_CB_SetSpawn({CD(GMode,3)}, {KimrhegbArr_3[j]}, KimrhegbArr3[j][1],KimrhegbArr3[j][2], "MAX", 203, nil, nil, P6,1)
+				G_CB_SetSpawn({CD(GMode,3,AtLeast)}, {KimrhegbArr_3[j]}, KimrhegbArr3[j][1],KimrhegbArr3[j][2], "MAX", 203, nil, nil, P6,1)
 			else
 				G_CB_SetSpawn({CD(GMode,1)}, {k}, KimrhegbArr3[j][1],KimrhegbArr3[j][2], "MAX", 203, nil, nil, P6,1)
 				G_CB_SetSpawn({CD(GMode,2,AtLeast)}, {k}, KimrhegbArr2[j][1],KimrhegbArr2[j][2], "MAX", 203, nil, nil, P6,1)
@@ -1134,14 +1160,14 @@ end
 	for i = 0, 4 do
 		CAdd(FP,TotalM,_Mul(MarNum4[i+1],20))
 	end
-	CIf(FP,{CD(GMode,3)})
+	CIf(FP,{CD(GMode,4)})
 	
 	CMov(FP,TotalM,_Mul(_Mod(GTime,60),8))--무조건 시간기믹만 적용
 	CIfEnd()
 
 
 	else
-		CIfX(FP,{CD(GMode,2,AtMost)})
+		CIfX(FP,{CD(GMode,3,AtMost)})
 	UnitReadX(FP, Force1, 10, 201, MarNum3)--*3
 	for i = 0, 4 do
 		CIf(FP,{HumanCheck(i, 1)})
@@ -1340,8 +1366,8 @@ end
 			G_CB_TSetSpawn({GNm(1)}, {94}, {L1084}, nil, {OwnerTable=P6,LMTable="MAX",CenterXY={0,0}})
 			G_CB_TSetSpawn({GNm(2)}, {94}, {L2084}, nil, {OwnerTable=P6,LMTable="MAX",CenterXY={0,0}})
 			if DLC_Project == 1 then
-				G_CB_TSetSpawn({GNm(1),CD(GMode,3)}, {30}, {L1084}, nil, {OwnerTable=P6,LMTable="MAX",CenterXY={0,0}})
-				G_CB_TSetSpawn({GNm(2),CD(GMode,3)}, {13}, {L2084}, nil, {OwnerTable=P6,LMTable="MAX",CenterXY={0,0}})
+				G_CB_TSetSpawn({GNm(1),CD(GMode,4)}, {30}, {L1084}, nil, {OwnerTable=P6,LMTable="MAX",CenterXY={0,0}})
+				G_CB_TSetSpawn({GNm(2),CD(GMode,4)}, {13}, {L2084}, nil, {OwnerTable=P6,LMTable="MAX",CenterXY={0,0}})
 			end
 			Trigger2X(FP, {}, {RotatePlayer({PlayWAVX("staredit\\wav\\BossWin.ogg"),PlayWAVX("staredit\\wav\\BossWin.ogg"),PlayWAVX("staredit\\wav\\BossWin.ogg"),PlayWAVX("staredit\\wav\\BossWin.ogg"),}, HumanPlayers, FP)},{preserved})
 
@@ -1511,18 +1537,21 @@ end
 		CIfEnd()
 		if DLC_Project == 1 then
 			CIfOnce(FP, {Gun_Line(7, AtLeast, 240),Gun_Line(8, Exactly, 0),Bring(P8, AtMost, 0, 74, 26)}, {Gun_SetLine(8, SetTo, 1),Gun_SetLine(7,SetTo,0)})
-				G_CB_TSetSpawn({CD(GMode,3)}, {"Merry","Shirley House"},CellMShapeSC,nil,{OwnerTable=P6,CenterXY={0,0}})
+				G_CB_TSetSpawn({CD(GMode,4)}, {"Merry","Shirley House"},CellMShapeSC,nil,{OwnerTable=P6,CenterXY={0,0}})
+				G_CB_TSetSpawn({CD(GMode,3)}, {"Kazansky","Schezar"},CellMShapeSC,nil,{OwnerTable=P6,CenterXY={0,0}})
 				G_CB_TSetSpawn({CD(GMode,2)}, {"Kazansky","Schezar"},CellMShapeSC,nil,{OwnerTable=P6,CenterXY={0,0}})
 				G_CB_TSetSpawn({CD(GMode,1)}, {"Kazansky","Schezar"},CellMShape,nil,{OwnerTable=P6,CenterXY={0,0}})
 			CIfEnd()
 			CIfOnce(FP, {Gun_Line(7, AtLeast, 240),Gun_Line(8, Exactly, 1)}, {Gun_SetLine(8, SetTo, 2),Gun_SetLine(7,SetTo,0)})
-				G_CB_TSetSpawn({CD(GMode,3)}, {"Lizzet","Freyja"},CellMShapeSC,nil,{OwnerTable=P6,CenterXY={0,0}})
+				G_CB_TSetSpawn({CD(GMode,4)}, {"Lizzet","Freyja"},CellMShapeSC,nil,{OwnerTable=P6,CenterXY={0,0}})
+				G_CB_TSetSpawn({CD(GMode,3)}, {"Artanis","Fenix Z"},CellMShapeSC,nil,{OwnerTable=P6,CenterXY={0,0}})
 				G_CB_TSetSpawn({CD(GMode,2)}, {"Artanis","Fenix Z"},CellMShapeSC,nil,{OwnerTable=P6,CenterXY={0,0}})
 				G_CB_TSetSpawn({CD(GMode,1)}, {"Artanis","Fenix Z"},CellMShape,nil,{OwnerTable=P6,CenterXY={0,0}})
 			CIfEnd()
 			CIfOnce(FP, {Gun_Line(7, AtLeast, 240),Gun_Line(8, Exactly, 2)}, {KillUnit(217, Force2),Gun_DoSuspend(),Gun_SetLine(7,SetTo,0)})
 				G_CB_TSetSpawn({CD(GMode,2)}, {13,"Identity"},CellMShape,nil,{OwnerTable=P6,CenterXY={0,0}})
-				G_CB_TSetSpawn({CD(GMode,3)}, {13,"Identity"},CellMShapeSC,nil,{OwnerTable=P6,CenterXY={0,0}})
+				G_CB_TSetSpawn({CD(GMode,3)}, {13,"Identity"},CellMShape,nil,{OwnerTable=P6,CenterXY={0,0}})
+				G_CB_TSetSpawn({CD(GMode,4)}, {13,"Identity"},CellMShapeSC,nil,{OwnerTable=P6,CenterXY={0,0}})
 			CIfEnd()
 	--
 		else
@@ -1562,7 +1591,7 @@ end
 		ObEff1(256,400)
 		ObEff1(1760,400)
 	CIfEnd()
-	CIf(FP,(CD(GMode,3)))
+	CIf(FP,(CD(GMode,3,AtLeast)))
 
 		f_Lengthdir(FP, _Sub(_Mov(3800/8),_Div(Var_TempTable[9],8)), _Mul(Var_TempTable[8],2), CPosX, CPosY)
 		f_Div(FP,CPosY,2)
@@ -1572,9 +1601,11 @@ end
 		f_Div(FP,CPosY,2)
 		Simple_SetLocX(FP, 199, _Add(CPosX,Var_TempTable[2]), _Add(CPosY,Var_TempTable[3]), _Add(CPosX,Var_TempTable[2]), _Add(CPosY,Var_TempTable[3]), Simple_CalcLoc(199, -4, -4, 4, 4))
 		DoActions(FP,{CreateUnit(1, 94, 200, P6)})
+		CIf(FP,{CD(GMode,4)})
 		if DLC_Project == 1 then
 			ObEff1(1024,7568)
 		end
+		CIfEnd()
 
 
 	CIfEnd()
@@ -1639,7 +1670,7 @@ end
 				
 
 			CIfEnd()
-			CIf(FP,(CD(GMode,3)))
+			CIf(FP,(CD(GMode,3,AtLeast)))
 				G_CB_TSetSpawn({}, {94}, {WarpZ}, nil, {OwnerTable=P6,LMTable=WarpZ[1]/40})
 
 				WaveGM3(1,{38},{41})
@@ -1671,7 +1702,7 @@ end
 				WaveGM3(20,{"EL FAIL"},{"DIEIN"})
 				WaveGM3(21,{"LENA"},{"EL CLEAR"})
 
-
+				CIf(FP,{CD(GMode,4)})
 				if DLC_Project == 1 then
 				function WaveGM4(GNum,CUTable1,CUTable2,CUTable3,CUTable4)
 					G_CB_TSetSpawn({GNm(GNum)}, CUTable1, RBLine, nil, {OwnerTable=P6,LMTable="MAX",CenterXY={1024,7568}})
@@ -1705,7 +1736,8 @@ end
 				--RBLine
 				--RBFill
 				--RBC
-			end
+				end
+				CIfEnd()
 
 
 			CIfEnd()
@@ -1718,13 +1750,16 @@ end
 		if DLC_Project == 1 then
 			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+0),CD(GMode,1)}, {CUT[1]}, {PSILHD1}, 1, {OwnerTable=P6,RepeatType={"Patrol_Gun"}})
 			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+0),CD(GMode,2)}, {CUT[1]}, {PSILSC1}, 1, {OwnerTable=P6,RepeatType={"Patrol_Gun"}})
-			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+0),CD(GMode,3)}, {CUT[1]}, {PSILSC1}, 1, {OwnerTable=P6,RepeatType=187})
+			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+0),CD(GMode,3)}, {CUT[1]}, {PSILSC1}, 1, {OwnerTable=P6,RepeatType={"Patrol_Gun"}})
+			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+0),CD(GMode,4)}, {CUT[1]}, {PSILSC1}, 1, {OwnerTable=P6,RepeatType=187})
 			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+120),CD(GMode,1)}, {CUT[2]}, {PSICHD1}, 1, {OwnerTable=P7,RepeatType={"Patrol_Gun"}})
 			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+120),CD(GMode,2)}, {CUT[2]}, {PSICSC1}, 1, {OwnerTable=P7,RepeatType={"Patrol_Gun"}})
-			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+120),CD(GMode,3)}, {CUT[2]}, {PSICSC1}, 1, {OwnerTable=P7,RepeatType=187})
+			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+120),CD(GMode,3)}, {CUT[2]}, {PSICSC1}, 1, {OwnerTable=P7,RepeatType={"Patrol_Gun"}})
+			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+120),CD(GMode,4)}, {CUT[2]}, {PSICSC1}, 1, {OwnerTable=P7,RepeatType=187})
 			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+240),CD(GMode,1)}, {CUT[3]}, {PSISHD1}, 1, {OwnerTable=P8,RepeatType={"Patrol_Gun"}})
 			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+240),CD(GMode,2)}, {CUT[3]}, {PSISSC1}, 1, {OwnerTable=P8,RepeatType={"Patrol_Gun"}})
-			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+240),CD(GMode,3)}, {CUT[3]}, {PSISSC1}, 1, {OwnerTable=P8,RepeatType=187})
+			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+240),CD(GMode,3)}, {CUT[3]}, {PSISSC1}, 1, {OwnerTable=P8,RepeatType={"Patrol_Gun"}})
+			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+240),CD(GMode,4)}, {CUT[3]}, {PSISSC1}, 1, {OwnerTable=P8,RepeatType=187})
 		else
 			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+0),CD(GMode,1)}, {CUT[1]}, {PSILHD1}, 1, {OwnerTable=P6,RepeatType={"Attack_Gun"}})
 			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+0),CD(GMode,2,AtLeast)}, {CUT[1]}, {PSILSC1}, 1, {OwnerTable=P6,RepeatType={"Attack_Gun"}})
@@ -1781,7 +1816,7 @@ end
 		G_CB_TSetSpawn({Gun_Line(7,AtLeast,(SNm*480)),CD(GMode,1)}, CUTable, LDH, 1, {OwnerTable={P7,P8},LMTable="MAX"})
 		G_CB_TSetSpawn({Gun_Line(7,AtLeast,(SNm*480)),CD(GMode,2,AtLeast)}, CUTable, LD, 1, {OwnerTable={P7,P8},LMTable="MAX"})
 		if DLC_Project == 1 then
-			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(SNm*480)),CD(GMode,3)}, CUTable_DLC, LDH, 1, {OwnerTable={P7,P8},LMTable="MAX"})
+			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(SNm*480)),CD(GMode,4)}, CUTable_DLC, LDH, 1, {OwnerTable={P7,P8},LMTable="MAX"})
 		end
 	end
 	LDSetSpawn(0,{"Lizzet","Yona"},{102})
@@ -1813,15 +1848,15 @@ end
 		if DLC_Project == 1 then
 			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(SNm*480)),CD(GMode,1)}, {CUTable1[1]}, RBLineHD, 1, {OwnerTable=P7,LMTable="MAX",CenterXY={1024,7776}})
 			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(SNm*480)),CD(GMode,2)}, {CUTable1[1]}, RBLine, 1, {OwnerTable=P7,LMTable="MAX",CenterXY={1024,7776}})
-			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(SNm*480)),CD(GMode,3)}, CUTable1, RBLine, 1, {OwnerTable=P7,LMTable="MAX",CenterXY={1024,7776}})
+			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(SNm*480)),CD(GMode,3,AtLeast)}, CUTable1, RBLine, 1, {OwnerTable=P7,LMTable="MAX",CenterXY={1024,7776}})
 			
 			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(SNm*480)),CD(GMode,1)}, CUTable2, RBFillHD, 1, {OwnerTable=P7,LMTable="MAX",CenterXY={1024,7776}})
 			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(SNm*480)),CD(GMode,2)}, CUTable2, RBFill, 1, {OwnerTable=P7,LMTable="MAX",CenterXY={1024,7776}})
-			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(SNm*480)),CD(GMode,3)}, CUTable2, RBFill, 1, {OwnerTable=P7,LMTable="MAX",CenterXY={1024,7776}})
+			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(SNm*480)),CD(GMode,3,AtLeast)}, CUTable2, RBFill, 1, {OwnerTable=P7,LMTable="MAX",CenterXY={1024,7776}})
 			
 			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(SNm*480)),CD(GMode,1)}, CUTable3, RBCHD, 1, {OwnerTable=P7,LMTable="MAX",CenterXY={1024,7776}})
 			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(SNm*480)),CD(GMode,2)}, CUTable3, RBC, 1, {OwnerTable=P7,LMTable="MAX",CenterXY={1024,7776}})
-			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(SNm*480)),CD(GMode,3)}, CUTable3, RBC, 1, {OwnerTable=P7,LMTable="MAX",CenterXY={1024,7776}})
+			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(SNm*480)),CD(GMode,3,AtLeast)}, CUTable3, RBC, 1, {OwnerTable=P7,LMTable="MAX",CenterXY={1024,7776}})
 		else
 			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(SNm*480)),CD(GMode,1)}, CUTable1, RBLineHD, 1, {OwnerTable=P7,LMTable="MAX",CenterXY={1024,7776}})
 			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(SNm*480)),CD(GMode,2,AtLeast)}, CUTable1, RBLine, 1, {OwnerTable=P7,LMTable="MAX",CenterXY={1024,7776}})
@@ -1843,7 +1878,12 @@ end
 	RBSetSpawn(2,{"Sen"},{"Sadol","Leon"},{"Zero"})
 	
 	if DLC_Project == 1 then
+		CIf(FP,{CD(GMode,3)})
+		RBSetSpawn(3,{"Identity"},{"Destroy"},{"Division"})
+		CIfEnd()
+		CIf(FP,{CD(GMode,4)})
 		RBSetSpawn(3,{"Identity",13},{"Destroy"},{"Division"})
+		CIfEnd()
 	else
 		RBSetSpawn(3,{"Identity"},{"Destroy"},{"Division"})
 	end
@@ -2076,18 +2116,18 @@ Trigger2X(FP, {CD(gMAXCcodeArr[1],1),Bring(Force1, AtMost, 5, "Men", 64)}, {Rota
 	
 	
 	if DLC_Project == 1 then
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,630)}, {88}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RepeatType={"gMAX1"},RotateTable=0})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,1100)}, {88}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RepeatType={"gMAX1"},RotateTable=60})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,1420)}, {88}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RepeatType={"gMAX1"},RotateTable=120})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,1730)}, {88}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RepeatType={"gMAX1"},RotateTable=180})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,2050)}, {88}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RepeatType={"gMAX1"},RotateTable=240})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,2210)}, {88}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RepeatType={"gMAX1"},RotateTable=300})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,630)}, {21}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RepeatType={"gMAX1"},RotateTable=0})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,1100)}, {28}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RepeatType={"gMAX1"},RotateTable=60})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,1420)}, {88}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RepeatType={"gMAX1"},RotateTable=120})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,1730)}, {86}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RepeatType={"gMAX1"},RotateTable=180})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,2050)}, {84}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RepeatType={"gMAX1"},RotateTable=240})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,2210)}, {98}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RepeatType={"gMAX1"},RotateTable=300})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,630)}, {88}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RepeatType={"gMAX1"},RotateTable=0})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,1100)}, {88}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RepeatType={"gMAX1"},RotateTable=60})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,1420)}, {88}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RepeatType={"gMAX1"},RotateTable=120})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,1730)}, {88}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RepeatType={"gMAX1"},RotateTable=180})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,2050)}, {88}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RepeatType={"gMAX1"},RotateTable=240})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,2210)}, {88}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RepeatType={"gMAX1"},RotateTable=300})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,630)}, {21}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RepeatType={"gMAX1"},RotateTable=0})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,1100)}, {28}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RepeatType={"gMAX1"},RotateTable=60})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,1420)}, {88}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RepeatType={"gMAX1"},RotateTable=120})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,1730)}, {86}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RepeatType={"gMAX1"},RotateTable=180})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,2050)}, {84}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RepeatType={"gMAX1"},RotateTable=240})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,2210)}, {98}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RepeatType={"gMAX1"},RotateTable=300})
 	else
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,630)}, {88}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RepeatType={"gMAX1"},RotateTable=0})
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,1100)}, {88}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RepeatType={"gMAX1"},RotateTable=60})
@@ -2106,31 +2146,31 @@ Trigger2X(FP, {CD(gMAXCcodeArr[1],1),Bring(Force1, AtMost, 5, "Men", 64)}, {Rota
 
 	
 	if DLC_Project == 1 then
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,12630)}, {77}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=0})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,12630)}, {77}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=60})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,12630)}, {77}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=120})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,12630)}, {77}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=180})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,12630)}, {77}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=240})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,12630)}, {77}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=300})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,17680)}, {21,17}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=0})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,17680)}, {21,17}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=60})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,17680)}, {21,17}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=120})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,17680)}, {21,17}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=180})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,17680)}, {21,17}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=240})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,17680)}, {21,17}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=300})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,12630)}, {77}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=0})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,12630)}, {77}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=60})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,12630)}, {77}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=120})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,12630)}, {77}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=180})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,12630)}, {77}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=240})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,12630)}, {77}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=300})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,17680)}, {21,17}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=0})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,17680)}, {21,17}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=60})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,17680)}, {21,17}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=120})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,17680)}, {21,17}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=180})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,17680)}, {21,17}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=240})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,17680)}, {21,17}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=300})
 		
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,12630)}, {17}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=0})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,12630)}, {19}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=60})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,12630)}, {77}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=120})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,12630)}, {78}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=180})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,12630)}, {25}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=240})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,12630)}, {75}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=300})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,17680)}, {58,76}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=0})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,17680)}, {80,79}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=60})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,17680)}, {8,81}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=120})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,17680)}, {12,83}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=180})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,17680)}, {29,95}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=240})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,17680)}, {7,5}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=300})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,12630)}, {17}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=0})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,12630)}, {19}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=60})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,12630)}, {77}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=120})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,12630)}, {78}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=180})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,12630)}, {25}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=240})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,12630)}, {75}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=300})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,17680)}, {58,76}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=0})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,17680)}, {80,79}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=60})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,17680)}, {8,81}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=120})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,17680)}, {12,83}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=180})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,17680)}, {29,95}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=240})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,17680)}, {7,5}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=300})
 	else
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,12630)}, {77}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=0})
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,12630)}, {77}, GMAXSh1, 1, {LMTable="MAX",OwnerTable=P6,RotateTable=60})
@@ -2196,18 +2236,18 @@ Trigger2X(FP, {CD(gMAXCcodeArr[1],1),Bring(Force1, AtMost, 5, "Men", 64)}, {Rota
 
 
 	if DLC_Project== 1 then
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,32360)}, {"Raynor V","Hyperion"}, CallStarL, 1, {LMTable="MAX",OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,33000)}, {"Danimoth","Fenix Z"}, CallStarL, 1, {LMTable="MAX",OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,33630)}, {"Fenix D","Lin"}, CallStarL, 1, {LMTable="MAX",OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,34260)}, {"Kazansky","Zeratul"}, CallStarL, 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,32360)}, {"Raynor V","Hyperion"}, CallStarL, 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,33000)}, {"Danimoth","Fenix Z"}, CallStarL, 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,33630)}, {"Fenix D","Lin"}, CallStarL, 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,34260)}, {"Kazansky","Zeratul"}, CallStarL, 1, {LMTable="MAX",OwnerTable=P6})
 		
 		
 		
 
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,32360)}, {66,60}, CallStarL, 1, {LMTable="MAX",OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,33000)}, {40,70}, CallStarL, 1, {LMTable="MAX",OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,33630)}, {87,57}, CallStarL, 1, {LMTable="MAX",OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,34260)}, {74,62}, CallStarL, 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,32360)}, {66,60}, CallStarL, 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,33000)}, {40,70}, CallStarL, 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,33630)}, {87,57}, CallStarL, 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,34260)}, {74,62}, CallStarL, 1, {LMTable="MAX",OwnerTable=P6})
 	else
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,32360)}, {"Raynor V","Hyperion"}, CallStarL, 1, {LMTable="MAX",OwnerTable=P6})
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,33000)}, {"Danimoth","Fenix Z"}, CallStarL, 1, {LMTable="MAX",OwnerTable=P6})
@@ -2229,24 +2269,24 @@ Trigger2X(FP, {CD(gMAXCcodeArr[1],1),Bring(Force1, AtMost, 5, "Men", 64)}, {Rota
 
 
 
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,37500-0x1D)}, {"Duke Siege"}, GMAXSh3, 1, {RotateTable=0,OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,37500)}, {"Duke Siege"}, GMAXSh3, 1, {RotateTable=45,OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,37500+0x1D)}, {"Duke Siege"}, GMAXSh3, 1, {RotateTable=90,OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,37500+0x1D+0x1D)}, {"Duke Siege"}, GMAXSh3, 1, {RotateTable=90+45,OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,37500+0x1D+0x1D+0x1D)}, {"Duke Siege"}, GMAXSh3, 1, {RotateTable=180,OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,37500+0x1D+0x1D+0x1D+0x1D)}, {"Duke Siege"}, GMAXSh3, 1, {RotateTable=180+45,OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,37500+0x1D+0x1D+0x1D+0x1D+0x1D)}, {"Duke Siege"}, GMAXSh3, 1, {RotateTable=270,OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,37500+0x1D+0x1D+0x1D+0x1D+0x1D+0x1D)}, {"Duke Siege"}, GMAXSh3, 1, {RotateTable=270+45,OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,37500-0x1D)}, {"Duke Siege"}, GMAXSh3, 1, {RotateTable=0,OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,37500)}, {"Duke Siege"}, GMAXSh3, 1, {RotateTable=45,OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,37500+0x1D)}, {"Duke Siege"}, GMAXSh3, 1, {RotateTable=90,OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,37500+0x1D+0x1D)}, {"Duke Siege"}, GMAXSh3, 1, {RotateTable=90+45,OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,37500+0x1D+0x1D+0x1D)}, {"Duke Siege"}, GMAXSh3, 1, {RotateTable=180,OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,37500+0x1D+0x1D+0x1D+0x1D)}, {"Duke Siege"}, GMAXSh3, 1, {RotateTable=180+45,OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,37500+0x1D+0x1D+0x1D+0x1D+0x1D)}, {"Duke Siege"}, GMAXSh3, 1, {RotateTable=270,OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,37500+0x1D+0x1D+0x1D+0x1D+0x1D+0x1D)}, {"Duke Siege"}, GMAXSh3, 1, {RotateTable=270+45,OwnerTable=P6})
 
 		
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,37500-0x1D)}, {"Identity"}, GMAXSh3, 1, {RotateTable=0,OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,37500)}, {"Identity"}, GMAXSh3, 1, {RotateTable=45,OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,37500+0x1D)}, {"Identity"}, GMAXSh3, 1, {RotateTable=90,OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,37500+0x1D+0x1D)}, {"Identity"}, GMAXSh3, 1, {RotateTable=90+45,OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,37500+0x1D+0x1D+0x1D)}, {"Identity"}, GMAXSh3, 1, {RotateTable=180,OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,37500+0x1D+0x1D+0x1D+0x1D)}, {"Identity"}, GMAXSh3, 1, {RotateTable=180+45,OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,37500+0x1D+0x1D+0x1D+0x1D+0x1D)}, {"Identity"}, GMAXSh3, 1, {RotateTable=270,OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,37500+0x1D+0x1D+0x1D+0x1D+0x1D+0x1D)}, {"Identity"}, GMAXSh3, 1, {RotateTable=270+45,OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,37500-0x1D)}, {"Identity"}, GMAXSh3, 1, {RotateTable=0,OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,37500)}, {"Identity"}, GMAXSh3, 1, {RotateTable=45,OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,37500+0x1D)}, {"Identity"}, GMAXSh3, 1, {RotateTable=90,OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,37500+0x1D+0x1D)}, {"Identity"}, GMAXSh3, 1, {RotateTable=90+45,OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,37500+0x1D+0x1D+0x1D)}, {"Identity"}, GMAXSh3, 1, {RotateTable=180,OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,37500+0x1D+0x1D+0x1D+0x1D)}, {"Identity"}, GMAXSh3, 1, {RotateTable=180+45,OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,37500+0x1D+0x1D+0x1D+0x1D+0x1D)}, {"Identity"}, GMAXSh3, 1, {RotateTable=270,OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,37500+0x1D+0x1D+0x1D+0x1D+0x1D+0x1D)}, {"Identity"}, GMAXSh3, 1, {RotateTable=270+45,OwnerTable=P6})
 		
 	else
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,37500-0x1D)}, {"Duke Siege"}, GMAXSh3, 1, {RotateTable=0,OwnerTable=P6})
@@ -2276,10 +2316,13 @@ Trigger2X(FP, {CD(gMAXCcodeArr[1],1),Bring(Force1, AtMost, 5, "Men", 64)}, {Rota
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,42940),CD(GMode,2)}, {"Tassadar","Raszagal"}, GMAXSh4_3, 1, {LMTable="MAX",OwnerTable=P6})
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,48000),CD(GMode,2)}, {"Danimoth","Darly"}, GMAXSh4_3, 1, {LMTable="MAX",OwnerTable=P6})
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,53050),CD(GMode,2)}, {"Envy","Yumi"}, GMAXSh4_3, 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,42940),CD(GMode,3)}, {"Tassadar","Raszagal"}, GMAXSh4_3, 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,48000),CD(GMode,3)}, {"Danimoth","Darly"}, GMAXSh4_3, 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,53050),CD(GMode,3)}, {"Envy","Yumi"}, GMAXSh4_3, 1, {LMTable="MAX",OwnerTable=P6})
 
-		G_CB_TSetSpawn({Gun_Line(8,AtLeast,42940),CD(GMode,3)}, {"Lizzet","Jisoo"}, GMAXSh4_3, 1, {LMTable="MAX",OwnerTable=P6})
-		G_CB_TSetSpawn({Gun_Line(8,AtLeast,48000),CD(GMode,3)}, {"Merry","Yona"}, GMAXSh4_3, 1, {LMTable="MAX",OwnerTable=P6})
-		G_CB_TSetSpawn({Gun_Line(8,AtLeast,53050),CD(GMode,3)}, {"Rose","Yuri"}, GMAXSh4_3, 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,42940),CD(GMode,4)}, {"Lizzet","Jisoo"}, GMAXSh4_3, 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,48000),CD(GMode,4)}, {"Merry","Yona"}, GMAXSh4_3, 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,53050),CD(GMode,4)}, {"Rose","Yuri"}, GMAXSh4_3, 1, {LMTable="MAX",OwnerTable=P6})
 	else
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,42940),CD(GMode,2,AtLeast)}, {"Tassadar","Raszagal"}, GMAXSh4_3, 1, {LMTable="MAX",OwnerTable=P6})
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,48000),CD(GMode,2,AtLeast)}, {"Danimoth","Darly"}, GMAXSh4_3, 1, {LMTable="MAX",OwnerTable=P6})
@@ -2302,23 +2345,23 @@ Trigger2X(FP, {CD(gMAXCcodeArr[1],1),Bring(Force1, AtMost, 5, "Men", 64)}, {Rota
 	if DLC_Project == 1 then
 		
 		
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,51630)}, {"Hyperion"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=100})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,51940)}, {"Hyperion"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=130})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,52260)}, {"Hyperion"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=160})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,56680)}, {"Lin"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=100})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,57000)}, {"Lin"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=130})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,57310)}, {"Lin"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=160})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,57630)}, {"Lin"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=190})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,57940)}, {"Lin"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=220})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,51630)}, {"Hyperion"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=100})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,51940)}, {"Hyperion"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=130})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,52260)}, {"Hyperion"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=160})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,56680)}, {"Lin"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=100})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,57000)}, {"Lin"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=130})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,57310)}, {"Lin"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=160})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,57630)}, {"Lin"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=190})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,57940)}, {"Lin"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=220})
 		
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,51630)}, {8}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=100})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,51940)}, {12}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=130})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,52260)}, {7}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=160})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,56680)}, {60}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=100})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,57000)}, {70}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=130})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,57310)}, {57}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=160})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,57630)}, {62}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=190})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,57940)}, {64}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=220})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,51630)}, {8}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=100})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,51940)}, {12}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=130})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,52260)}, {7}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=160})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,56680)}, {60}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=100})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,57000)}, {70}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=130})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,57310)}, {57}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=160})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,57630)}, {62}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=190})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,57940)}, {64}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=220})
 	else
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,51630)}, {"Hyperion"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=100})
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,51940)}, {"Hyperion"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=130})
@@ -2339,17 +2382,17 @@ Trigger2X(FP, {CD(gMAXCcodeArr[1],1),Bring(Force1, AtMost, 5, "Men", 64)}, {Rota
 	G_CB_TSetSpawn({Gun_Line(8,AtLeast,61730)}, {94}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=220})
 	G_CB_TSetSpawn({Gun_Line(8,AtLeast,57940)}, {88}, GMAXSh5_2, 1, {LMTable=1,OwnerTable=P6})
 	if DLC_Project == 1 then
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,61730)}, {"Duke Siege"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=100})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,61730)}, {"Duke Siege"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=130})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,61730)}, {"Duke Siege"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=160})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,61730)}, {"Duke Siege"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=190})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,61730)}, {"Duke Siege"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=220})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,61730)}, {"Duke Siege"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=100})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,61730)}, {"Duke Siege"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=130})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,61730)}, {"Duke Siege"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=160})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,61730)}, {"Duke Siege"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=190})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,61730)}, {"Duke Siege"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=220})
 		
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,61730)}, {13}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=100})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,61730)}, {13}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=130})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,61730)}, {13}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=160})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,61730)}, {13}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=190})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,61730)}, {13}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=220})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,61730)}, {13}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=100})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,61730)}, {13}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=130})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,61730)}, {13}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=160})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,61730)}, {13}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=190})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,61730)}, {13}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=220})
 	else
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,61730)}, {"Duke Siege"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=100})
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,61730)}, {"Duke Siege"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=130})
@@ -2364,11 +2407,11 @@ Trigger2X(FP, {CD(gMAXCcodeArr[1],1),Bring(Force1, AtMost, 5, "Men", 64)}, {Rota
 
 	
 	if DLC_Project == 1 then
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,63150)}, {88}, GMAXSh5_4, 1, {LMTable=5,OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,63780)}, {21}, GMAXSh5_5, 1, {LMTable=5,OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,63150)}, {88}, GMAXSh5_4, 1, {LMTable=5,OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,63780)}, {21}, GMAXSh5_5, 1, {LMTable=5,OwnerTable=P6})
 
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,63150)}, {80}, GMAXSh5_4, 1, {LMTable=5,OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,63780)}, {8}, GMAXSh5_5, 1, {LMTable=5,OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,63150)}, {80}, GMAXSh5_4, 1, {LMTable=5,OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,63780)}, {8}, GMAXSh5_5, 1, {LMTable=5,OwnerTable=P6})
 	else
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,63150)}, {88}, GMAXSh5_4, 1, {LMTable=5,OwnerTable=P6})
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,63780)}, {21}, GMAXSh5_5, 1, {LMTable=5,OwnerTable=P6})
@@ -2385,11 +2428,15 @@ Trigger2X(FP, {CD(gMAXCcodeArr[1],1),Bring(Force1, AtMost, 5, "Men", 64)}, {Rota
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,64890),CD(GMode,2)}, {77}, EnvShVSC, 1, {LMTable="MAX",OwnerTable=P6})
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,65210),CD(GMode,2)}, {78}, PaciShSC, 1, {LMTable="MAX",OwnerTable=P6})
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,65520),CD(GMode,2)}, {"Raynor V"}, STCirSC, 1, {LMTable="MAX",OwnerTable=P6})
-
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,64420),CD(GMode,3)}, {"Lin"}, RBLine, 1, {LMTable="MAX",OwnerTable=P6})
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,64890),CD(GMode,3)}, {77}, EnvShVSC, 1, {LMTable="MAX",OwnerTable=P6})
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,65210),CD(GMode,3)}, {78}, PaciShSC, 1, {LMTable="MAX",OwnerTable=P6})
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,65520),CD(GMode,3)}, {"Raynor V"}, STCirSC, 1, {LMTable="MAX",OwnerTable=P6})
+
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,64420),CD(GMode,4)}, {"Lin"}, RBLine, 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,64890),CD(GMode,4)}, {77}, EnvShVSC, 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,65210),CD(GMode,4)}, {78}, PaciShSC, 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,65520),CD(GMode,4)}, {"Raynor V"}, STCirSC, 1, {LMTable="MAX",OwnerTable=P6})
 	else
 
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,64420),CD(GMode,2,AtLeast)}, {80}, RBLine, 1, {LMTable="MAX",OwnerTable=P6})
@@ -2408,27 +2455,27 @@ Trigger2X(FP, {CD(gMAXCcodeArr[1],1),Bring(Force1, AtMost, 5, "Men", 64)}, {Rota
 	if DLC_Project ==1 then
 		
 
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,68050)}, {"Era"}, CSMakeCircle(6, 32, 0, PlotSizeCalc(6, 1), PlotSizeCalc(6, 0)), 1, {LMTable="MAX",OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,68680)}, {"Kamilia"}, CSMakeCircle(6, 32, 0, PlotSizeCalc(6, 2), PlotSizeCalc(6, 1)), 1, {LMTable="MAX",OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,69310)}, {"Archon"}, CSMakeCircle(6, 32, 0, PlotSizeCalc(6, 3), PlotSizeCalc(6, 2)), 1, {LMTable="MAX",OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,69940)}, {"Zeratul"}, CSMakeCircle(6, 32, 0, PlotSizeCalc(6, 4), PlotSizeCalc(6, 3)), 1, {LMTable="MAX",OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,70570)}, {"Schezar"}, CSMakeCircle(6, 32, 0, PlotSizeCalc(6, 5), PlotSizeCalc(6, 4)), 1, {LMTable="MAX",OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,72000)}, {"Hyperion"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=100})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,72310)}, {"Hyperion"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=130})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,72470)}, {"Hyperion"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=160})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,72780)}, {"Hyperion"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=190})
-		G_CB_TSetSpawn({CD(GMode,2,AtMost),Gun_Line(8,AtLeast,73100)}, {"Hyperion"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=220})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,68050)}, {"Era"}, CSMakeCircle(6, 32, 0, PlotSizeCalc(6, 1), PlotSizeCalc(6, 0)), 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,68680)}, {"Kamilia"}, CSMakeCircle(6, 32, 0, PlotSizeCalc(6, 2), PlotSizeCalc(6, 1)), 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,69310)}, {"Archon"}, CSMakeCircle(6, 32, 0, PlotSizeCalc(6, 3), PlotSizeCalc(6, 2)), 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,69940)}, {"Zeratul"}, CSMakeCircle(6, 32, 0, PlotSizeCalc(6, 4), PlotSizeCalc(6, 3)), 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,70570)}, {"Schezar"}, CSMakeCircle(6, 32, 0, PlotSizeCalc(6, 5), PlotSizeCalc(6, 4)), 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,72000)}, {"Hyperion"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=100})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,72310)}, {"Hyperion"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=130})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,72470)}, {"Hyperion"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=160})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,72780)}, {"Hyperion"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=190})
+		G_CB_TSetSpawn({CD(GMode,3,AtMost),Gun_Line(8,AtLeast,73100)}, {"Hyperion"}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=220})
 		
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,68050)}, {"Era"}, CSMakeCircle(6, 32, 0, PlotSizeCalc(6, 2), PlotSizeCalc(6, 1)), 1, {LMTable="MAX",OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,68680)}, {"Kamilia"}, CSMakeCircle(6, 32, 0, PlotSizeCalc(6, 3), PlotSizeCalc(6, 2)), 1, {LMTable="MAX",OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,69310)}, {"Archon"}, CSMakeCircle(6, 32, 0, PlotSizeCalc(6, 4), PlotSizeCalc(6, 3)), 1, {LMTable="MAX",OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,69940)}, {"Zeratul"}, CSMakeCircle(6, 32, 0, PlotSizeCalc(6, 5), PlotSizeCalc(6, 4)), 1, {LMTable="MAX",OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,70570)}, {"Schezar"}, CSMakeCircle(6, 32, 0, PlotSizeCalc(6, 6), PlotSizeCalc(6, 5)), 1, {LMTable="MAX",OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,72000)}, {12}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=100})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,72310)}, {12}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=130})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,72470)}, {12}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=160})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,72780)}, {12}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=190})
-		G_CB_TSetSpawn({CD(GMode,3),Gun_Line(8,AtLeast,73100)}, {12}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=220})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,68050)}, {"Era"}, CSMakeCircle(6, 32, 0, PlotSizeCalc(6, 2), PlotSizeCalc(6, 1)), 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,68680)}, {"Kamilia"}, CSMakeCircle(6, 32, 0, PlotSizeCalc(6, 3), PlotSizeCalc(6, 2)), 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,69310)}, {"Archon"}, CSMakeCircle(6, 32, 0, PlotSizeCalc(6, 4), PlotSizeCalc(6, 3)), 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,69940)}, {"Zeratul"}, CSMakeCircle(6, 32, 0, PlotSizeCalc(6, 5), PlotSizeCalc(6, 4)), 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,70570)}, {"Schezar"}, CSMakeCircle(6, 32, 0, PlotSizeCalc(6, 6), PlotSizeCalc(6, 5)), 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,72000)}, {12}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=100})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,72310)}, {12}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=130})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,72470)}, {12}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=160})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,72780)}, {12}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=190})
+		G_CB_TSetSpawn({CD(GMode,4),Gun_Line(8,AtLeast,73100)}, {12}, GMAXSh5_1, 1, {LMTable="MAX",OwnerTable=P6,SizeTable=220})
 
 	else
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,68050)}, {"Era"}, CSMakeCircle(6, 32, 0, PlotSizeCalc(6, 1), PlotSizeCalc(6, 0)), 1, {LMTable="MAX",OwnerTable=P6})
@@ -2543,15 +2590,21 @@ Trigger2X(FP, {CD(gMAXCcodeArr[1],1),Bring(Force1, AtMost, 5, "Men", 64)}, {Rota
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,111630),CD(GMode,2)}, {94,70,"Sen"}, HCC, 1, {LMTable="MAX",OwnerTable=P6})
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,111940),CD(GMode,2)}, {94,57,"Gaya"}, HCB, 1, {LMTable="MAX",OwnerTable=P6})
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,112260),CD(GMode,2)}, {94,62,"Leon"}, HCA, 1, {LMTable="MAX",OwnerTable=P6})
-		
-		
-		
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,108470),CD(GMode,3)}, {94,"Rophe"}, EnvShVSC, 1, {LMTable="MAX",OwnerTable=P6})
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,108780),CD(GMode,3)}, {94,"Jisoo"}, PaciShSC, 1, {LMTable="MAX",OwnerTable=P6})
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,109100),CD(GMode,3)}, {94,"Yuri"}, STCirSC, 1, {LMTable="MAX",OwnerTable=P6})
-		G_CB_TSetSpawn({Gun_Line(8,AtLeast,111630),CD(GMode,3)}, {94,102,23}, HCC, 1, {LMTable="MAX",OwnerTable=P6,RepeatType="Attack_HP50"})
-		G_CB_TSetSpawn({Gun_Line(8,AtLeast,111940),CD(GMode,3)}, {94,27,68}, HCB, 1, {LMTable="MAX",OwnerTable=P6,RepeatType="Attack_HP50"})
-		G_CB_TSetSpawn({Gun_Line(8,AtLeast,112260),CD(GMode,3)}, {94,89,61}, HCA, 1, {LMTable="MAX",OwnerTable=P6,RepeatType="Attack_HP50"})
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,111630),CD(GMode,3)}, {94,70,"Sen"}, HCC, 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,111940),CD(GMode,3)}, {94,57,"Gaya"}, HCB, 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,112260),CD(GMode,3)}, {94,62,"Leon"}, HCA, 1, {LMTable="MAX",OwnerTable=P6})
+		
+		
+		
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,108470),CD(GMode,4)}, {94,"Rophe"}, EnvShVSC, 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,108780),CD(GMode,4)}, {94,"Jisoo"}, PaciShSC, 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,109100),CD(GMode,4)}, {94,"Yuri"}, STCirSC, 1, {LMTable="MAX",OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,111630),CD(GMode,4)}, {94,102,23}, HCC, 1, {LMTable="MAX",OwnerTable=P6,RepeatType="Attack_HP50"})
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,111940),CD(GMode,4)}, {94,27,68}, HCB, 1, {LMTable="MAX",OwnerTable=P6,RepeatType="Attack_HP50"})
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,112260),CD(GMode,4)}, {94,89,61}, HCA, 1, {LMTable="MAX",OwnerTable=P6,RepeatType="Attack_HP50"})
 	else
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,108470),CD(GMode,2,AtLeast)}, {94,"Rophe"}, EnvShVSC, 1, {LMTable="MAX",OwnerTable=P6})
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,108780),CD(GMode,2,AtLeast)}, {94,"Jisoo"}, PaciShSC, 1, {LMTable="MAX",OwnerTable=P6})
@@ -2593,15 +2646,21 @@ Trigger2X(FP, {CD(gMAXCcodeArr[1],1),Bring(Force1, AtMost, 5, "Men", 64)}, {Rota
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,131360),CD(GMode,2)}, {"Destroy"}, GMAXSh7_1, 1, {LMTable=1,OwnerTable=P6})
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,141470),CD(GMode,2)}, {"DeathsX"}, GMAXSh7_2, 1, {LMTable=1,OwnerTable=P6})
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,150150),CD(GMode,2)}, {"DIEIN"}, CS_RatioXY(HCC, 2, 2), 1, {LMTable=1,OwnerTable=P6})
-		
-		G_CB_TSetSpawn({Gun_Line(8,AtLeast,131360),CD(GMode,3)}, {"Division"}, GMAXSh7_3, 1, {LMTable=1,OwnerTable=P6})
-		G_CB_TSetSpawn({Gun_Line(8,AtLeast,131360),CD(GMode,3)}, {"Destroy"}, GMAXSh7_3, 1, {LMTable=1,OwnerTable=P6})
-		G_CB_TSetSpawn({Gun_Line(8,AtLeast,141470),CD(GMode,3)}, {"Zero"}, GMAXSh7_3, 1, {LMTable=1,OwnerTable=P6})
-		G_CB_TSetSpawn({Gun_Line(8,AtLeast,141470),CD(GMode,3)}, {"DeathsX"}, GMAXSh7_3, 1, {LMTable=1,OwnerTable=P6})
-		G_CB_TSetSpawn({Gun_Line(8,AtLeast,150150),CD(GMode,3)}, {"LENA"}, CS_RatioXY(HCC_FL, 2, 2), 1, {LMTable=1,OwnerTable=P6})
-		G_CB_TSetSpawn({Gun_Line(8,AtLeast,150150),CD(GMode,3)}, {"DIEIN"}, CS_RatioXY(HCC_FL, 2, 2), 1, {LMTable=1,OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,131360),CD(GMode,3)}, {"Division"}, GMAXSh7_1, 1, {LMTable=1,OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,141470),CD(GMode,3)}, {"Zero"}, GMAXSh7_2, 1, {LMTable=1,OwnerTable=P6})
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,150150),CD(GMode,3)}, {"LENA"}, CS_RatioXY(HCC, 2, 2), 1, {LMTable=1,OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,131360),CD(GMode,3)}, {"Destroy"}, GMAXSh7_1, 1, {LMTable=1,OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,141470),CD(GMode,3)}, {"DeathsX"}, GMAXSh7_2, 1, {LMTable=1,OwnerTable=P6})
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,150150),CD(GMode,3)}, {"DIEIN"}, CS_RatioXY(HCC, 2, 2), 1, {LMTable=1,OwnerTable=P6})
+		
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,131360),CD(GMode,4)}, {"Division"}, GMAXSh7_3, 1, {LMTable=1,OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,131360),CD(GMode,4)}, {"Destroy"}, GMAXSh7_3, 1, {LMTable=1,OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,141470),CD(GMode,4)}, {"Zero"}, GMAXSh7_3, 1, {LMTable=1,OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,141470),CD(GMode,4)}, {"DeathsX"}, GMAXSh7_3, 1, {LMTable=1,OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,150150),CD(GMode,4)}, {"LENA"}, CS_RatioXY(HCC_FL, 2, 2), 1, {LMTable=1,OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,150150),CD(GMode,4)}, {"DIEIN"}, CS_RatioXY(HCC_FL, 2, 2), 1, {LMTable=1,OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,150150),CD(GMode,4)}, {"LENA"}, CS_RatioXY(HCC, 2, 2), 1, {LMTable=1,OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(8,AtLeast,150150),CD(GMode,4)}, {"DIEIN"}, CS_RatioXY(HCC, 2, 2), 1, {LMTable=1,OwnerTable=P6})
 
 	else
 		G_CB_TSetSpawn({Gun_Line(8,AtLeast,131360),CD(GMode,2,AtLeast)}, {"Division"}, GMAXSh7_1, 1, {LMTable=1,OwnerTable=P6})
@@ -2620,8 +2679,8 @@ Trigger2X(FP, {CD(gMAXCcodeArr[1],1),Bring(Force1, AtMost, 5, "Men", 64)}, {Rota
 	G_CB_TSetSpawn({Gun_Line(8,AtLeast,141470),CD(GMode,1)}, {"DeathsX"}, GMAXSh7_2, 1, {LMTable=1,OwnerTable=P6,RepeatType="Attack_HP10"})
 	G_CB_TSetSpawn({Gun_Line(8,AtLeast,150150),CD(GMode,1)}, {"DIEIN"}, CS_RatioXY(HCC, 2, 2), 1, {LMTable=1,OwnerTable=P6,RepeatType="Attack_HP10"})
 
-	GT = {{"\x08H\x04D \x08S\x04tyle","\x16M\x04X \x16S\x04tyle","\x11S\x04C \x11S\x04tyle"},{"\x08H\x04D \x08S\x04tyle - \x07EVF","\x16M\x04X \x16S\x04tyle - \x07EVF","\x11S\x04C \x11S\x04tyle - \x07EVF"}}
-	for i = 1, 3 do
+	GT = {{"\x1CN\x04M \x1CS\x04tyle","\x08H\x04D \x08S\x04tyle","\x16M\x04X \x16S\x04tyle","\x11S\x04C \x11S\x04tyle"},{"\x1CN\x04M \x1CS\x04tyle - \x07EVF","\x08H\x04D \x08S\x04tyle - \x07EVF","\x16M\x04X \x16S\x04tyle - \x07EVF","\x11S\x04C \x11S\x04tyle - \x07EVF"}}
+	for i = 1, 4 do
 		for j= 0,1 do
 			WinText = "\n\n\n\n\x13\x04――――――――――――――――――――――――――――――――――――――――――――――――――――――\n\x13\x04！！！　\x07Ｔｈａｎｋ　ｙｏｕ　ｆｏｒ　Ｐｌａｙｉｎｇ\x04　！！！\n\n\x13\x04"..GT[j+1][i].." 클리어 하셨습니다.\n\n\x13\x1FSTRCtrig \x04Assembler \x07v5.4\x04, \x1FCB \x16Paint \x07v2.4 \x04in Used \x19(つ>ㅅ<)つ\n\x13\x0Fⓒ \x08NEOWIZ\x04, \x17DJMAX\x04. \x07A\x04ll \x1BR\x04ights \x11R\x04eserved.\n\n\x13\x04！！！　\x07Ｔｈａｎｋ　ｙｏｕ　ｆｏｒ　Ｐｌａｙｉｎｇ\x04　！！！\n\x13\x04――――――――――――――――――――――――――――――――――――――――――――――――――――――"
 			Trigger2X(FP, {CD(GMode,i),CD(EVFCcode,j),Gun_Line(8,AtLeast,154100),CV(CreateUnitQueueNum,0),Bring(P6, AtMost, 0, "Men", 64)}, {RotatePlayer({DisplayTextX(WinText,4),PlayWAVX("staredit\\wav\\PP_SFX.ogg"),PlayWAVX("staredit\\wav\\PP_SFX.ogg"),PlayWAVX("staredit\\wav\\PP_SFX.ogg"),PlayWAVX("staredit\\wav\\PP_SFX.ogg")}, HumanPlayers, FP),SetCD(WinCcode2,1)})

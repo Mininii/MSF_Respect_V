@@ -586,7 +586,7 @@ CMov(FP, 0x6509B0, FP)
 		CIfXEnd()
 
 		if DLC_Project == 1 then
-			CIf(FP,{CD(GMode,3)})--DLC SC 에너미스톰 유닛 이동속도 파리급으로 상향
+			CIf(FP,{CD(GMode,4)})--DLC SC 에너미스톰 유닛 이동속도 파리급으로 상향
 			CDoActions(FP, {
 				TSetMemory(_Sub(BackupCp,25-13),SetTo,8000),
 				TSetMemoryX(_Sub(BackupCp,25-18),SetTo,2000,0xFFFF),TSetMemoryX(_Add(SubUnitPtr,8),SetTo,(127*65536),0xFF0000)
@@ -710,8 +710,8 @@ for i = 0, 4 do
 		TriggerX(FP,{CD(SELimit,4,AtMost)}, {AddCD(SELimit,1),RotatePlayer({PlayWAVX("staredit\\wav\\Marinedead.ogg"),PlayWAVX("staredit\\wav\\Marinedead.ogg")},HumanPlayers, FP)},{preserved})
 		CIf(FP,{CD(gMAXCcodeArr[2], 0)})
 		if DLC_Project == 1 then
-		f_TempRepeat({CD(GMode,3)}, 88, 2, 2, P8)
-		f_TempRepeat({CD(GMode,3)}, 21, 2, 2, P8)
+		f_TempRepeat({CD(GMode,4)}, 88, 2, 2, P8)
+		f_TempRepeat({CD(GMode,4)}, 21, 2, 2, P8)
 		end
 		
 
@@ -731,10 +731,10 @@ for i = 0, 4 do
 		TriggerX(FP,{CD(SELimit,4,AtMost)}, {AddCD(SELimit,1),RotatePlayer({PlayWAVX("staredit\\wav\\Marinedead.ogg"),PlayWAVX("staredit\\wav\\Marinedead.ogg")},HumanPlayers, FP)},{preserved})
 		CIf(FP,{CD(gMAXCcodeArr[2], 0)})
 		if DLC_Project == 1 then
-			f_TempRepeat({CD(GMode,3)}, 88, 1, 2, P8)
-			f_TempRepeat({CD(GMode,3)}, 21, 1, 2, P8)
-			f_TempRepeat({CD(GMode,3)}, 79, 1, 2, P8)
-			f_TempRepeat({CD(GMode,3)}, 95, 1, 2, P8)
+			f_TempRepeat({CD(GMode,4)}, 88, 1, 2, P8)
+			f_TempRepeat({CD(GMode,4)}, 21, 1, 2, P8)
+			f_TempRepeat({CD(GMode,4)}, 79, 1, 2, P8)
+			f_TempRepeat({CD(GMode,4)}, 95, 1, 2, P8)
 		end
 		
 
@@ -753,11 +753,11 @@ for i = 0, 4 do
 		TriggerX(FP,{CD(SELimit,4,AtMost)}, {AddCD(SELimit,1),RotatePlayer({PlayWAVX("staredit\\wav\\Marinedead.ogg"),PlayWAVX("staredit\\wav\\Marinedead.ogg")},HumanPlayers, FP)},{preserved})
 		CIf(FP,{CD(gMAXCcodeArr[2], 0)})
 		if DLC_Project == 1 then
-		f_TempRepeat({CD(GMode,3)}, 89, 1, 218, P8)
-		f_TempRepeat({CD(GMode,3)}, 61, 1, 218, P8)
-		f_TempRepeat({CD(GMode,3)}, 63, 1, 218, P8)
-		f_TempRepeat({CD(GMode,3)}, 67, 1, 218, P8)
-		f_TempRepeat({CD(GMode,3)}, 71, 1, 218, P8)
+		f_TempRepeat({CD(GMode,4)}, 89, 1, 218, P8)
+		f_TempRepeat({CD(GMode,4)}, 61, 1, 218, P8)
+		f_TempRepeat({CD(GMode,4)}, 63, 1, 218, P8)
+		f_TempRepeat({CD(GMode,4)}, 67, 1, 218, P8)
+		f_TempRepeat({CD(GMode,4)}, 71, 1, 218, P8)
 		end
 		CIfX(FP, {Deaths(i, Exactly, 2, 217)})
 		DisplayPrint(HumanPlayers,{"\x12"..StrD[1]..string.char(ColorCode[i+1]).."名取さな \x04의 \x1F스\x04페셜 \x1F마\x04린이 \x08폭사\x04당했어...",StrD[2]})
@@ -777,11 +777,11 @@ for i = 0, 4 do
 		f_Read(FP, _Sub(BackupCp,15), CPos)
 		Convert_CPosXY()
 		--218
-		f_TempRepeat({CD(GMode,3)}, 89, 1, 218, P8)
-		f_TempRepeat({CD(GMode,3)}, 61, 1, 218, P8)
-		f_TempRepeat({CD(GMode,3)}, 63, 1, 218, P8)
-		f_TempRepeat({CD(GMode,3)}, 67, 1, 218, P8)
-		f_TempRepeat({CD(GMode,3)}, 71, 1, 218, P8)
+		f_TempRepeat({CD(GMode,4)}, 89, 1, 218, P8)
+		f_TempRepeat({CD(GMode,4)}, 61, 1, 218, P8)
+		f_TempRepeat({CD(GMode,4)}, 63, 1, 218, P8)
+		f_TempRepeat({CD(GMode,4)}, 67, 1, 218, P8)
+		f_TempRepeat({CD(GMode,4)}, 71, 1, 218, P8)
 		end
 
 		CIfX(FP, {Deaths(i, Exactly, 2, 217)})
@@ -866,7 +866,7 @@ end
 	f_LoadCp()
 	CIfEnd()
 	if DLC_Project == 1 then
-	CIf(FP,{CD(GMode,3)})
+	CIf(FP,{CD(GMode,4)})
 		f_SaveCp()
 		f_Read(FP, BackupCp, HeroIndex, nil, 0xFF, 1)
 		f_Read(FP, _Sub(BackupCp,15), CPos)
@@ -889,10 +889,12 @@ end
 		OtherGunSet(146,{{55,10},{53,10},{54,10},{46,10},{56,10},{104,10},{51,10},{48,10}})
 		OtherGunSet(149,{{11,30},{69,30}})
 		OtherGunSet(188,{{11,30},{69,30}})
-		f_TempRepeat({CV(HeroIndex,149)}, 11, 30, 187, P8)
-		f_TempRepeat({CV(HeroIndex,149)}, 69, 30, 187, P8)
-		f_TempRepeat({CV(HeroIndex,188)}, 11, 30, 187, P8)
-		f_TempRepeat({CV(HeroIndex,188)}, 69, 30, 187, P8)
+		PFNM = CreateVar(FP)
+		CMov(FP,PFNM,_Mod(GTime,60))
+		f_TempRepeatX({CV(HeroIndex,149)}, 11, PFNM, 187, P8)
+		f_TempRepeatX({CV(HeroIndex,149)}, 69, PFNM, 187, P8)
+		f_TempRepeatX({CV(HeroIndex,188)}, 11, PFNM, 187, P8)
+		f_TempRepeatX({CV(HeroIndex,188)}, 69, PFNM, 187, P8)
 
 
 		
@@ -949,13 +951,25 @@ end
 
 
 		CIf(FP,{TTOR(GunTable)}) -- 잡건작 오버로드포함 터질시 날파리 생성
-		f_TempRepeatX({}, 94, 1, nil, P8, {1024,LTime})
-		f_TempRepeatX({}, 62, 1, 187, P8, {1024,LTime})
-		f_TempRepeatX({}, 57, 1, 187, P8, {1024,LTime})
-		f_TempRepeatX({}, 64, 1, 187, P8, {1024,LTime})
-		f_TempRepeatX({}, 70, 1, 187, P8, {1024,LTime})
-		f_TempRepeatX({}, 12, 1, 187, P8, {1024,LTime})
-		f_TempRepeatX({}, 8, 1, 187, P8, {1024,LTime})
+		CMov(FP,MinMod,_Mod(_Div(GTime2,60000),2))
+		CIfX(FP,CV(MinMod,0))
+		CMov(FP,LTime,_Mul(_Mod(GTime,60),136),15)
+		CElseX()
+		CSub(FP,LTime,_Mov(8192),_Add(_Mul(_Mod(GTime,60),136),15))
+		CIfXEnd()
+		CMov(FP,MinMod2,_Mod(_Div(GTime2,600000),2))
+		CIfX(FP,CV(MinMod2,0))
+		CMov(FP,WTime,_Mul(_Mod(_Div(GTime,60),10),200),24)
+		CElseX()
+		CSub(FP,WTime,_Mov(2048),_Add(_Mul(_Mod(_Div(GTime,60),10),200),24))
+		CIfXEnd()
+		f_TempRepeatX({}, 94, 1, nil, P8, {WTime,LTime})
+		f_TempRepeatX({}, 62, 1, 187, P8, {WTime,LTime})
+		f_TempRepeatX({}, 57, 1, 187, P8, {WTime,LTime})
+		f_TempRepeatX({}, 64, 1, 187, P8, {WTime,LTime})
+		f_TempRepeatX({}, 70, 1, 187, P8, {WTime,LTime})
+		f_TempRepeatX({}, 12, 1, 187, P8, {WTime,LTime})
+		f_TempRepeatX({}, 8, 1, 187, P8, {WTime,LTime})
 		CIfEnd()
 		f_LoadCp()
 	CIfEnd()
@@ -981,20 +995,19 @@ end
 		end
 		EXCC_End()
 	
+	--아드레날린 안전장치
+	TriggerX(FP,{},{SetMemoryB(0x665C48+341,SetTo,1)},{preserved})
+	for i = 0, 4 do
+		TriggerX(FP,{Memory(0x582294+(4*i),AtLeast,1600);},{SetMemoryB(0x665C48+341,SetTo,0)},{preserved})
+	end
+
+
 	SETimer = CreateCcode()
 	TriggerX(FP,{CDeaths(FP,Exactly,0,SETimer)},{SetCDeaths(FP,SetTo,0,SELimit),SetCDeaths(FP,SetTo,5000,SETimer)},{preserved})
 	CDoActions(FP,{TSetCDeaths(FP,Subtract,CurSpeed,SETimer)})
-	CMov(FP,GTime,_Div(_Mul(_ReadF(0x57F23C),42),1000))
-	CMov(FP,G_CB_RotateV,_Mul(_Mod(GTime,60),6))
-	local MinMod = CreateVar(FP)
-	CMov(FP,MinMod,_Mod(_Div(MinMod,60),2))
-	CIfX(FP,CV(MinMod,0))
-	CMov(FP,LTime,_Mul(_Mod(GTime,60),136),15)
-	CElseX()
-	CSub(FP,LTime,_Mov(8192),_Add(_Mul(_Mod(GTime,60),136),15))
-	CIfXEnd()
-
-
+	CMov(FP,GTime2,_Mul(_ReadF(0x57F23C),42))
+	CMov(FP,GTime,_Div(GTime2,1000))
+	CMov(FP,G_CB_RotateV,_Mul(_Div(_Mod(GTime2,60000),500),3))
 	CIf(FP,{CD(GMode,2,AtLeast),Deaths(P8, AtMost, 0, 189)})--콜은 MX난이도이상만 나옴, 워프게이트 깔때까지
 	--1~6 5분간격
 	--7~9 10분간격
@@ -1023,8 +1036,8 @@ end
 	f_TempRepeat({}, 11, 25, 187, P7, {288,3792})
 	f_TempRepeat({}, 69, 25, 187, P8, {288,3792})
 	if DLC_Project == 1 then
-		f_TempRepeat({CD(GMode,3)}, 11, 25, 187, P7, {288,3792})
-		f_TempRepeat({CD(GMode,3)}, 69, 25, 187, P8, {288,3792})
+		f_TempRepeat({CD(GMode,4)}, 11, 25, 187, P7, {288,3792})
+		f_TempRepeat({CD(GMode,4)}, 69, 25, 187, P8, {288,3792})
 	end
 	CIfEnd()
 
@@ -1102,14 +1115,14 @@ if NameTest == 1 then
 		--Aram
 		--Leon
 		--퀸 60000 1000 노멀
-		str33 = "\x1C。+.˚Space of Soul\x12\x0ES\x04pace \x0Eo\x04f \x0ES\x04oul\x0E。+.˚"
+		str33 = "\x1F。+.˚Only Marine\x12\x16O\x04nly \x16M\x04arine\x16。+.˚"
 		--str33 = "\t\x1C。˙+˚DeathsX。+.˚\x12\x1F。˙+˚D\x04eathsX\x1F。+.˚"
 		str44 = "\x08。+.˚Summer 2017\x12\x11S\x04ummer \x112\x04017\x11。+.˚"
 		--str44 = "\t\x11。˙+˚Turret。+.˚\x12\x15。˙+˚T\x04urret\x15。+.˚"
 		
 		--str44 = "\t\t\t\x15。˙+˚Leon。+.˚\x12\x1B。˙+˚L\x04eon。+.˚"
 		--str55 = "\x15。+.˚Misty E'ra 'Mui'\x12\x10M\x04isty \x10E\x04'ra '\x10M\x04ui'\x10。+.˚"
-		str55 = "\t\t\t\x10。˙+˚Tomb。+.˚\x12\x18。˙+˚T\x04omb\x15。+.˚"
+		str55 = "\t\t\t\x1F。˙+˚Only Marine。+.˚\x16。˙+˚O\x04nly \x16M\x04arine\x16。+.˚"
 
 		--Yuri
 		--Sena

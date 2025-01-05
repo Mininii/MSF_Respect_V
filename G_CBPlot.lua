@@ -81,12 +81,12 @@ CIf(FP,{TMemoryX(_Add(RPtr,40),AtLeast,150*16777216,0xFF000000)})
 		Simple_SetLocX(FP,71,CPosX,CPosY,CPosX,CPosY,{Simple_CalcLoc(71,-4,-4,4,4)})
 		CIfX(FP,{CVar(FP,RType[2],AtLeast,200),CVar(FP,RType[2],AtMost,203)})
 		if DLC_Project == 1 then
-			CTrigger(FP,{CVar(FP,RType[2],Exactly,200),CD(GMode,2,AtMost)},{Simple_SetLoc(200, 1888, 2928, 1888, 2928),TMoveUnit(1,RUID,RPID,72,201)},{preserved})
-			CTrigger(FP,{CVar(FP,RType[2],Exactly,201),CD(GMode,2,AtMost)},{Simple_SetLoc(200, 96, 4112, 96, 4112),TMoveUnit(1,RUID,RPID,72,201)},{preserved})
-			CTrigger(FP,{CVar(FP,RType[2],Exactly,202),CD(GMode,2,AtMost)},{Simple_SetLoc(200, 1024, 7568, 1024, 7568),TMoveUnit(1,RUID,RPID,72,201)},{preserved})
-			CTrigger(FP,{CVar(FP,RType[2],Exactly,200),CD(GMode,3)},{TMoveUnit(1,RUID,RPID,72,1)},{preserved})
-			CTrigger(FP,{CVar(FP,RType[2],Exactly,201),CD(GMode,3)},{TMoveUnit(1,RUID,RPID,72,1)},{preserved})
-			CTrigger(FP,{CVar(FP,RType[2],Exactly,202),CD(GMode,3)},{TMoveUnit(1,RUID,RPID,72,1)},{preserved})
+			CTrigger(FP,{CVar(FP,RType[2],Exactly,200),CD(GMode,3,AtMost)},{Simple_SetLoc(200, 1888, 2928, 1888, 2928),TMoveUnit(1,RUID,RPID,72,201)},{preserved})
+			CTrigger(FP,{CVar(FP,RType[2],Exactly,201),CD(GMode,3,AtMost)},{Simple_SetLoc(200, 96, 4112, 96, 4112),TMoveUnit(1,RUID,RPID,72,201)},{preserved})
+			CTrigger(FP,{CVar(FP,RType[2],Exactly,202),CD(GMode,3,AtMost)},{Simple_SetLoc(200, 1024, 7568, 1024, 7568),TMoveUnit(1,RUID,RPID,72,201)},{preserved})
+			CTrigger(FP,{CVar(FP,RType[2],Exactly,200),CD(GMode,4)},{TMoveUnit(1,RUID,RPID,72,1)},{preserved})
+			CTrigger(FP,{CVar(FP,RType[2],Exactly,201),CD(GMode,4)},{TMoveUnit(1,RUID,RPID,72,1)},{preserved})
+			CTrigger(FP,{CVar(FP,RType[2],Exactly,202),CD(GMode,4)},{TMoveUnit(1,RUID,RPID,72,1)},{preserved})
 		else
 			CTrigger(FP,{CVar(FP,RType[2],Exactly,200)},{Simple_SetLoc(200, 1888, 2928, 1888, 2928),TMoveUnit(1,RUID,RPID,72,201)},{preserved})
 			CTrigger(FP,{CVar(FP,RType[2],Exactly,201)},{Simple_SetLoc(200, 96, 4112, 96, 4112),TMoveUnit(1,RUID,RPID,72,201)},{preserved})
@@ -226,10 +226,10 @@ CIf(FP,{TMemoryX(_Add(RPtr,40),AtLeast,150*16777216,0xFF000000)})
 			CIf(FP,{CVar(FP,RType[2],AtLeast,200),CVar(FP,RType[2],AtMost,202)})--fCGive후 타이머 어택
 			
 			if DLC_Project ==1 then
-				CIf(FP,{CD(GMode,2,AtMost)})
+				CIf(FP,{CD(GMode,3,AtMost)})
 					f_CGive(FP, RPtr, nil, P9, RPID)
 				CIfEnd()
-				CTrigger(FP,{CD(GMode,2,AtMost)},{TSetMemoryX(_Add(RPtr,55),SetTo,0x4000000,0x4000000),
+				CTrigger(FP,{CD(GMode,3,AtMost)},{TSetMemoryX(_Add(RPtr,55),SetTo,0x4000000,0x4000000),
 				TSetMemoryX(_Add(RPtr,9),SetTo,0,0xFF0000),
 				TSetMemoryX(_Add(RPtr,72),SetTo,0xFF*256,0xFF00),
 				TSetMemoryX(_Add(RPtr,55),SetTo,0xA00000,0xA00000),
@@ -243,7 +243,7 @@ CIf(FP,{TMemoryX(_Add(RPtr,40),AtLeast,150*16777216,0xFF000000)})
 			,{preserved})
 
 
-				CTrigger(FP,{CD(GMode,3)},{TSetMemoryX(_Add(RPtr,55),SetTo,0x4000000,0x4000000),
+				CTrigger(FP,{CD(GMode,4)},{TSetMemoryX(_Add(RPtr,55),SetTo,0x4000000,0x4000000),
 				TSetMemoryX(_Add(RPtr,9),SetTo,0,0xFF0000),
 				TSetMemoryX(_Add(RPtr,72),SetTo,0xFF*256,0xFF00),
 				--TSetMemoryX(_Add(RPtr,55),SetTo,0xA00000,0xA00000),

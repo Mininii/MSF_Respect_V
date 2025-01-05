@@ -14,6 +14,7 @@
 	nilunit = 181
 	QueueMaxSize = 200000
 	MSDiff = {
+		 "\x07NM S\x04tyle",
 		 "\x08HD S\x04tyle",
 		 "\x16MX S\x04tyle",
 		 "\x08SC S\x04tyle",
@@ -96,7 +97,7 @@
 	UnitHPArr = CreateFArr(1700, FP)
 	if DLC_Project == 1 then 
 		ExRateT = {
-			{20,22,24,27,30},{11,12,13,15,17},{9,10,11,13,14}
+			{20,22,24,27,30},{11,12,13,15,17},{10,11,12,14,16},{9,10,11,13,14}
 		}
 	else
 		ExRateT = {
@@ -131,6 +132,7 @@
 	VFlagB = CreateVarArr(6,FP)
 	VFlag256B = CreateVarArr(6,FP)
 	EVFCcode = CreateCcode()
+	OnlyMarineMode = CreateCcode()
 	CTMin = CreateVarArr(7, FP)
 	if DLC_Project == 1 then
 		MarNumberLimit = CreateVar3(FP,1800)
@@ -154,7 +156,12 @@
 	OverMePosX = CreateArr(20, FP)
 	OverMePosY = CreateArr(20, FP)
 	GTime = CreateVar(FP)
+	GTime2 = CreateVar(FP)
 	LTime = CreateVar(FP)
+	LTime2 = CreateVar(FP)
+	MinMod = CreateVar(FP)
+	MinMod2 = CreateVar(FP)
+	WTime = CreateVar(FP)
 	WinCcode = CreateCcode()
 	WinCcode2 = CreateCcode()
 	HStr2 = SaveiStrArrX(FP,MakeiStrVoid(54*11)) 
