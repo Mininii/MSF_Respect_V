@@ -587,10 +587,14 @@ CMov(FP, 0x6509B0, FP)
 
 		if DLC_Project == 1 then
 			CIf(FP,{CD(GMode,4)})--DLC SC 에너미스톰 유닛 이동속도 파리급으로 상향
-			CDoActions(FP, {
+			CTrigger(FP, {CD(OnlyMarineMode,0)}, {
 				TSetMemory(_Sub(BackupCp,25-13),SetTo,8000),
 				TSetMemoryX(_Sub(BackupCp,25-18),SetTo,2000,0xFFFF),TSetMemoryX(_Add(SubUnitPtr,8),SetTo,(127*65536),0xFF0000)
-			})
+			}, {preserved})
+			CTrigger(FP, {CD(OnlyMarineMode,1)}, {
+				TSetMemory(_Sub(BackupCp,25-13),SetTo,3500),
+				TSetMemoryX(_Sub(BackupCp,25-18),SetTo,500,0xFFFF),TSetMemoryX(_Add(SubUnitPtr,8),SetTo,(127*65536),0xFF0000)
+			}, {preserved})
 			CIfEnd()
 		end
 		CDoActions(FP, {
@@ -887,8 +891,10 @@ end
 		OtherGunSet(143,{{55,10},{53,10},{54,10},{46,10},{56,10},{104,10},{51,10},{48,10}})
 		OtherGunSet(144,{{55,10},{53,10},{54,10},{46,10},{56,10},{104,10},{51,10},{48,10}})
 		OtherGunSet(146,{{55,10},{53,10},{54,10},{46,10},{56,10},{104,10},{51,10},{48,10}})
-		OtherGunSet(149,{{11,30},{69,30}})
-		OtherGunSet(188,{{11,30},{69,30}})
+		CIf(FP,{CD(OnlyMarineMode,0)})
+		OtherGunSet(149,{{11,10},{69,10}})
+		OtherGunSet(188,{{11,10},{69,10}})
+		CIfEnd()
 		PFNM = CreateVar(FP)
 		CMov(FP,PFNM,_Mod(GTime,60))
 		f_TempRepeatX({CV(HeroIndex,149)}, 11, PFNM, 187, P8)
@@ -963,13 +969,13 @@ end
 		CElseX()
 		CSub(FP,WTime,_Mov(2048),_Add(_Mul(_Mod(_Div(GTime,60),10),200),24))
 		CIfXEnd()
-		f_TempRepeatX({}, 94, 1, nil, P8, {WTime,LTime})
-		f_TempRepeatX({}, 62, 1, 187, P8, {WTime,LTime})
-		f_TempRepeatX({}, 57, 1, 187, P8, {WTime,LTime})
-		f_TempRepeatX({}, 64, 1, 187, P8, {WTime,LTime})
-		f_TempRepeatX({}, 70, 1, 187, P8, {WTime,LTime})
-		f_TempRepeatX({}, 12, 1, 187, P8, {WTime,LTime})
-		f_TempRepeatX({}, 8, 1, 187, P8, {WTime,LTime})
+		f_TempRepeatX({CD(OnlyMarineMode,0)}, 94, 1, nil, P8, {WTime,LTime})
+		f_TempRepeatX({CD(OnlyMarineMode,0)}, 62, 1, 187, P8, {WTime,LTime})
+		f_TempRepeatX({CD(OnlyMarineMode,0)}, 57, 1, 187, P8, {WTime,LTime})
+		f_TempRepeatX({CD(OnlyMarineMode,0)}, 64, 1, 187, P8, {WTime,LTime})
+		f_TempRepeatX({CD(OnlyMarineMode,0)}, 70, 1, 187, P8, {WTime,LTime})
+		f_TempRepeatX({CD(OnlyMarineMode,0)}, 12, 1, 187, P8, {WTime,LTime})
+		f_TempRepeatX({CD(OnlyMarineMode,0)}, 8, 1, 187, P8, {WTime,LTime})
 		CIfEnd()
 		f_LoadCp()
 	CIfEnd()

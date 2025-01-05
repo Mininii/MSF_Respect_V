@@ -425,7 +425,7 @@
 			TriggerX(FP, {CV(SelUID,197)}, {RotatePlayer({DisplayTextX(StrDesignX("\x16M\x04X \x16S\x04tyle").."\n"..StrDesignX("\x04- \x03위험도 \x04: \x08★★★★★★★★★★ \x04-").."\n"..StrDesignX("\x08조심하십시오.. 매우 어렵습니다."), 4)}, HumanPlayers, FP)}, {preserved})
 			TriggerX(FP, {CV(SelUID,196)}, {RotatePlayer({DisplayTextX(StrDesignX("\x10S\x04C \x10S\x04tyle").."\n"..StrDesignX("\x04- \x03위험도 \x04: \x10★★★★★\x11★★★★★\x08★★★★★ \x04-").."\n"..StrDesignX("\x11정의할 수 없는, 정리하지 못한 난이도입니다."), 4)}, HumanPlayers, FP)}, {preserved})
 			TriggerX(FP, {CV(SelUID,145)}, {RotatePlayer({DisplayTextX(StrDesignX("\x0FE\x04VF \x0FM\x04ode").."\n"..StrDesignX("\x04- \x03활성화 가능 옵션 \x04-").."\n"..StrDesignX("\x07속시원한 빠른 플레이\x04를 원할 경우 사용할 수 있습니다. ").."\n"..StrDesignX("\x03특징 : \x1B마린, 스킬 공격력 \x0850% 증가\x04, \x17Fever Power \x04활성화").."\n"..StrDesignX("\x17Fever Power \x04사용 중에는 모든 마린의 체력, 쉴드가 100%로 고정되고, 환전률 \x072배\x04가 적용되며 잠시동안 \x08공격속도\x04가 \x07매우 빨라집니다."), 4)}, HumanPlayers, FP)}, {preserved})
-			TriggerX(FP, {CV(SelUID,158)}, {RotatePlayer({DisplayTextX(StrDesignX("\x1FO\x04nly \x1FM\x04arine \x1FM\x04ode").."\n"..StrDesignX("\x04- \x03활성화 가능 옵션 \x04-").."\n"..StrDesignX("\x1F영웅마린\x04만 사용하길 원할 경우 사용할 수 있습니다. ").."\n"..StrDesignX("\x03특징 : \x1B마린 공격력 \x0850% 증가\x04, \x07일부 건작 밸런스 \x04변경").."\n"..StrDesignX("\x04초기버전은 아직 건작 밸런스가 변경되지 않았습니다. 선택에 유의해 주세요."), 4)}, HumanPlayers, FP)}, {preserved})
+			TriggerX(FP, {CV(SelUID,158)}, {RotatePlayer({DisplayTextX(StrDesignX("\x1FO\x04nly \x1FM\x04arine \x1FM\x04ode").."\n"..StrDesignX("\x04- \x03활성화 가능 옵션 \x04-").."\n"..StrDesignX("\x1F영웅마린\x04만 사용하길 원할 경우 사용할 수 있습니다. ").."\n"..StrDesignX("\x03특징 : \x1B영웅마린\x04만 사용 가능, \x07일부 건작 밸런스 \x04변경").."\n"..StrDesignX("\x04초기버전은 아직 건작 밸런스가 변경되지 않았습니다. 선택에 유의해 주세요."), 4)}, HumanPlayers, FP)}, {preserved})
 			
 		else
 
@@ -441,8 +441,8 @@
 
 	
 if DLC_Project == 1 then
-	Trigger2X(FP, {Bring(AllPlayers, AtLeast, 1, 96, 11)}, {SetCD(EVFCcode,1),RemoveUnit(145, AllPlayers),RotatePlayer({DisplayTextX("\n\n\n\n\n\n\n\n\n",4),DisplayTextX(StrDesignX("\x0FE\x04VF \x0FM\x04ode\x04가 활성화되었습니다.").."\n"..StrDesignX("\x1B마린 공격력 \x0850% 증가\x04, \x17Fever Power \x04활성화").."\n"..StrDesignX("\x17Fever Power \x04사용 중에는 모든 마린의 체력, 쉴드가 100%로 고정되고, 환전률 \x072배\x04가 적용되며 잠시동안 \x08공격속도\x04가 \x07매우 빨라집니다."), 4),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg")}, HumanPlayers, FP)})
-	Trigger2X(FP, {Bring(AllPlayers, AtLeast, 1, 96, 48)}, {SetCD(OnlyMarineMode,1),RemoveUnit(158, AllPlayers),RotatePlayer({DisplayTextX("\n\n\n\n\n\n\n\n\n",4),DisplayTextX(StrDesignX("\x1FO\x04nly \x1FM\x04arine \x1FM\x04ode\x04가 활성화되었습니다.").."\n"..StrDesignX("\x1B마린 공격력\x082배\x04, \x07일부 건작 밸런스 \x04변경").."\n"..StrDesignX("\x04초기버전은 아직 건작 밸런스가 변경되지 않았습니다. 선택에 유의해 주세요."), 4),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg")}, HumanPlayers, FP)})
+	Trigger2X(FP, {Bring(AllPlayers, AtLeast, 1, 96, 11)}, {SetCD(EVFCcode,1),RemoveUnit(145, AllPlayers),RotatePlayer({DisplayTextX("\n\n\n\n\n\n\n\n\n",4),DisplayTextX(StrDesignX("\x0FE\x04VF \x0FM\x04ode\x04가 활성화되었습니다.").."\n"..StrDesignX("\x1B마린, 스킬 공격력 \x0850% 증가\x04, \x17Fever Power \x04활성화").."\n"..StrDesignX("\x17Fever Power \x04사용 중에는 모든 마린의 체력, 쉴드가 100%로 고정되고, 환전률 \x072배\x04가 적용되며 잠시동안 \x08공격속도\x04가 \x07매우 빨라집니다."), 4),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg")}, HumanPlayers, FP)})
+	Trigger2X(FP, {Bring(AllPlayers, AtLeast, 1, 96, 48)}, {SetCD(OnlyMarineMode,1),RemoveUnit(158, AllPlayers),RotatePlayer({DisplayTextX("\n\n\n\n\n\n\n\n\n",4),DisplayTextX(StrDesignX("\x1FO\x04nly \x1FM\x04arine \x1FM\x04ode\x04가 활성화되었습니다.").."\n"..StrDesignX("\x1B영웅마린\x04만 사용 가능\x04, \x07일부 건작 밸런스 \x04변경").."\n"..StrDesignX("\x04초기버전은 아직 건작 밸런스가 변경되지 않았습니다. 선택에 유의해 주세요."), 4),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg")}, HumanPlayers, FP)})
 else
 	Trigger2X(FP, {Bring(AllPlayers, AtLeast, 1, 96, 11)}, {SetCD(EVFCcode,1),RemoveUnit(145, AllPlayers),RotatePlayer({DisplayTextX("\n\n\n\n\n\n\n\n\n",4),DisplayTextX(StrDesignX("\x0FE\x04VF \x0FM\x04ode\x04가 활성화되었습니다.").."\n"..StrDesignX("\x1B마린 공격력 \x0850% 증가\x04, \x17Fever Power \x04활성화").."\n"..StrDesignX("\x17Fever Power \x04사용 중에는 모든 마린의 체력, 쉴드가 100%로 고정되고, 환전률 \x072배\x04가 적용됩니다."), 4),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg")}, HumanPlayers, FP)})
 end
@@ -474,7 +474,7 @@ end
 		SetCp(P7),
 		RunAIScriptAt("Expansion Zerg Campaign Insane","AI"),
 		RunAIScriptAt("Value This Area Higher",6),
-		SetResources(Force1, Add, 25000, Ore),
+		SetResources(Force1, Add, 5000, Ore),
 		RemoveUnit(199, AllPlayers),
 		RemoveUnit(198, AllPlayers),
 		RemoveUnit(197, AllPlayers),
@@ -512,6 +512,21 @@ end
 			SetMemoryB(0x57F27C + (2 * 228) + 12,SetTo,0),
 			SetMemoryB(0x57F27C + (3 * 228) + 12,SetTo,0),
 			SetMemoryB(0x57F27C + (4 * 228) + 12,SetTo,0),
+
+			
+		})
+		
+		TriggerX(FP, (CD(OnlyMarineMode,0)), {
+			SetMemoryB(0x57F27C + (0 * 228) + 50,SetTo,1),
+			SetMemoryB(0x57F27C + (1 * 228) + 50,SetTo,1),
+			SetMemoryB(0x57F27C + (2 * 228) + 50,SetTo,1),
+			SetMemoryB(0x57F27C + (3 * 228) + 50,SetTo,1),
+			SetMemoryB(0x57F27C + (4 * 228) + 50,SetTo,1),
+			SetMemoryB(0x57F27C + (0 * 228) + 12,SetTo,1),
+			SetMemoryB(0x57F27C + (1 * 228) + 12,SetTo,1),
+			SetMemoryB(0x57F27C + (2 * 228) + 12,SetTo,1),
+			SetMemoryB(0x57F27C + (3 * 228) + 12,SetTo,1),
+			SetMemoryB(0x57F27C + (4 * 228) + 12,SetTo,1),
 
 			
 		})
@@ -691,10 +706,10 @@ end
 		},1)
 		end
 		for o = 2, #HMT[i+1] do
-			CallTriggerX(FP, Call_MarCr,{HumanCheck(i,1),Memory(0x628438, AtLeast, 1)}, {
-			SetV(MID,MCT[2][2]),
+			CallTriggerX(FP, Call_MarCr,{HumanCheck(i,1),CV(SetPlayers,1),Memory(0x628438, AtLeast, 1)}, {
+			SetV(MID,MCT[1][2]),
 			SetV(MPID,i),
-			SetV(MHP,MCT[2][3]),
+			SetV(MHP,MCT[1][3]),
 			SetV(MPosX,HMT[i+1][o][1]),
 			SetV(MPosY,HMT[i+1][o][2]),
 		},1)
@@ -704,7 +719,7 @@ end
 		TriggerX(FP, {HumanCheck(i, 1)}, {SetCp(i),RunAIScriptAt("Enter Transport", 64),SetCp(FP)})
 	end
 
-	Trigger2X(FP, {CV(SetPlayers,1)},{SetResources(Force1, Add, 30000, Ore),RotatePlayer({DisplayTextX(StrDesignX("솔로 플레이 보너스 \x04: \x1F30000 ore"), 4)}, HumanPlayers, FP)})
+	Trigger2X(FP, {CV(SetPlayers,1)},{SetResources(Force1, Add, 10000, Ore),RotatePlayer({DisplayTextX(StrDesignX("솔로 플레이 보너스 \x04: \x1F10000 ore\x04, 마린 1기"), 4)}, HumanPlayers, FP)})
 	CIfEnd()
 	
 
