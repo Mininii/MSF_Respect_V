@@ -118,6 +118,7 @@
 	CurCunitI = CreateVar(FP)
 	CurCunitI2 = CreateVar(FP)
 	SetPlayers = CreateVar(FP)
+	StartPlayers = CreateCcodeArr(5)
 	BarPos = CreateVarArr(7,FP)
 	BarRally = CreateVarArr(7,FP)
 	CunitIndex = CreateVar(FP)
@@ -187,6 +188,10 @@
 	RebirthUp = CreateVarArr(5, FP)
 	CurInvUp = CreateVarArr(5, FP)
 	InvUp = CreateVarArr(5, FP)
+
+	TeamOre = CreateVar(FP)
+	TeamOreChange = CreateVar(FP)
+	SpendOre = CreateVarArr(5, FP)
 
 	
 	CurSMUp = CreateVarArr(5, FP)

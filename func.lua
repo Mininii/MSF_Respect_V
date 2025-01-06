@@ -322,9 +322,11 @@ function CreateUnitQueue()
 		TSetMemory(_Add(QueueUID,EPDF(0x662860)) ,SetTo,1+65536),
 	})
 		TriggerX(FP,{CVar(FP,QueuePID[2],Exactly,0xFFFFFFFF)},{SetCVar(FP,QueuePID[2],SetTo,7)},{preserved})
+		TriggerX(FP,{CV(QueueType,132),CV(QueueUID,68)},{SetMemoryX(0x664080 + (68*4),SetTo,4,4),SetMemoryB(0x663150 + (68),SetTo,12)},{preserved})
 		TriggerX(FP,{CV(QueueType,129),CV(QueueUID,68)},{SetMemoryX(0x664080 + (68*4),SetTo,4,4),SetMemoryB(0x663150 + (68),SetTo,12)},{preserved})
 		CTrigger(FP,{TTCVar(FP,QueueType[2],NotSame,2)},{TCreateUnitWithProperties(1,QueueUID,1,QueuePID,{energy = 100})},1,LocIndex)
         CTrigger(FP,{CVar(FP,QueueType[2],Exactly,2)},{TCreateUnitWithProperties(1,QueueUID,1,QueuePID,{energy = 100, burrowed = true})},1,LocIndex+1)
+		TriggerX(FP,{CV(QueueType,132),CV(QueueUID,68)},{SetMemoryX(0x664080 + (68*4),SetTo,0,4),SetMemoryB(0x663150 + (68),SetTo,4)},{preserved})
 		TriggerX(FP,{CV(QueueType,129),CV(QueueUID,68)},{SetMemoryX(0x664080 + (68*4),SetTo,0,4),SetMemoryB(0x663150 + (68),SetTo,4)},{preserved})
 	DoActions(FP, {
 		SetMemoryB(0x6644F8+4,SetTo,76),
@@ -424,10 +426,28 @@ function CreateUnitQueue()
 
 	},{preserved})
 FixText(FP, 1)
+--자원공유트리거 실험용
+	CMov(FP,TeamOreChange,0)
+	for i= 0, 4 do
+		CIf(FP,{HumanCheck(i, 1)})
+		local OreChangeTmp = CreateVar(FP)
+		CMov(FP, OreChangeTmp, _Add(_Read(0x57f0f0+(i*4)),_Neg(TeamOre)))
+		CAdd(FP,TeamOreChange,OreChangeTmp)
+		CAdd(FP,SpendOre[i+1],OreChangeTmp)
+		CIfEnd()
+	end
+	CAdd(FP,TeamOre,TeamOreChange)
+	for i= 0, 4 do
+		CIf(FP,{HumanCheck(i, 1)})
+		CMov(FP,0x57f0f0+(i*4),TeamOre)
+		CIfEnd()
+	end
+
 TriggerX(FP,{CV(CreateUnitQueuePenaltyLock,0),CV(CreateUnitQueueNum,0),},{SubV(CreateUnitQueuePenaltyT,2)},{preserved})
 TriggerX(FP,{CV(CreateUnitQueuePenaltyLock,0),CV(CreateUnitQueueNum,1,AtLeast)},{AddV(CreateUnitQueuePenaltyT,10)},{preserved})
-TriggerX(FP,{CV(CreateUnitQueuePenaltyLock,0),CV(CreateUnitQueueNum,500,AtLeast)},{AddV(CreateUnitQueuePenaltyT,10)},{preserved})
-TriggerX(FP,{CV(CreateUnitQueuePenaltyLock,0),CV(CreateUnitQueueNum,1000,AtLeast)},{AddV(CreateUnitQueuePenaltyT,10)},{preserved})
+TriggerX(FP,{CV(CreateUnitQueuePenaltyLock,0),CV(CreateUnitQueueNum,1500,AtLeast)},{AddV(CreateUnitQueuePenaltyT,10)},{preserved})
+TriggerX(FP,{CV(CreateUnitQueuePenaltyLock,0),CV(CreateUnitQueueNum,3000,AtLeast)},{AddV(CreateUnitQueuePenaltyT,10)},{preserved})
+TriggerX(FP,{CV(CreateUnitQueuePenaltyLock,0),CV(CreateUnitQueueNum,4500,AtLeast)},{AddV(CreateUnitQueuePenaltyT,10)},{preserved})
 TriggerX(FP,{CV(CreateUnitQueuePenaltyLock,0),CV(CreateUnitQueueNum,QueueMaxSize,AtLeast)},{RotatePlayer({Defeat()}, Force1, FP)},{preserved})
 
 if DLC_Project == 1 then
@@ -459,6 +479,18 @@ Trigger2X(FP,{CV(CreateUnitQueuePenaltyT,4800,AtLeast)},{RotatePlayer({
 
 
 DisplayPrint(HumanPlayers,{"\x07『 \x04CreateUnit\x07Queue \x04: ",CreateUnitQueueNum," || \x08P\x04enalty \x08T\x04imer : \x08",CreateUnitQueuePenaltyT," \x04/ \x034800 \x07』"})
+for i = 0, 4 do
+CIf(FP,{CD(StartPlayers[i+1],1)})
+-- SpendOre[i+1]
+CIfX(FP,{CV(SpendOre[i+1],0x7FFFFFFF,AtMost)}) -- 벌었을 경우
+DisplayPrint(HumanPlayers,{"\x07『 ",PName(i)," \x07벌었음 \x04: \x1F",SpendOre[i+1]," \x07』"})
+CElseX()--썼을 경우
+local NegVar=CreateVar(FP)
+CNeg(FP, NegVar, SpendOre[i+1])
+DisplayPrint(HumanPlayers,{"\x07『 ",PName(i)," \x08사용함 \x04: \x11",NegVar," \x07』"})
+CIfXEnd()
+CIfEnd()
+end
 TriggerX(FP,{LocalPlayerID(128);Memory(0x68C144,AtLeast,1);},{SetMemory(0x68C144,SetTo,2);SetCp(128),DisplayText("\x07『 \x03관전 상태\x04에서도 \x11플레이어\x04에게 \x07채팅을 보낼 수 있습니다. \x07』", 4),SetCp(FP)},{preserved})
 TriggerX(FP,{LocalPlayerID(129);Memory(0x68C144,AtLeast,1);},{SetMemory(0x68C144,SetTo,2);SetCp(129),DisplayText("\x07『 \x03관전 상태\x04에서도 \x11플레이어\x04에게 \x07채팅을 보낼 수 있습니다. \x07』", 4),SetCp(FP)},{preserved})
 TriggerX(FP,{LocalPlayerID(130);Memory(0x68C144,AtLeast,1);},{SetMemory(0x68C144,SetTo,2);SetCp(130),DisplayText("\x07『 \x03관전 상태\x04에서도 \x11플레이어\x04에게 \x07채팅을 보낼 수 있습니다. \x07』", 4),SetCp(FP)},{preserved})

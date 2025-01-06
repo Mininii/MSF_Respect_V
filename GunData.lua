@@ -458,15 +458,15 @@ end
 		if DLC_Project == 1 then
 			G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,1)}, CUTable1, "ACAS", ShapeHD, 0, 0, nil, CenterXY, P7)
 			G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,2)}, CUTable1, "ACAS", ShapeSC, 0, 0, nil, CenterXY, P7)
-			G_CB_TSetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3,AtLeast)}, CUTable1, _G[ShapeSC], nil, {OwnerTable=P7,RepeatType={"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"},CenterXY=CenterXY})
+			G_CB_TSetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3,AtLeast)}, CUTable1, _G[ShapeSC], nil, {OwnerTable=P7,RepeatType={"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"},CenterXY=CenterXY})
 			G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,1)}, CUTable2, "ACAS", ShapeHD, 0, 0, nil, CenterXY, P7)
 			G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,2)}, CUTable2, "ACAS", ShapeSC, 0, 0, nil, CenterXY, P7)
-			G_CB_TSetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3,AtLeast)}, CUTable2, _G[ShapeSC], nil, {OwnerTable=P7,RepeatType={"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"},CenterXY=CenterXY})
+			G_CB_TSetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3,AtLeast)}, CUTable2, _G[ShapeSC], nil, {OwnerTable=P7,RepeatType={"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"},CenterXY=CenterXY})
 	
 			G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,2,AtMost)}, {55,53,54,46}, "ACAS" ,ZunitSh1, 0, 0, nil, CenterXY, P8)
 			G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,2,AtMost)}, {56,104,51,48}, "ACAS" ,ZunitSh2, 0, 0, nil, CenterXY, P8)
-			G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3,AtLeast)}, {55,53,54,46}, "ACAS" ,ZunitSh1, 0, {"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"}, nil, CenterXY, P8)
-			G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3,AtLeast)}, {56,104,51,48}, "ACAS" ,ZunitSh2, 0, {"Patrol_Gun","Patrol_Gun","Patrol_Gun","Patrol_Gun"}, nil, CenterXY, P8)
+			G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,3,AtLeast)}, {55,53,54,46}, "ACAS" ,ZunitSh1, 0, {"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"}, nil, CenterXY, P8)
+			G_CB_SetSpawn({Gun_Line(6,AtLeast,1),CD(GMode,3,AtLeast)}, {56,104,51,48}, "ACAS" ,ZunitSh2, 0, {"Attack_Gun","Attack_Gun","Attack_Gun","Attack_Gun"}, nil, CenterXY, P8)
 			f_TempRepeat({Gun_Line(6,AtLeast,1),CD(GMode,3,AtLeast)},CreateOneUnitID,1,14,P6,CenterXY)
 		else
 			G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,1)}, CUTable1, "ACAS", ShapeHD, 0, 0, nil, CenterXY, P7)
@@ -665,31 +665,70 @@ end
 			Simple_SetLocX(FP, 200, NI, 0, _Add(NI,64), 8192)
 			DoActions(FP, {KillUnitAt(All,nilunit,201,FP),Simple_SetLoc(201, 0, 0, 0, 0)})
 			NJumpX(FP, CheckJump,{CD(GMode,3),Bring(Force1, AtLeast, 1, "Men", 201)},{MoveLocation(202, "Men", Force1, 201),SetCD(Chk,1)})
-			NJumpX(FP, CheckJump,{CD(GMode,4),GNm(1),Bring(Force1, AtLeast, 1, 20, 201)},{MoveLocation(202, "Men", Force1, 201),SetCD(Chk,1)})
-			NJumpX(FP, CheckJump,{CD(GMode,4),GNm(3),Bring(Force1, AtLeast, 1, 10, 201)},{MoveLocation(202, "Men", Force1, 201),SetCD(Chk,1)})
-			for i = 0, 4 do
-				NJumpX(FP, CheckJump,{CD(GMode,4),GNm(5),Bring(i, AtLeast, 1, MarID[i+1], 201)},{MoveLocation(202, "Men", Force1, 201),SetCD(Chk,1)})
-			end
+			NJumpX(FP, CheckJump,{CD(GMode,4),Bring(Force1, AtLeast, 1, "Men", 201),CD(OnlyMarineMode,1)},{MoveLocation(202, "Men", Force1, 201),SetCD(Chk,1)})
+
+				NIf(FP,{CD(OnlyMarineMode,0)})
+				NJumpX(FP, CheckJump,{CD(GMode,4),GNm(1),Bring(Force1, AtLeast, 1, 20, 201)},{MoveLocation(202, "Men", Force1, 201),SetCD(Chk,1)})
+				NJumpX(FP, CheckJump,{CD(GMode,4),GNm(3),Bring(Force1, AtLeast, 1, 10, 201)},{MoveLocation(202, "Men", Force1, 201),SetCD(Chk,1)})
+				for i = 0, 4 do
+					NJumpX(FP, CheckJump,{CD(GMode,4),GNm(5),Bring(i, AtLeast, 1, MarID[i+1], 201)},{MoveLocation(202, "Men", Force1, 201),SetCD(Chk,1)})
+				end
+				NIfEnd()
+
 			NIfEnd()
 			NIf(FP,{TTOR({GNm(2),GNm(4),GNm(6)})})
 			Simple_SetLocX(FP, 200, _Sub(_Mov(2048-64),NI), 0, _Sub(_Mov(2048),NI), 8192)
 			DoActions(FP, {KillUnitAt(All,nilunit,201,FP),Simple_SetLoc(201, 0, 0, 0, 0)})
 			NJumpX(FP, CheckJump,{CD(GMode,3),Bring(Force1, AtLeast, 1, "Men", 201)},{MoveLocation(202, "Men", Force1, 201),SetCD(Chk,1)})
-			NJumpX(FP, CheckJump,{CD(GMode,4),GNm(2),Bring(Force1, AtLeast, 1, 20, 201)},{MoveLocation(202, "Men", Force1, 201),SetCD(Chk,1)})
-			NJumpX(FP, CheckJump,{CD(GMode,4),GNm(4),Bring(Force1, AtLeast, 1, 10, 201)},{MoveLocation(202, "Men", Force1, 201),SetCD(Chk,1)})
-			for i = 0, 4 do
-				NJumpX(FP, CheckJump,{CD(GMode,4),GNm(6),Bring(i, AtLeast, 1, MarID[i+1], 201)},{MoveLocation(202, "Men", Force1, 201),SetCD(Chk,1)})
-			end
+			NJumpX(FP, CheckJump,{CD(GMode,4),Bring(Force1, AtLeast, 1, "Men", 201),CD(OnlyMarineMode,1)},{MoveLocation(202, "Men", Force1, 201),SetCD(Chk,1)})
+
+				NIf(FP,{CD(OnlyMarineMode,0)})
+				NJumpX(FP, CheckJump,{CD(GMode,4),GNm(2),Bring(Force1, AtLeast, 1, 20, 201)},{MoveLocation(202, "Men", Force1, 201),SetCD(Chk,1)})
+				NJumpX(FP, CheckJump,{CD(GMode,4),GNm(4),Bring(Force1, AtLeast, 1, 10, 201)},{MoveLocation(202, "Men", Force1, 201),SetCD(Chk,1)})
+				for i = 0, 4 do
+					NJumpX(FP, CheckJump,{CD(GMode,4),GNm(6),Bring(i, AtLeast, 1, MarID[i+1], 201)},{MoveLocation(202, "Men", Force1, 201),SetCD(Chk,1)})
+				end
+				NIfEnd()
+
 			NIfEnd()
 			CForEnd()
 			NJumpXEnd(FP, CheckJump)--{RotatePlayer({DisplayTextX("Check",4)},HumanPlayers,FP)}
 			--DisplayPrint(HumanPlayers, {"CPosX: ",CPosX,"  CPosY: ",CPosY})
-			TriggerX(FP,{CD(Chk,0)},{Simple_SetLoc(201, 1024, 1088, 1024, 1088)},{preserved})
+			TriggerX(FP,{CD(Chk,0)},Simple_SetLoc(201, 1024, 1088, 1024, 1088),{preserved})--타게팅이 없을 경우 집으로 타겟설정됨.
+			if TestStart == 1 then
+				TriggerX(FP,{CD(Chk,1)},{
+					RotatePlayer({DisplayTextX("Chk : 1", 4)}, HumanPlayers, FP);
+				},{preserved})
+				TriggerX(FP,{CD(Chk,0)},{
+					RotatePlayer({DisplayTextX("Chk : 0", 4)}, HumanPlayers, FP);
+				},{preserved})
+				
+			end
 			GetLocCenter(201, CPosX, CPosY)
+
+			CIf(FP,{CD(GMode,4)})--SC일 경우 1,2번은 X좌표, 3,4번은 Y좌표, 5,6번은 둘다 반전. 
+				CIf(FP,{TTOR({GNm(1),GNm(2)})})
+				CNeg(FP,CPosX)
+				CAdd(FP,CPosX,2048)
+				CIfEnd()
+				CIf(FP,{TTOR({GNm(3),GNm(4)})})
+				CNeg(FP,CPosY)
+				CAdd(FP,CPosY,8192)
+				CIfEnd()
+				CIf(FP,{TTOR({GNm(5),GNm(6)})})
+				CNeg(FP,CPosX)
+				CAdd(FP,CPosX,2048)
+				CNeg(FP,CPosY)
+				CAdd(FP,CPosY,8192)
+				CIfEnd()
+			CIfEnd()
+			Simple_SetLocX(FP,201,CPosX,CPosY,CPosX,CPosY)
+
 			CNeg(FP,CPosX)
 			CAdd(FP,CPosX,32*64)
 			CNeg(FP,CPosY)
 			CAdd(FP,CPosY,32*256)
+
 			CMov(FP,G_CB_X,CPosX)
 			CMov(FP,G_CB_Y,CPosY)
 			CenT = {7,60,70,57,62,64}
@@ -703,7 +742,7 @@ end
 				G_CB_SetSpawn({GNm(j)}, {k}, {"ACAS"}, {"CenCross2"}, "MAX", 129, nil, nil, P8,1)
 				end
 				for j,k in pairs(CenT3) do
-				G_CB_SetSpawn({GNm(j),CD(GMode,4)}, {k}, {"ACAS"}, {"CenCross3"}, "MAX", 129, nil, nil, P8,1)
+				G_CB_SetSpawn({GNm(j),CD(GMode,4)}, {k}, {"ACAS"}, {"CenCross3"}, "MAX", "Era_Attack_HP50", nil, nil, P8,1)
 				end
 				
 			end

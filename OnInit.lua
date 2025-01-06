@@ -348,7 +348,7 @@
 			SetAllianceStatus(P12, Enemy),SetCp(FP)
 
 		},1)
-		TriggerX(FP, {HumanCheck(i, 1)}, {SetCVar(FP,SetPlayers[2],Add,1),Simple_SetLoc(0, 320,992+(64*i), 320,992+(64*i)),CreateUnit(1, 107, 1, i),Simple_CalcLoc(0, 64, 0, 64, 0),
+		TriggerX(FP, {HumanCheck(i, 1)}, {SetCD(StartPlayers[i+1],1),SetCVar(FP,SetPlayers[2],Add,1),Simple_SetLoc(0, 320,992+(64*i), 320,992+(64*i)),CreateUnit(1, 107, 1, i),Simple_CalcLoc(0, 64, 0, 64, 0),
 		CreateUnit(1, 115, 34+i, i),GiveUnits(All, 115, i, 34+i, P9)})
 	end
 	for i = 4, 0,-1 do

@@ -45,6 +45,12 @@ UpgradeFlag = CreateVar(FP)
 SetCall(FP) 
 --0x655740 미네랄 코스트 베이스 2바이트
 --0x6559C0 미네랄 코스트 증가량 2바이트
+--업글 계산전 공유 미네랄 계산
+--	CSub(FP,TeamOreChange,_Read(_Add(UpgradeCP,EPDF(0x57f0f0))),TeamOre)
+--	CAdd(FP,TeamOre,TeamOreChange)
+--	CDoActions(FP, {TSetDeaths(_Add(UpgradeCP, EPDF(0x57f0f0)), SetTo, TeamOre,0)})
+--	CMov(FP,0x57f0f0,TeamOre)
+
 	CIfX(FP,{CV(UpgradeFlag,1)})
 	f_WreadX(FP, 0x655740, 7, MinCostBase)
 	f_WreadX(FP, 0x6559C0, 7, MinCostFactor)
@@ -138,6 +144,7 @@ SetCall(FP)
 		SetCVar(FP,UpCost[2],SetTo,0),
 		SetCVar(FP,UpCompleted[2],SetTo,0)
 	})
+	
 SetCallEnd()
 
 

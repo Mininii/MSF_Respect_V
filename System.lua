@@ -337,7 +337,12 @@ CMov(FP, 0x6509B0, FP)
 	NIfEnd()
 	--0x4 in air check
 
+
+	--41
 	CTrigger(FP, {DeathsX(CurrentPlayer,Exactly,35,0,0xFF)}, {Set_EXCCX(0, SetTo, 1),Set_EXCC(0, SetTo, 1)}, {preserved})--라바 Lock On
+	EXCC_BreakCalc({DeathsX(CurrentPlayer,Exactly,51,0,0xFF)}, {SetMemory(0x6509B0, Add, 16),SetDeathsX(CurrentPlayer, SetTo, 110*0x10000, 0, 0xFF0000)}) --감케 감듀 클로킹 제거
+	EXCC_BreakCalc({DeathsX(CurrentPlayer,Exactly,104,0,0xFF)}, {SetMemory(0x6509B0, Add, 16),SetDeathsX(CurrentPlayer, SetTo, 110*0x10000, 0, 0xFF0000)}) --감케 감듀 클로킹 제거
+
 	CAdd(FP,0x6509B0,30)
 	CIf(FP,{DeathsX(CurrentPlayer,Exactly,0x4,0,0x4)},{Set_EXCCX(0, SetTo, 1),Set_EXCC(0, SetTo, 1)}) -- Air Unit Lock On
 	--55 to 10
@@ -400,6 +405,9 @@ CMov(FP, 0x6509B0, FP)
 	
 	LauncherUnit = def_sIndex()
 	NJumpX(FP,LauncherUnit,DeathsX(CurrentPlayer,Exactly,119,0,0xFF))
+
+	EXCC_BreakCalc({Cond_EXCC(6,Exactly,1,1)}, {SetMemory(0x6509B0, Add, 16),SetDeathsX(CurrentPlayer, SetTo, 110*0x10000, 0, 0xFF0000),SetMemory(0x6509B0, Subtract, 16)}) --감케 감듀 클로킹 제거
+
 	TimerUnit = def_sIndex()
 	NJumpX(FP,TimerUnit,{Cond_EXCC(2, AtLeast, 1)}) -- 2 = Timer 4 = Option
 	if DLC_Project == 1 then
@@ -439,7 +447,26 @@ CMov(FP, 0x6509B0, FP)
 				SetDeathsX(CurrentPlayer,SetTo,0,1,0xFF00),
 				SetMemory(0x6509B0, Subtract, 2),
 			},{preserved})
+			
+			CIf(FP,{CD(OnlyMarineMode,1)})
+			CAdd(FP,0x6509B0,6)--25
+			CIf(FP,{DeathsX(CurrentPlayer, Exactly, 20, 0, 0xFF)})
+			CSub(FP,0x6509B0,1)
+			TriggerX(FP, {Deaths(CurrentPlayer, AtMost, (3000-1)*256, 0)}, {SetDeaths(CurrentPlayer, Add, 100*256, 0)},{preserved})
+			TriggerX(FP, {Deaths(CurrentPlayer, AtLeast, (3000+1)*256, 0)}, {SetDeaths(CurrentPlayer, SetTo, 3000*256, 0)},{preserved})
+			CAdd(FP,0x6509B0,1)
+			CIfEnd()
+			CSub(FP,0x6509B0,6)--19
+			CIfEnd()
+
+
 			for j = 1, 5 do
+				
+				
+
+				
+
+				
 				CIf(FP,{CV(HealUpgrade[i+1],j)})
 
 				CAdd(FP,0x6509B0,6)--25
@@ -543,13 +570,10 @@ CMov(FP, 0x6509B0, FP)
 			CDoActions(FP, {TOrder(UIDV, PIDV, 1, Attack, 201)})
 		CIfEnd()
 		CIf(FP, {Cond_EXCC(5, Exactly, 3)})--타이머 타입 번호(f_CGive 해제 후 기지공격)
-		if DLC_Project == 1 then
-			CIf(FP,{CD(GMode,2,AtMost)})
+			CIf(FP,{CV(PIDV,8)})--P9일 경우 f_CGive
 			f_CGive(FP, _Sub(BackupCp,25), nil, P6, PIDV)
+			CMov(FP,PIDV,P6)
 			CIfEnd()
-		else
-			f_CGive(FP, _Sub(BackupCp,25), nil, P6, PIDV)
-		end
 			local NPosX, NPosY = CreateVars(2, FP)
 			GetLocCenter(5, NPosX, NPosY)
 			SpeedRet = CreateVar(FP)
@@ -573,6 +597,7 @@ CMov(FP, 0x6509B0, FP)
 		f_Read(FP, _Sub(BackupCp,6), PIDV, nil,0xFF,1)
 		CIf(FP,{CV(PIDV,8)})
 		f_CGive(FP, _Sub(BackupCp,25), nil, P6, PIDV)
+		CMov(FP,PIDV,P6)
 		f_Read(FP, _Sub(BackupCp,15), CPos)
 		Convert_CPosXY()
 		f_Read(FP, BackupCp, UIDV, nil,0xFF,1)
@@ -1072,6 +1097,7 @@ end
 	
 		return KeyToggle2,KeyToggle
 	end
+
 			
 	if TestStart == 1 then-- BarTextTest
 		

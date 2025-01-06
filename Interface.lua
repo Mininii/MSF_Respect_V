@@ -1,4 +1,6 @@
 ﻿function Interface()
+	
+
 	local BanCode = CreateCcodeArr(7)
     count = CreateVar(FP)
     f_Read(FP, 0x6283F0, count)
@@ -456,16 +458,22 @@ end
 	
 	TriggerX(FP, {CD(GST,1,AtLeast)},{SetV(SpeedVar,4),SetCD(GS,1),RotatePlayer({PlayWAVX("sound\\glue\\bnetclick.wav"),PlayWAVX("sound\\glue\\bnetclick.wav"),PlayWAVX("sound\\glue\\bnetclick.wav")}, HumanPlayers, FP)},{preserved})
 	CIfEnd()
-	local BGMAct
-	if DLC_Project == 1 then
-		BGMAct = SetV(BGMType,28)
-	else
-		BGMAct = SetV(BGMType,1)
+	local BGMActNMHD = SetV(BGMType,0)
+	local BGMActMX = SetV(BGMType,0)
+	local BGMActSC = SetV(BGMType,0)
+	if TestStart == 0 then
+		if DLC_Project == 1 then
+			BGMActNMHD = SetV(BGMType,1)
+			BGMActMX = SetV(BGMType,28)
+			BGMActSC = SetV(BGMType,29)
+		else
+			BGMActNMHD = SetV(BGMType,1)
+			BGMActMX = SetV(BGMType,1)
+			BGMActSC = SetV(BGMType,1)
+		end
 	end
-	if TestStart == 1 then BGMAct = SetV(BGMType,0) end
 
 	CIfOnce(FP,{CD(GS,1)},{SetCDeaths(FP,Add,10,PExitFlag),
-		BGMAct,
 		ModifyUnitEnergy(All, "Any unit", AllPlayers, 64, 100);
 		SetResources(Force2, SetTo, 99999999, OreAndGas),
 		SetCp(FP),
@@ -492,9 +500,11 @@ end
 		SetMemoryB(0x57F27C + (4 * 228) + 74,SetTo,0)
 	})
 	  
-
+	TriggerX(FP,{CD(GMode,2,AtMost)},{BGMActNMHD},{preserved})
+	TriggerX(FP,{CD(GMode,3)},{BGMActMX},{preserved})
+	TriggerX(FP,{CD(GMode,4)},{BGMActSC},{preserved})
 	if DLC_Project == 1 then
-		TriggerX(FP, (CD(GMode,4)), {SetV(BGMType,29),
+		TriggerX(FP, (CD(GMode,4)), {
 		SetPlayerColor(P6, SetTo, 188);
 		SetPlayerColor(P7, SetTo, 160);
 		SetPlayerColor(P8, SetTo, 173);
@@ -1711,6 +1721,9 @@ if TestStart == 1 then
 		RunAIScript("Turn ON Shared Vision for Player 8");})
 	
 end
+
+
+
 	end
 
 	for k=0, 4 do -- 기부시스템
@@ -1772,6 +1785,7 @@ end
 			}
 	end 
 end 
+
 CIfEnd()
 end
 
