@@ -74,7 +74,7 @@
     CIfX(FP,Never()) -- 상위플레이어 단락 시작
         for i = 0, 4 do
             CElseIfX(HumanCheck(i,1),{SetCVar(FP,CurrentOP[2],SetTo,i),SetMemoryB(0x57F27C + (i * 228) + 62,SetTo,1),SetMemoryB(0x57F27C + (i * 228) + 63,SetTo,1)})
-			Trigger2X(FP, {ElapsedTime(AtMost, 120),Bring(i, AtLeast, 1, 96, 49),}, {
+			Trigger2X(FP, {CV(PCheckV,2,AtLeast),ElapsedTime(AtMost, 120),Bring(i, AtLeast, 1, 96, 49),}, {
 				RotatePlayer({
 					PlayWAVX("sound\\Terran\\Advisor\\TAdUpd05.WAV"),
 					PlayWAVX("sound\\Terran\\Advisor\\TAdUpd05.WAV"),
