@@ -432,6 +432,8 @@ CenCross3 = CS_OverlapX(CSMakeLine(4, 192, 0, 1024, 0),CSMakeLine(4, 96, 45, 102
 	RBFillX = CSMakeStar(4, 135, 64, 45, PlotSizeCalc(4*2, 6), 0)
 	RBC = CSMakeLine(64, 384, 0, 64+1, 0)
 	RBCHD = CSMakeLine(24, 384, 0, 24+1, 0)
+
+	ObbEffCir = CSMakeCircle(8, 64, 0, PlotSizeCalc(8, 3), 0)
 	
 
 

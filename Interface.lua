@@ -74,6 +74,17 @@
     CIfX(FP,Never()) -- 상위플레이어 단락 시작
         for i = 0, 4 do
             CElseIfX(HumanCheck(i,1),{SetCVar(FP,CurrentOP[2],SetTo,i),SetMemoryB(0x57F27C + (i * 228) + 62,SetTo,1),SetMemoryB(0x57F27C + (i * 228) + 63,SetTo,1)})
+			Trigger2X(FP, {ElapsedTime(AtMost, 120),Bring(i, AtLeast, 1, 96, 49),}, {
+				RotatePlayer({
+					PlayWAVX("sound\\Terran\\Advisor\\TAdUpd05.WAV"),
+					PlayWAVX("sound\\Terran\\Advisor\\TAdUpd05.WAV"),
+					PlayWAVX("sound\\Terran\\Advisor\\TAdUpd05.WAV"),
+					PlayWAVX("sound\\Terran\\Advisor\\TAdUpd05.WAV"),
+					PlayWAVX("sound\\Terran\\Advisor\\TAdUpd05.WAV"),
+					DisplayTextX("\x13"..string.char(ColorCode[i+1]).."방장 \x08야발놈\x04에 의해 \x1F자원공유 모드\x04가 \x07활성화 \x04되었습니다.\n\x13\x11어디 한번 열심히 자원을 나눠 써 보시기 바랍니다. \x08깔깔깔깔!!!!", 4)
+				}, HumanPlayers, FP),
+				SetCD(ShareOreMode,1),
+			}, {})
 			TriggerX(FP, {CD(GS,0)}, {GiveUnits(All, 96, AllPlayers, 64, i),},{preserved})
 			TriggerX(FP, {CD(GS,1)}, {GiveUnits(All, 96, AllPlayers, 41, i),},{preserved})
             if Limit == 1 then
@@ -335,7 +346,7 @@
 			DisplayTextX(string.sub("\x13"..MapText[DLC_Project+1],1,i),4),
 			DisplayTextX(string.sub("\x13\x1FSTRCtrig \x04Assembler \x07v5.4\x04, \x1FCB \x16Paint \x07v2.4 \x04in Used \x19(つ>ㅅ<)つ",1,i),4),
 			DisplayTextX(string.sub("\x13\x0Fⓒ \x08NEOWIZ\x04, \x17DJMAX\x04. \x07A\x04ll \x1BR\x04ights \x11R\x04eserved.",1,i),4),
-			DisplayTextX(string.sub("\x13\x03TESTMODE OP \x04: "..G_CB_ShNm.." Shapes Initiated",1,i),4),
+			DisplayTextX(string.sub("\x13\x03TESTMODE OP \x04: "..#G_CB_Shapes.." Shapes Initiated",1,i),4),
 			DisplayTextX(string.sub("\x13\x1BC\x04reated \x1BB\x04y : GALAXY_BURST",1,i),4),
 			DisplayTextX(string.sub("\x13\x1FI\x04nspirated to \x03MSF \x11R\x04espect. \x18B\x04y.\x1DSANDELE",1,i),4),
 			DisplayTextX(string.sub(tt,1,i),4),
@@ -354,7 +365,7 @@
 			DisplayTextX(string.sub("\x13"..MapText[DLC_Project+1],1,i),4),
 			DisplayTextX(string.sub("\x13\x1FSTRCtrig \x04Assembler \x07v5.4\x04, \x1FCB \x16Paint \x07v2.4 \x04in Used \x19(つ>ㅅ<)つ",1,i),4),
 			DisplayTextX(string.sub("\x13\x0Fⓒ \x08NEOWIZ\x04, \x17DJMAX\x04. \x07A\x04ll \x1BR\x04ights \x11R\x04eserved.",1,i),4),
-			DisplayTextX(string.sub("\x13\x03TESTMODE OP \x04: "..G_CB_ShNm.." Shapes Initiated",1,i),4),
+			DisplayTextX(string.sub("\x13\x03TESTMODE OP \x04: "..#G_CB_Shapes.." Shapes Initiated",1,i),4),
 			DisplayTextX(string.sub("\x13\x1BC\x04reated \x1BB\x04y : GALAXY_BURST",1,i),4),
 			DisplayTextX(string.sub("\x13\x1FI\x04nspirated to \x03MSF \x11R\x04espect. \x18B\x04y.\x1DSANDELE",1,i),4),
 			DisplayTextX(string.sub(tt,1,i),4),
@@ -425,9 +436,13 @@
 			TriggerX(FP, {CV(SelUID,199)}, {RotatePlayer({DisplayTextX(StrDesignX("\x0EN\x04M \x0ES\x04tyle").."\n"..StrDesignX("\x04- \x03위험도 \x04: \x07★★ \x04-").."\n"..StrDesignX("\x04입문용 난이도로 나쁘지 않습니다."), 4)}, HumanPlayers, FP)}, {preserved})
 			TriggerX(FP, {CV(SelUID,198)}, {RotatePlayer({DisplayTextX(StrDesignX("\x08H\x04D \x08S\x04tyle").."\n"..StrDesignX("\x04- \x03위험도 \x04: \x07★★★★★ \x04-").."\n"..StrDesignX("\x04어느정도 어렵지만 가볍게 즐길 수 있습니다."), 4)}, HumanPlayers, FP)}, {preserved})
 			TriggerX(FP, {CV(SelUID,197)}, {RotatePlayer({DisplayTextX(StrDesignX("\x16M\x04X \x16S\x04tyle").."\n"..StrDesignX("\x04- \x03위험도 \x04: \x08★★★★★★★★★★ \x04-").."\n"..StrDesignX("\x08조심하십시오.. 매우 어렵습니다."), 4)}, HumanPlayers, FP)}, {preserved})
-			TriggerX(FP, {CV(SelUID,196)}, {RotatePlayer({DisplayTextX(StrDesignX("\x10S\x04C \x10S\x04tyle").."\n"..StrDesignX("\x04- \x03위험도 \x04: \x10★★★★★\x11★★★★★\x08★★★★★ \x04-").."\n"..StrDesignX("\x11정의할 수 없는, 정리하지 못한 난이도입니다."), 4)}, HumanPlayers, FP)}, {preserved})
+			if Limit == 0 then
+				TriggerX(FP, {CV(SelUID,196)}, {RotatePlayer({DisplayTextX(StrDesignX("\x10S\x04C \x10S\x04tyle").."\n"..StrDesignX("\x04- \x03위험도 \x04: \x10★★★★★\x11★★★★★\x08★★★★★ \x04-").."\n"..StrDesignX("\x11정의할 수 없는, 정리하지 못한 난이도입니다.").."\n"..StrDesignX("\x04해당 난이도는 \x07리뉴얼 중 입니다. 추후 2.0 업데이트에서 뵙시다!!"), 4)}, HumanPlayers, FP)}, {preserved})
+			else
+				TriggerX(FP, {CV(SelUID,196)}, {RotatePlayer({DisplayTextX(StrDesignX("\x10S\x04C \x10S\x04tyle").."\n"..StrDesignX("\x04- \x03위험도 \x04: \x10★★★★★\x11★★★★★\x08★★★★★ \x04-").."\n"..StrDesignX("\x11정의할 수 없는, 정리하지 못한 난이도입니다."), 4)}, HumanPlayers, FP)}, {preserved})
+			end
 			TriggerX(FP, {CV(SelUID,145)}, {RotatePlayer({DisplayTextX(StrDesignX("\x0FE\x04VF \x0FM\x04ode").."\n"..StrDesignX("\x04- \x03활성화 가능 옵션 \x04-").."\n"..StrDesignX("\x07속시원한 빠른 플레이\x04를 원할 경우 사용할 수 있습니다. ").."\n"..StrDesignX("\x03특징 : \x1B마린, 스킬 공격력 \x0850% 증가\x04, \x17Fever Power \x04활성화").."\n"..StrDesignX("\x17Fever Power \x04사용 중에는 모든 마린의 체력, 쉴드가 100%로 고정되고, 환전률 \x072배\x04가 적용되며 잠시동안 \x08공격속도\x04가 \x07매우 빨라집니다."), 4)}, HumanPlayers, FP)}, {preserved})
-			TriggerX(FP, {CV(SelUID,158)}, {RotatePlayer({DisplayTextX(StrDesignX("\x1FO\x04nly \x1FM\x04arine \x1FM\x04ode").."\n"..StrDesignX("\x04- \x03활성화 가능 옵션 \x04-").."\n"..StrDesignX("\x1F영웅마린\x04만 사용하길 원할 경우 사용할 수 있습니다. ").."\n"..StrDesignX("\x03특징 : \x1B영웅마린\x04만 사용 가능, \x07일부 건작 밸런스 \x04변경").."\n"..StrDesignX("\x04초기버전은 아직 건작 밸런스가 변경되지 않았습니다. 선택에 유의해 주세요."), 4)}, HumanPlayers, FP)}, {preserved})
+			TriggerX(FP, {CV(SelUID,158)}, {RotatePlayer({DisplayTextX(StrDesignX("\x1FO\x04nly \x1FM\x04arine \x1FM\x04ode").."\n"..StrDesignX("\x04- \x03활성화 가능 옵션 \x04-").."\n"..StrDesignX("\x1F영웅마린\x04만 사용하길 원할 경우 사용할 수 있습니다. ").."\n"..StrDesignX("\x03특징 : \x1B영웅마린\x04만 사용 가능, \x07일부 건작 밸런스 \x04변경"), 4)}, HumanPlayers, FP)}, {preserved})
 			
 		else
 
@@ -444,7 +459,7 @@
 	
 if DLC_Project == 1 then
 	Trigger2X(FP, {Bring(AllPlayers, AtLeast, 1, 96, 11)}, {SetCD(EVFCcode,1),RemoveUnit(145, AllPlayers),RotatePlayer({DisplayTextX("\n\n\n\n\n\n\n\n\n",4),DisplayTextX(StrDesignX("\x0FE\x04VF \x0FM\x04ode\x04가 활성화되었습니다.").."\n"..StrDesignX("\x1B마린, 스킬 공격력 \x0850% 증가\x04, \x17Fever Power \x04활성화").."\n"..StrDesignX("\x17Fever Power \x04사용 중에는 모든 마린의 체력, 쉴드가 100%로 고정되고, 환전률 \x072배\x04가 적용되며 잠시동안 \x08공격속도\x04가 \x07매우 빨라집니다."), 4),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg")}, HumanPlayers, FP)})
-	Trigger2X(FP, {Bring(AllPlayers, AtLeast, 1, 96, 48)}, {SetCD(OnlyMarineMode,1),RemoveUnit(158, AllPlayers),RotatePlayer({DisplayTextX("\n\n\n\n\n\n\n\n\n",4),DisplayTextX(StrDesignX("\x1FO\x04nly \x1FM\x04arine \x1FM\x04ode\x04가 활성화되었습니다.").."\n"..StrDesignX("\x1B영웅마린\x04만 사용 가능\x04, \x07일부 건작 밸런스 \x04변경").."\n"..StrDesignX("\x04초기버전은 아직 건작 밸런스가 변경되지 않았습니다. 선택에 유의해 주세요."), 4),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg")}, HumanPlayers, FP)})
+	Trigger2X(FP, {Bring(AllPlayers, AtLeast, 1, 96, 48)}, {SetCD(OnlyMarineMode,1),RemoveUnit(158, AllPlayers),RotatePlayer({DisplayTextX("\n\n\n\n\n\n\n\n\n",4),DisplayTextX(StrDesignX("\x1FO\x04nly \x1FM\x04arine \x1FM\x04ode\x04가 활성화되었습니다.").."\n"..StrDesignX("\x1B영웅마린\x04만 사용 가능\x04, \x07일부 건작 밸런스 \x04변경"), 4),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg")}, HumanPlayers, FP)})
 else
 	Trigger2X(FP, {Bring(AllPlayers, AtLeast, 1, 96, 11)}, {SetCD(EVFCcode,1),RemoveUnit(145, AllPlayers),RotatePlayer({DisplayTextX("\n\n\n\n\n\n\n\n\n",4),DisplayTextX(StrDesignX("\x0FE\x04VF \x0FM\x04ode\x04가 활성화되었습니다.").."\n"..StrDesignX("\x1B마린 공격력 \x0850% 증가\x04, \x17Fever Power \x04활성화").."\n"..StrDesignX("\x17Fever Power \x04사용 중에는 모든 마린의 체력, 쉴드가 100%로 고정되고, 환전률 \x072배\x04가 적용됩니다."), 4),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg")}, HumanPlayers, FP)})
 end
@@ -454,7 +469,11 @@ end
 	Trigger2X(FP, {Bring(AllPlayers, AtLeast, 1, 96, 8)}, {SetCD(GST,1),RemoveUnit(96, AllPlayers),SetCD(GMode,1)})
 	Trigger2X(FP, {Bring(AllPlayers, AtLeast, 1, 96, 12)}, {SetCD(GST,1),RemoveUnit(96, AllPlayers),SetCD(GMode,2)})
 	Trigger2X(FP, {Bring(AllPlayers, AtLeast, 1, 96, 9)}, {SetCD(GST,1),RemoveUnit(96, AllPlayers),SetCD(GMode,3)})
-	Trigger2X(FP, {Bring(AllPlayers, AtLeast, 1, 96, 47)}, {SetCD(GST,1),RemoveUnit(96, AllPlayers),SetCD(GMode,4)})
+	if Limit == 0 then
+		Trigger2X(FP, {Bring(AllPlayers, AtLeast, 1, 96, 47)}, {RotatePlayer({DisplayTextX(StrDesignX("\x04해당 난이도는 \x07리뉴얼 중 \x04입니다. 추후 2.0 업데이트에서 뵙시다!!"), 4),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg")}, HumanPlayers, FP),MoveUnit(1, 96, AllPlayers, 47, 10),},{preserved})
+	else
+		Trigger2X(FP, {Bring(AllPlayers, AtLeast, 1, 96, 47)}, {SetCD(GST,1),RemoveUnit(96, AllPlayers),SetCD(GMode,4)})
+	end
 	
 	TriggerX(FP, {CD(GST,1,AtLeast)},{SetV(SpeedVar,4),SetCD(GS,1),RotatePlayer({PlayWAVX("sound\\glue\\bnetclick.wav"),PlayWAVX("sound\\glue\\bnetclick.wav"),PlayWAVX("sound\\glue\\bnetclick.wav")}, HumanPlayers, FP)},{preserved})
 	CIfEnd()
@@ -497,7 +516,13 @@ end
 		SetMemoryB(0x57F27C + (1 * 228) + 74,SetTo,0),
 		SetMemoryB(0x57F27C + (2 * 228) + 74,SetTo,0),
 		SetMemoryB(0x57F27C + (3 * 228) + 74,SetTo,0),
-		SetMemoryB(0x57F27C + (4 * 228) + 74,SetTo,0)
+		SetMemoryB(0x57F27C + (4 * 228) + 74,SetTo,0),
+		SetMemoryB(0x57F27C + (0 * 228) + 51,SetTo,1),
+		SetMemoryB(0x57F27C + (1 * 228) + 51,SetTo,1),
+		SetMemoryB(0x57F27C + (2 * 228) + 51,SetTo,1),
+		SetMemoryB(0x57F27C + (3 * 228) + 51,SetTo,1),
+		SetMemoryB(0x57F27C + (4 * 228) + 51,SetTo,1),
+
 	})
 	  
 	TriggerX(FP,{CD(GMode,2,AtMost)},{BGMActNMHD},{preserved})
@@ -575,7 +600,7 @@ if DLC_Project == 1 then
 				SetCVar(FP,ExRate[2],SetTo,ExRateT[j][p]);})
 		end
 		for p = 1, 5 do
-			local TT = "\x13\x04마린키우기 \x17R\x04espect \x17V \x06L\x11I\x17B\x18E\x1CR\x0ET\x10Y\n\x13"..MSDiff[j].." "..string.char(ColorCode[p])..p.."인 \x17환전률 : \x1B"..ExRateT[j][p].."%\n\x13\x04Marine + \x1F"..HMCost.." Ore\x04 = \x1BH\x04ero \x1BM\x04arine"
+			local TT = "\x13\x04마린키우기 \x17R\x04espect \x17V \x06L\x11I\x17B\x18E\x1CR\x0ET\x10Y\n\x13"..MSDiff[j].." "..string.char(ColorCode[p])..p.."인 \x17환전률 : \x1B"..ExRateT[j][p].."%\n\x13\x04Marine + \x1F"..HMCost.." Ore\x04 = \x1BH\x04ero \x1BM\x04arine\n\x13\x04Only Marine Mode에서는 \x1BH\x04ero \x1BM\x04arine 까지만 뽑을 수 있으며\n\x13\x1BH\x04ero \x1BM\x04arine에 틱당 100의 \x1C쉴드\x04가 재생됩니다."
 			Trigger2X(FP, {CD(GMode,j),CV(SetPlayers,p),CD(OnlyMarineMode,1);}, {
 				RotatePlayer({SetMissionObjectivesX(TT)},HumanPlayers,FP);
 				SetCVar(FP,ExRate[2],SetTo,ExRateT[j][p]);})
@@ -968,6 +993,7 @@ DoActions(FP,{
 		CTrigger(FP, {CD(ColorTimer,1),Memory(0x582294+(4*i),Exactly,1),}, {SetPlayerColor(i, SetTo, PColorC[i+1])}, {preserved})
 
 
+		TriggerX(FP, {CD(ShareOreMode,1)}, {SetMemoryB(0x58D088 + (i * 46) + 18,SetTo,0),SetMemoryB(0x58D088 + (i * 46) + 19,SetTo,0),SetMemoryB(0x58D088 + (i * 46) + 20,SetTo,0)}, {preserved})
 		CDoActions(FP, {TSetDeathsX(i, Subtract, Dt, 12,0xFFFFFF)})
         DoActions(FP, {
             SetMemory(0x5822C4+(i*4),SetTo,1200);

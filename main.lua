@@ -31,7 +31,7 @@ EVFMode = 1
 DLC_Project = 1 
 X4_Mode = 0
 MapText = {"\x04Marine Special Forces \x17R\x04espect \x17V","\x04Marine Special Forces \x17R\x04espect \x17V \x06L\x11I\x17B\x18E\x1CR\x0ET\x10Y"}
-TestSet(1)
+TestSet(0)
 FP = P8
 SetForces({P1,P2,P3,P4,P5},{P6,P7,P8},{},{},{P1,P2,P3,P4,P5,P6,P7,P8})
 SetFixedPlayer(FP)
@@ -61,7 +61,6 @@ CJump(AllPlayers,init_func)
 	Shape()
 	Include_G_CB_Library(6,0x600,128)
 	Include_GunData(128,55)
-	G_CBPlot()
 CJumpEnd(AllPlayers,init_func)
 NoAirCollisionX(FP)
 
@@ -79,6 +78,13 @@ CreateUnitQueue()
 --Waves()
 
 --PushErrorMsg(G_CB_ShNm)
+
+
+
+init_func2 = def_sIndex()
+CJump(AllPlayers,init_func2)
+G_CBPlot()
+CJumpEnd(AllPlayers,init_func2)
 
 
 init_Setting()

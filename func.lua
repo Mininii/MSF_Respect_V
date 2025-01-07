@@ -427,40 +427,49 @@ function CreateUnitQueue()
 	},{preserved})
 FixText(FP, 1)
 --자원공유트리거 실험용
-	CMov(FP,TeamOreChange,0)
-	for i= 0, 4 do
-		CIf(FP,{HumanCheck(i, 1)})
-		local OreChangeTmp = CreateVar(FP)
-		CMov(FP, OreChangeTmp, _Add(_Read(0x57f0f0+(i*4)),_Neg(TeamOre)))
-		CAdd(FP,TeamOreChange,OreChangeTmp)
-		CAdd(FP,SpendOre[i+1],OreChangeTmp)
-		CIfEnd()
-	end
-	CAdd(FP,TeamOre,TeamOreChange)
-	for i= 0, 4 do
-		CIf(FP,{HumanCheck(i, 1)})
-		CMov(FP,0x57f0f0+(i*4),TeamOre)
-		CIfEnd()
-	end
 
-TriggerX(FP,{CV(CreateUnitQueuePenaltyLock,0),CV(CreateUnitQueueNum,0),},{SubV(CreateUnitQueuePenaltyT,2)},{preserved})
-TriggerX(FP,{CV(CreateUnitQueuePenaltyLock,0),CV(CreateUnitQueueNum,1,AtLeast)},{AddV(CreateUnitQueuePenaltyT,10)},{preserved})
-TriggerX(FP,{CV(CreateUnitQueuePenaltyLock,0),CV(CreateUnitQueueNum,1500,AtLeast)},{AddV(CreateUnitQueuePenaltyT,10)},{preserved})
-TriggerX(FP,{CV(CreateUnitQueuePenaltyLock,0),CV(CreateUnitQueueNum,3000,AtLeast)},{AddV(CreateUnitQueuePenaltyT,10)},{preserved})
-TriggerX(FP,{CV(CreateUnitQueuePenaltyLock,0),CV(CreateUnitQueueNum,4500,AtLeast)},{AddV(CreateUnitQueuePenaltyT,10)},{preserved})
-TriggerX(FP,{CV(CreateUnitQueuePenaltyLock,0),CV(CreateUnitQueueNum,QueueMaxSize,AtLeast)},{RotatePlayer({Defeat()}, Force1, FP)},{preserved})
+CIf(FP,CD(ShareOreMode,1))
+CMov(FP,TeamOreChange,0)
 
+
+for i= 0, 4 do
+	CIf(FP,{HumanCheck(i, 1)},{SetMemoryB(0x57F27C + (i * 228) + 51,SetTo,0)})
+	local OreChangeTmp = CreateVar(FP)
+	CMov(FP, OreChangeTmp, _Add(_Read(0x57f0f0+(i*4)),_Neg(TeamOre)))
+	CAdd(FP,TeamOreChange,OreChangeTmp)
+	CAdd(FP,SpendOre[i+1],OreChangeTmp)
+	CIfEnd()
+end
+CAdd(FP,TeamOre,TeamOreChange)
+for i= 0, 4 do
+	CIf(FP,{HumanCheck(i, 1)})
+	CMov(FP,0x57f0f0+(i*4),TeamOre)
+	CIfEnd()
+end
+CIfEnd()
+
+TriggerX(FP,{CV(CreateUnitQueuePenaltyLock,0),CV(CreateUnitQueueNum,0)},{SubV(CreateUnitQueuePenaltyT,2)},{preserved})
+CIf(FP,{CV(CreateUnitQueuePenaltyLock,0),CV(CreateUnitQueueNum,1,AtLeast)})
+	local PTRet = CreateVar(FP)
+	CMov(FP,PTRet,_Div(CreateUnitQueueNum,100),2)
+	TriggerX(FP,{CV(PTRet,50,AtLeast)},{SetV(PTRet,50)},{preserved})
+	CAdd(FP,CreateUnitQueuePenaltyT,PTRet)
+CIfEnd()
+TriggerX(FP,{CV(CreateUnitQueueNum,QueueMaxSize,AtLeast)},{RotatePlayer({
+	PlayWAVX("sound\\Bullet\\TNsFir00.wav"),
+	PlayWAVX("sound\\Bullet\\TNsFir00.wav"),
+	PlayWAVX("sound\\Bullet\\TNsFir00.wav"),
+	DisplayTextX("\x13\x08유닛 큐가 시스템의 한계에 도달하여 더이상 게임을 진행할 수 없습니다.",4),
+	DisplayTextX("\x13\x08게임에서 패배하였습니다.",4),Defeat()}, Force1, FP)},{preserved})
 if DLC_Project == 1 then
 --	CIf(FP,{CV(CreateUnitQueuePenaltyT,4800,AtLeast),CD(GMode,3)})
 --	CFor(FP,0,1700,1)--
-
 --	local NX,NY = CreateVars(2,FP)
 --	f_Lengthdir(FP, _Mod(_Rand(), 32*10), _Mod(_Rand(), 360), NX,NY)
 --	Simple_SetLocX(FP, 0, NX,NY,NX,NY,{Simple_CalcLoc(0, 1024,1088,1024,1088)})
 --	DoActions(FP, {
 --		MoveUnit(1, 25, Force2, 39, 1),
 --		MoveUnit(1, 30, Force2, 39, 1),})
---	
 --	CMov(FP,NX,f_CRandNum(2048-64, 32))
 --	CMov(FP,NY,f_CRandNum(2048-64, 32))
 --	Simple_SetLocX(FP, 0, NX,NY,NX,NY)
@@ -480,15 +489,19 @@ Trigger2X(FP,{CV(CreateUnitQueuePenaltyT,4800,AtLeast)},{RotatePlayer({
 
 DisplayPrint(HumanPlayers,{"\x07『 \x04CreateUnit\x07Queue \x04: ",CreateUnitQueueNum," || \x08P\x04enalty \x08T\x04imer : \x08",CreateUnitQueuePenaltyT," \x04/ \x034800 \x07』"})
 for i = 0, 4 do
-CIf(FP,{CD(StartPlayers[i+1],1)})
--- SpendOre[i+1]
-CIfX(FP,{CV(SpendOre[i+1],0x7FFFFFFF,AtMost)}) -- 벌었을 경우
-DisplayPrint(HumanPlayers,{"\x07『 ",PName(i)," \x07벌었음 \x04: \x1F",SpendOre[i+1]," \x07』"})
-CElseX()--썼을 경우
-local NegVar=CreateVar(FP)
-CNeg(FP, NegVar, SpendOre[i+1])
-DisplayPrint(HumanPlayers,{"\x07『 ",PName(i)," \x08사용함 \x04: \x11",NegVar," \x07』"})
-CIfXEnd()
+CIf(FP,{CD(GS,1),CD(ShareOreMode,1)})
+	
+
+	CIf(FP,{CD(StartPlayers[i+1],1)})
+	-- SpendOre[i+1]
+	CIfX(FP,{CV(SpendOre[i+1],0x7FFFFFFF,AtMost)}) -- 벌었을 경우
+	DisplayPrint(HumanPlayers,{"\x07『 ",PName(i)," \x07벌었음 \x04: \x1F",SpendOre[i+1]," \x07』"})
+	CElseX()--썼을 경우
+	local NegVar=CreateVar(FP)
+	CNeg(FP, NegVar, SpendOre[i+1])
+	DisplayPrint(HumanPlayers,{"\x07『 ",PName(i)," \x08사용함 \x04: \x11",NegVar," \x07』"})
+	CIfXEnd()
+	CIfEnd()
 CIfEnd()
 end
 TriggerX(FP,{LocalPlayerID(128);Memory(0x68C144,AtLeast,1);},{SetMemory(0x68C144,SetTo,2);SetCp(128),DisplayText("\x07『 \x03관전 상태\x04에서도 \x11플레이어\x04에게 \x07채팅을 보낼 수 있습니다. \x07』", 4),SetCp(FP)},{preserved})

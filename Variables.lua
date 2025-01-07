@@ -12,7 +12,7 @@
 	MedicTick = {1,2,3,4,5}
 	ObEff = 84
 	nilunit = 181
-	QueueMaxSize = 200000
+	QueueMaxSize = 20000
 	MSDiff = {
 		 "\x07NM S\x04tyle",
 		 "\x08HD S\x04tyle",
@@ -191,6 +191,7 @@
 
 	TeamOre = CreateVar(FP)
 	TeamOreChange = CreateVar(FP)
+	ShareOreMode = CreateCcode()
 	SpendOre = CreateVarArr(5, FP)
 
 	
@@ -264,12 +265,13 @@
 	RandSwitch3 = "Switch 102"
 	RandSwitch4 = "Switch 103"
 	JYD = "Set Unit Order To: Junk Yard Dog"
+	
 	DelayMedicT = {
-		StrDesign("\x1D예약메딕\x04을 \x1B2Tick\x04으로 변경합니다. - \x1F225 Ore\x07"),
-		StrDesign("\x1D예약메딕\x04을 \x1B3Tick\x04으로 변경합니다. - \x1F250 Ore\x07"),
-		StrDesign("\x1D예약메딕\x04을 \x1B4Tick\x04으로 변경합니다. - \x1F275 Ore\x07"),
-		StrDesign("\x1D예약메딕\x04을 \x1B5Tick\x04으로 변경합니다. - \x1F300 Ore\x07"),
-		StrDesign("\x1D예약메딕\x04을 \x1B비활성화(1Tick)\x04하였습니다. - \x1F200 Ore\x07")}
+		StrDesign("\x1D예약메딕\x04을 \x1B2Tick\x04으로 변경합니다. - \x1F390 Ore\x07"),
+		StrDesign("\x1D예약메딕\x04을 \x1B3Tick\x04으로 변경합니다. - \x1F430 Ore\x07"),
+		StrDesign("\x1D예약메딕\x04을 \x1B4Tick\x04으로 변경합니다. - \x1F470 Ore\x07"),
+		StrDesign("\x1D예약메딕\x04을 \x1B5Tick\x04으로 변경합니다. - \x1F510 Ore\x07"),
+		StrDesign("\x1D예약메딕\x04을 \x1B비활성화(1Tick)\x04하였습니다. - \x1F350 Ore\x07")}
 
 	GiveRateT = {
 	StrDesign("\x04기부금액 단위가 \x1F5000 Ore\x04 \x04로 변경되었습니다."),
