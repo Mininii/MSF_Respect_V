@@ -1070,7 +1070,7 @@ end
 	f_TempRepeat({CD(GMode,3,AtMost)}, 94, 1, nil, P6, {288,3792})
 	f_TempRepeat({CD(GMode,3,AtMost)}, 11, 25, 187, P7, {288,3792})
 	f_TempRepeat({CD(GMode,3,AtMost)}, 69, 25, 187, P8, {288,3792})
-	CMov(FP,FNum,_Div(GTime,60))
+	CMov(FP,FNum,_Div(GTime,60),25)
 	if DLC_Project == 1 then
 		CIf(FP,{CD(GMode,4)})
 		CMov(FP,MinMod,_Mod(_Div(GTime2,60000),2))
