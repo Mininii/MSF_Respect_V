@@ -86,7 +86,7 @@ SetCall(FP)
 		TAccumulate(CurrentPlayer,AtLeast,TempFactor,Ore),
 		TMemoryX(TempUpgradePtr,AtMost,TempMul_254,TempMul_255)
 	})
-	for i = 0, 6 do
+	for i = 0, 4 do
 		CTrigger(FP, {CV(UpgradeCP,i)}, {SubV(CTMin[i+1],TempFactor)}, {preserved})
 	end
 		CDoActions(FP,{

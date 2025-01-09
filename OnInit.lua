@@ -652,7 +652,7 @@ CbyteConvert(FP,VArr(HVA3,0),GetStrArr(0,"\x0D\x0D!H"))
 	f_Read(FP,_Add(CI,19),PlayerV,nil,0xFF,1)
 
 	CIf(FP,{CV(RepHeroIndex,111)})
-	for i = 0,6 do
+	for i = 0,4 do
 		CIf(FP,CVX(PlayerV,i,0xFF))
 		CMov(FP,BarPos[i+1],CI)
 		--DisplayPrint(HumanPlayers, {"배럭 등록 완료"})
