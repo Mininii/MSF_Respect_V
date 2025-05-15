@@ -267,7 +267,7 @@
 
 	SetUnitsDatX(72,{Playerable = 2, Reqptr=5,SuppCost=0,MinCost=0,GasCost=0,BuildTime=1})--플레이어만 사용가능, 요구조건을 무조건?으로
 	for j,k in pairs(MedicTrig) do
-		SetUnitsDatX(k,{Playerable = 2, Reqptr=5, MinCost=350+((j-1)*40),GasCost=0,BuildTime = MedicTick[j],SuppCost = 0,RdySnd=999})--플레이어만 사용가능, 요구조건을 무조건?으로
+		SetUnitsDatX(k,{Playerable = 2, Reqptr=5, MinCost=350,GasCost=0,BuildTime = MedicTick[j],SuppCost = 0,RdySnd=999})--플레이어만 사용가능, 요구조건을 무조건?으로
 	end
 	for j,k in pairs(GiveUnitID) do
 		SetUnitsDatX(k,{Playerable = 2, Reqptr=5, MinCost=0,GasCost=0,BuildTime = 1,SuppCost = 0})--플레이어만 사용가능, 요구조건을 무조건?으로

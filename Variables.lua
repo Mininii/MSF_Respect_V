@@ -31,10 +31,20 @@
 		NMFactorAtk=7 -- 파벳베이스 : 1/2 데미지로 설정할것
 		HMBaseAtk=100
 		HMFactorAtk=20
+
+
 		SMBaseAtk = 100 -- 파벳베이스 : 1/2 데미지로 설정할것
 		SMFactorAtk = 15 -- 파벳베이스 : 1/2 데미지로 설정할것
 		RMBaseAtk = 90
 		RMFactorAtk = 40
+
+		
+		SMBaseAtk2 = 100 -- 파벳베이스 : 1/2 데미지로 설정할것
+		SMFactorAtk2 = 20 -- 파벳베이스 : 1/2 데미지로 설정할것
+		RMBaseAtk2 = 50
+		RMFactorAtk2 = 14
+
+
 		
 		SMSkillBaseAtk = 50
 		SMSkillFactorAtk = 20
@@ -59,6 +69,8 @@
 		HMCost = 40000
 		SMCost = 50000--유닛죽이기용
 		RMCost = 300000--건작용
+		SMCost2 = 100000 -- 온리마린 딜개쌘거
+		RMCost2 = 50000 -- 온리마린 스플
 		RMtoSMCost = 2000
 	else
 		NMCost = 5000

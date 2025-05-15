@@ -478,6 +478,17 @@ if DLC_Project == 1 then
 --	DoActions2(FP,{Simple_SetLoc(0, 0, 0, 2048, 2048),Order("Men", Force2, 1, Attack, 6)})
 --	CIfEnd()
 end
+
+local ZUnitArr = {43,37,38,39,44,46,55,53,54,56,104,51,48}
+local ZAct = {}
+for j,k in pairs(ZUnitArr) do
+	table.insert(ZAct,KillUnit(k, P6))
+	table.insert(ZAct,KillUnit(k, P7))
+	table.insert(ZAct,KillUnit(k, P8))
+end
+
+
+Trigger2X(FP,{CV(CreateUnitQueuePenaltyT,4800,AtLeast)},ZAct,{preserved})
 Trigger2X(FP,{CV(CreateUnitQueuePenaltyT,4800,AtLeast)},{RotatePlayer({
 	PlayWAVX("sound\\Bullet\\TNsHit00.wav"),
 	PlayWAVX("sound\\Bullet\\TNsHit00.wav"),
@@ -486,8 +497,9 @@ Trigger2X(FP,{CV(CreateUnitQueuePenaltyT,4800,AtLeast)},{RotatePlayer({
 	PlayWAVX("sound\\Terran\\GOLIATH\\TGoPss05.WAV"),
 	},HumanPlayers,FP),SetV(CreateUnitQueuePenaltyT,0),AddV(CreateUnitQueuePenaltyAct,1),},{preserved})
 
-
+CIf(FP,{CD(GS,1),})
 DisplayPrint(HumanPlayers,{"\x07『 \x04CreateUnit\x07Queue \x04: ",CreateUnitQueueNum," || \x08P\x04enalty \x08T\x04imer : \x08",CreateUnitQueuePenaltyT," \x04/ \x034800 \x07』"})
+CIfEnd()
 for i = 0, 4 do
 CIf(FP,{CD(GS,1),CD(ShareOreMode,1)})
 	

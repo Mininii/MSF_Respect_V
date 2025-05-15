@@ -39,6 +39,10 @@
 		{27,"staredit\\wav\\BGM_SpaceofSoul.ogg",76*1000},
 		{28,"staredit\\wav\\BGM_OP_DLC.ogg",127*1000},
 		{29,"staredit\\wav\\BGM_OP_DLC2.ogg",125*1000},
+
+
+
+		
 		
 	})
 	
@@ -87,6 +91,7 @@
 			}, {})
 			TriggerX(FP, {CD(GS,0)}, {GiveUnits(All, 96, AllPlayers, 64, i),},{preserved})
 			TriggerX(FP, {CD(GS,1)}, {GiveUnits(All, 96, AllPlayers, 41, i),},{preserved})
+			Trigger2X(FP, {ElapsedTime(AtMost, 240),Bring(i ,AtLeast, 1, 96, 34+i);CD(EVFCcode,1)},{SetCD(HongEnable,1)})
             if Limit == 1 then
                 f_Read(FP,0x6284E8+(0x30*i),"X",Cunit2)
             end
@@ -418,7 +423,7 @@
 
 	CTrigger(FP, {CD(GST2,300,AtLeast)}, {TCreateUnit(1, 96, 10, CurrentOP)})
 	TriggerX(FP, {Bring(AllPlayers, AtMost, 0, 96, 10)}, {MoveUnit(All, 96, AllPlayers, 64, 10)},{preserved})
-	TriggerX(FP,{CD(GST2,1000,AtLeast)},{MoveUnit(All, 96, AllPlayers, 64, 8)},{preserved})
+	TriggerX(FP,{CD(GST2,2000,AtLeast)},{MoveUnit(All, 96, AllPlayers, 64, 8)},{preserved})
 	TriggerX(FP, {CD(GST2,300,AtMost)}, {RotatePlayer({CenterView(64)}, HumanPlayers, FP)},{preserved})
 	TriggerX(FP, {CD(GST2,300,AtLeast)}, {RotatePlayer({CenterView(10)}, HumanPlayers, FP)},{preserved})
 	TriggerX(FP, {CD(GST2,300,AtLeast)}, {RotatePlayer({DisplayTextX(StrDesignX("\x04난이도를 선택해 주십시오.").."\n"..StrDesignX("\x04- \x03난이도 설명은 비콘 클릭시 출력됩니다 \x04-"), 4)}, HumanPlayers, FP)})
@@ -470,7 +475,12 @@ end
 	Trigger2X(FP, {Bring(AllPlayers, AtLeast, 1, 96, 12)}, {SetCD(GST,1),RemoveUnit(96, AllPlayers),SetCD(GMode,2)})
 	Trigger2X(FP, {Bring(AllPlayers, AtLeast, 1, 96, 9)}, {SetCD(GST,1),RemoveUnit(96, AllPlayers),SetCD(GMode,3)})
 	if Limit == 0 then
-		Trigger2X(FP, {Bring(AllPlayers, AtLeast, 1, 96, 47)}, {RotatePlayer({DisplayTextX(StrDesignX("\x04해당 난이도는 \x07리뉴얼 중 \x04입니다. 추후 2.0 업데이트에서 뵙시다!!"), 4),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg")}, HumanPlayers, FP),MoveUnit(1, 96, AllPlayers, 47, 10),},{preserved})
+		
+
+		Trigger2X(FP, {ElapsedTime(AtMost, 64),Bring(AllPlayers, AtLeast, 1, 96, 47)}, {RotatePlayer({DisplayTextX(StrDesignX("\x04해당 난이도는 \x07리뉴얼 중 \x04입니다. 추후 2.0 업데이트에서 뵙시다!!"), 4),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg")}, HumanPlayers, FP),MoveUnit(1, 96, AllPlayers, 47, 10),},{preserved})
+
+		Trigger2X(FP, {ElapsedTime(AtLeast, 65),Memory(0xA03740,Exactly,0),Bring(AllPlayers, AtLeast, 1, 96, 47)}, {SetCD(GST,1),RemoveUnit(96, AllPlayers),SetCD(GMode,4)},{preserved})
+		Trigger2X(FP, {ElapsedTime(AtLeast, 65),Memory(0xA03740,AtLeast,1),Bring(AllPlayers, AtLeast, 1, 96, 47)}, {RotatePlayer({DisplayTextX(StrDesignX("\x04해당 난이도는 \x07리뉴얼 중 \x04입니다. 추후 2.0 업데이트에서 뵙시다!!"), 4),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg")}, HumanPlayers, FP),MoveUnit(1, 96, AllPlayers, 47, 10),},{preserved})
 	else
 		Trigger2X(FP, {Bring(AllPlayers, AtLeast, 1, 96, 47)}, {SetCD(GST,1),RemoveUnit(96, AllPlayers),SetCD(GMode,4)})
 	end
@@ -507,6 +517,7 @@ end
 		RemoveUnit(197, AllPlayers),
 		RemoveUnit(196, AllPlayers),
 		RemoveUnit(145, AllPlayers),
+		RemoveUnit(158, AllPlayers),
 		SetMemory(0x582144 + (4 * 6),SetTo,1600);
 		SetMemory(0x5821A4 + (4 * 6),SetTo,1600);
 		SetMemory(0x582144 + (4 * 7),SetTo,1600);
@@ -528,8 +539,21 @@ end
 	TriggerX(FP,{CD(GMode,2,AtMost)},{BGMActNMHD},{preserved})
 	TriggerX(FP,{CD(GMode,3)},{BGMActMX},{preserved})
 	TriggerX(FP,{CD(GMode,4)},{BGMActSC},{preserved})
+
+
 	if DLC_Project == 1 then
+		TriggerX(FP, (CD(GMode,2)), {
+			SetMemoryB(0x58F32C+(5*15)+13, SetTo, 2),
+			SetMemoryB(0x58F32C+(6*15)+13, SetTo, 1),
+			SetMemoryB(0x58F32C+(7*15)+13, SetTo, 1),})
+		TriggerX(FP, (CD(GMode,3)), {
+			SetMemoryB(0x58F32C+(5*15)+13, SetTo, 4),
+			SetMemoryB(0x58F32C+(6*15)+13, SetTo, 2),
+			SetMemoryB(0x58F32C+(7*15)+13, SetTo, 2),})
 		TriggerX(FP, (CD(GMode,4)), {
+			SetMemoryB(0x58F32C+(5*15)+13, SetTo, 6),
+			SetMemoryB(0x58F32C+(6*15)+13, SetTo, 3),
+			SetMemoryB(0x58F32C+(7*15)+13, SetTo, 3),
 		SetPlayerColor(P6, SetTo, 188);
 		SetPlayerColor(P7, SetTo, 160);
 		SetPlayerColor(P8, SetTo, 173);
@@ -537,16 +561,38 @@ end
 		SetMinimapColor(P7, SetTo, 160),
 		SetMinimapColor(P8, SetTo, 173),})
 		TriggerX(FP, (CD(OnlyMarineMode,1)), {
+			SetMemoryW(0x656888+(3*2),SetTo,3), --스플 안
+			SetMemoryW(0x6570C8+(3*2),SetTo,5), --스플 중
+			SetMemoryW(0x657780+(3*2),SetTo,10), --스플 밖
+			SetMemory(0x656CA8+(3 *4),SetTo,150);
+			SetMemoryB(0x6566F8+2,SetTo,1),
+			SetMemoryW(0x656EB0+(2 *2),SetTo,SMBaseAtk2),
+			SetMemoryW(0x657678+(2 *2),SetTo,SMFactorAtk2),
+			SetMemoryW(0x656EB0+(3 *2),SetTo,RMBaseAtk2),
+			SetMemoryW(0x657678+(3 *2),SetTo,RMFactorAtk2),
+			SetMemory(0x662350 + (10*4),SetTo,8500*256),
+			SetMemoryW(0x660E00 + (10 *2), SetTo, 8500),
+			SetMemory(0x662350 + (MarID[1]*4),SetTo,9999*256),
+			SetMemoryW(0x660E00 + (MarID[1] *2), SetTo, 9999),
+			SetMemory(0x662350 + (MarID[2]*4),SetTo,9999*256),
+			SetMemoryW(0x660E00 + (MarID[2] *2), SetTo, 9999),
+			SetMemory(0x662350 + (MarID[3]*4),SetTo,9999*256),
+			SetMemoryW(0x660E00 + (MarID[3] *2), SetTo, 9999),
+			SetMemory(0x662350 + (MarID[4]*4),SetTo,9999*256),
+			SetMemoryW(0x660E00 + (MarID[4] *2), SetTo, 9999),
+			SetMemory(0x662350 + (MarID[5]*4),SetTo,9999*256),
+			SetMemoryW(0x660E00 + (MarID[5] *2), SetTo, 9999),
+
+			SetMemoryB(0x57F27C + (0 * 228) + 5,SetTo,0),
+			SetMemoryB(0x57F27C + (1 * 228) + 5,SetTo,0),
+			SetMemoryB(0x57F27C + (2 * 228) + 5,SetTo,0),
+			SetMemoryB(0x57F27C + (3 * 228) + 5,SetTo,0),
+			SetMemoryB(0x57F27C + (4 * 228) + 5,SetTo,0),
 			SetMemoryB(0x57F27C + (0 * 228) + 50,SetTo,0),
 			SetMemoryB(0x57F27C + (1 * 228) + 50,SetTo,0),
 			SetMemoryB(0x57F27C + (2 * 228) + 50,SetTo,0),
 			SetMemoryB(0x57F27C + (3 * 228) + 50,SetTo,0),
 			SetMemoryB(0x57F27C + (4 * 228) + 50,SetTo,0),
-			SetMemoryB(0x57F27C + (0 * 228) + 12,SetTo,0),
-			SetMemoryB(0x57F27C + (1 * 228) + 12,SetTo,0),
-			SetMemoryB(0x57F27C + (2 * 228) + 12,SetTo,0),
-			SetMemoryB(0x57F27C + (3 * 228) + 12,SetTo,0),
-			SetMemoryB(0x57F27C + (4 * 228) + 12,SetTo,0),
 
 			
 		})
@@ -557,11 +603,6 @@ end
 			SetMemoryB(0x57F27C + (2 * 228) + 50,SetTo,1),
 			SetMemoryB(0x57F27C + (3 * 228) + 50,SetTo,1),
 			SetMemoryB(0x57F27C + (4 * 228) + 50,SetTo,1),
-			SetMemoryB(0x57F27C + (0 * 228) + 12,SetTo,1),
-			SetMemoryB(0x57F27C + (1 * 228) + 12,SetTo,1),
-			SetMemoryB(0x57F27C + (2 * 228) + 12,SetTo,1),
-			SetMemoryB(0x57F27C + (3 * 228) + 12,SetTo,1),
-			SetMemoryB(0x57F27C + (4 * 228) + 12,SetTo,1),
 
 			
 		})
@@ -629,6 +670,8 @@ end
 			SetMemoryB(0x57F27C + (3 * 228) + 19,SetTo,0),
 			SetMemoryB(0x57F27C + (4 * 228) + 19,SetTo,0),
 		})
+
+
 		TriggerX(FP, {CD(GMode,3)}, {SetMemoryB(0x663CE8 + 8,SetTo,4),
 		SetMemoryB(0x57F27C + (0 * 228) + 7,SetTo,0),
 		SetMemoryB(0x57F27C + (1 * 228) + 7,SetTo,0),
@@ -640,6 +683,7 @@ end
 		SetMemoryB(0x57F27C + (2 * 228) + 12,SetTo,0),
 		SetMemoryB(0x57F27C + (3 * 228) + 12,SetTo,0),
 		SetMemoryB(0x57F27C + (4 * 228) + 12,SetTo,0),})
+
 		TriggerX(FP, {CD(EVFCcode,1)}, {
 			SetMemoryW(0x656EB0+(0 *2),Add,3), -- 공격력
 			SetMemoryW(0x657678+(0 *2),Add,2), -- 추가공격력
@@ -650,7 +694,17 @@ end
 			SetMemoryW(0x656EB0+(3 *2),Add,RMBaseAtk/2), -- 공격력
 			SetMemoryW(0x657678+(3 *2),Add,RMFactorAtk/2), -- 추가공격력
 			
+			SetMemoryW(0x656EB0+(119 *2),Add,SMSkillBaseAtk/2), -- 공격력
+			SetMemoryW(0x657678+(119 *2),Add,SMSkillFactorAtk/2), -- 추가공격력
+			SetMemoryW(0x656EB0+(120 *2),Add,RMSkillBaseAtk/2), -- 공격력
+			SetMemoryW(0x657678+(120 *2),Add,RMSkillFactorAtk/2), -- 추가공격력
+			SetMemoryW(0x656EB0+(121 *2),Add,SMSkillBaseAtk2/2), -- 공격력
+			SetMemoryW(0x657678+(121 *2),Add,SMSkillFactorAtk2/2), -- 추가공격력
+			SetMemoryW(0x656EB0+(122 *2),Add,SMSkillBaseAtk3/2), -- 공격력
+			SetMemoryW(0x657678+(122 *2),Add,SMSkillFactorAtk3/2), -- 추가공격력
 	})
+		
+
 	else
 		TriggerX(FP, {CD(EVFCcode,0)}, {
 			SetMemoryB(0x57F27C + (0 * 228) + 19,SetTo,0),
@@ -660,24 +714,26 @@ end
 			SetMemoryB(0x57F27C + (4 * 228) + 19,SetTo,0),
 		})
 		
+		TriggerX(FP, {CD(EVFCcode,1),CD(OnlyMarineMode,0)}, {
+			SetMemoryW(0x656EB0+(2 *2),Add,SMBaseAtk/2), -- 공격력
+			SetMemoryW(0x657678+(2 *2),Add,SMFactorAtk/2), -- 추가공격력
+			SetMemoryW(0x656EB0+(3 *2),Add,RMBaseAtk/2), -- 공격력
+			SetMemoryW(0x657678+(3 *2),Add,RMFactorAtk/2), -- 추가공격력
+			
+		})
+		TriggerX(FP, {CD(EVFCcode,1),CD(OnlyMarineMode,1)}, {
+			SetMemoryW(0x656EB0+(2 *2),Add,SMBaseAtk2/2),
+			SetMemoryW(0x657678+(2 *2),Add,SMFactorAtk2/2),
+			SetMemoryW(0x656EB0+(3 *2),Add,RMBaseAtk2/2),
+			SetMemoryW(0x657678+(3 *2),Add,RMFactorAtk2/2),
+			
+	})
 	TriggerX(FP, {CD(EVFCcode,1)}, {
 		SetMemoryW(0x656EB0+(0 *2),Add,3), -- 공격력
 		SetMemoryW(0x657678+(0 *2),Add,2), -- 추가공격력
 		SetMemoryW(0x656EB0+(1 *2),Add,HMBaseAtk/2), -- 공격력
 		SetMemoryW(0x657678+(1 *2),Add,HMFactorAtk/2), -- 추가공격력
-		SetMemoryW(0x656EB0+(2 *2),Add,SMBaseAtk/2), -- 공격력
-		SetMemoryW(0x657678+(2 *2),Add,SMFactorAtk/2), -- 추가공격력
-		SetMemoryW(0x656EB0+(3 *2),Add,RMBaseAtk/2), -- 공격력
-		SetMemoryW(0x657678+(3 *2),Add,RMFactorAtk/2), -- 추가공격력
 		
-		SetMemoryW(0x656EB0+(119 *2),Add,SMSkillBaseAtk/2), -- 공격력
-		SetMemoryW(0x657678+(119 *2),Add,SMSkillFactorAtk/2), -- 추가공격력
-		SetMemoryW(0x656EB0+(120 *2),Add,RMSkillBaseAtk/2), -- 공격력
-		SetMemoryW(0x657678+(120 *2),Add,RMSkillFactorAtk/2), -- 추가공격력
-		SetMemoryW(0x656EB0+(121 *2),Add,SMSkillBaseAtk2/2), -- 공격력
-		SetMemoryW(0x657678+(121 *2),Add,SMSkillFactorAtk2/2), -- 추가공격력
-		SetMemoryW(0x656EB0+(122 *2),Add,SMSkillBaseAtk3/2), -- 공격력
-		SetMemoryW(0x657678+(122 *2),Add,SMSkillFactorAtk3/2), -- 추가공격력
 })
 --TriggerX(FP, {CD(OnlyMarineMode,1)}, {
 --	SetMemoryW(0x656EB0+(0 *2),Add,2), -- 공격력
@@ -812,6 +868,45 @@ DoActions(FP,{
 		
 		
 		if DLC_Project == 1 then
+			Trigger { -- 조합 스마
+			players = {i},
+			conditions = {
+				Label(0);
+				CD(OnlyMarineMode,1);
+				Bring(i,AtLeast,1,20,13); 
+				Accumulate(i,AtLeast,SMCost2,Ore);
+				Accumulate(i,AtMost,0x7FFFFFFF,Ore);
+				CD(SMCr[i+1],0)
+			},
+			actions = {
+				ModifyUnitEnergy(1,20,i,13,0);
+				RemoveUnitAt(1,20,13,i);
+				SetResources(i,Subtract,SMCost2,Ore);
+				AddCD(SMCr[i+1],1);
+				DisplayText(StrDesign("\x1F광물\x04을 소모하여 \x1BH\x04ero M\x04arine 12기를 \x1DS\x04pecial \x1DM\x04arine으로 \x19변환\x04하였습니다. - \x1F"..N_to_EmN(SMCost2).." O r e"),4);
+				PreserveTrigger();
+			},
+			}
+			Trigger { -- 조합 근
+			players = {i},
+			conditions = {
+				Label(0);
+				CD(OnlyMarineMode,1);
+				Bring(i,AtLeast,1,10,13); 
+				Accumulate(i,AtLeast,RMCost2,Ore);
+				Accumulate(i,AtMost,0x7FFFFFFF,Ore);
+				CD(RMCr[i+1],0)
+			},
+			actions = {
+				ModifyUnitEnergy(1,10,i,13,0);
+				RemoveUnitAt(1,10,13,i);
+				SetResources(i,Subtract,RMCost2,Ore);
+				AddCD(RMCr[i+1],1);
+				DisplayText(StrDesign("\x1F광물\x04을 소모하여 \x1DS\x04pecial \x1DM\x04arine을 \x19R\x04espect \x19M\x04arine으로 \x19변환\x04하였습니다. - \x1F"..N_to_EmN(RMCost2).." O r e"),4);
+				PreserveTrigger();
+			},
+			}
+
 			Trigger { -- 조합 스마
 			players = {i},
 			conditions = {
@@ -984,7 +1079,7 @@ DoActions(FP,{
 		TriggerX(FP, {Deaths(i, Exactly, 2, 217),Deaths(i, AtLeast, 1, 190)}, AddCD(CrCheck1[i+1],1),{preserved})
 		TriggerX(FP, {Deaths(i, Exactly, 2, 217),Deaths(i, AtLeast, 1, 191)}, AddCD(CrCheck2[i+1],1),{preserved})
 		TriggerX(FP, {CD(CrCheck1[i+1],1),CD(CrCheck2[i+1],1),}, {SetDeaths(i, SetTo, 1, 219),SetCp(i),DisplayText(StrDesignX("\x03제작자\x04 인식되었습니다.\x07환영합니다."), 4),PlayWAV("staredit\\wav\\ADEnd.ogg");PlayWAV("staredit\\wav\\ADEnd.ogg"),SetCp(FP)})
-		Trigger2X(FP, {Deaths(i, AtLeast, 1, 217),Bring(i, AtLeast, 1, 96, 34+i);CD(EVFCcode,1)},{SetCD(HongEnable,1)})
+
 		CTrigger(FP, {CD(ColorTimer,0)}, {SetPlayerColor(i, SetTo, PColorC[i+1])}, {preserved})
 		CTrigger(FP, {CD(ColorTimer,1),Memory(0x582294+(4*i),AtLeast,2100),Memory(0x582294+(4*i),AtMost,2400)}, {SetPlayerColor(i, SetTo, 255)}, {preserved})--TSetMemoryX(EXCC_TempVarArr[9],SetTo,P6*0x10000, 0xFF0000)
 		CTrigger(FP, {CD(ColorTimer,1),Memory(0x582294+(4*i),AtLeast,1800),Memory(0x582294+(4*i),AtMost,2100)}, {SetPlayerColor(i, SetTo, 128)}, {preserved})--TSetMemoryX(EXCC_TempVarArr[9],SetTo,P8*0x10000, 0xFF0000)
@@ -1302,6 +1397,7 @@ DoActions(FP,{
 		end
 		
 		
+		CIf(FP,{CD(OnlyMarineMode,0)})
 		if Limit == 1 then
 			--DisplayPrintEr(i, {"RebirthUp : ",RebirthUp[i+1],"   SMRebirthT : ",SMRebirthT[i+1],"   RMRebirthT : ",RMRebirthT[i+1],"   "})
 			CIf(FP,CD(TestMode,1))
@@ -1482,7 +1578,7 @@ DoActions(FP,{
 		
 
 		
-
+		CIfEnd()
 
 
 		TriggerX(FP, {ElapsedTime(AtLeast, 10),Deaths(i,AtLeast,1,140),CD(WanCT[i+1],0)},{SetCD(WanCT[i+1],480),SetCp(i),DisplayText(MacroWarn1, 4),PlayWAV("sound\\Bullet\\TNsFir00.wav"),PlayWAV("sound\\Bullet\\TNsFir00.wav"),PlayWAV("sound\\Bullet\\TNsFir00.wav"),PlayWAV("sound\\Bullet\\TNsFir00.wav")})

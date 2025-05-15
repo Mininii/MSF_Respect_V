@@ -389,7 +389,7 @@ function Gen2GunS(CUTable1,CUTable2,GunNm,ShapeHD,ShapeSC,ZunitSh1,ZunitSh2,Crea
 	CIfEnd()
 end
 
-	
+
 	CIf_GCase(131)--해처리
 	G_CB_SetSpawn({GNm(1),Gun_Line(5,Exactly,0)}, {43,37,38,39}, P_6, 4, 0, 0, nil, nil, P7)
 	G_CB_SetSpawn({GNm(1),Gun_Line(6,AtLeast,1)}, {44,46,38,39}, P_7, 5, 0, 0, nil, nil, P7)
@@ -758,7 +758,7 @@ end
 	CIf_GCase(148)--옵마(Hypernaid)
 		CIf(FP,GNm(1))
 		
-		CTrigger(FP,{Gun_Line(7,AtLeast,480)},{Gun_SetLine(6,Add,1),Gun_SetLine(7,SetTo,0),},1)
+		CTrigger(FP,{Gun_Line(7,AtLeast,360)},{Gun_SetLine(6,Add,1),Gun_SetLine(7,SetTo,0),},1)
 
 		G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,1)}, {21,17}, "ACAS", "Hy1LC_64", nil, 0, nil, nil, P7)
 		G_CB_SetSpawn({Gun_Line(5,Exactly,0),CD(GMode,2,AtLeast)}, {21,17}, "ACAS", "Hy1FP_64", nil, 0, nil, nil, P7)
@@ -1075,7 +1075,7 @@ end
 	CIfEnd()
 	
 	CIf_GCase(126)--노라드
-		CTrigger(FP,{Gun_Line(7,AtLeast,480)},{Gun_SetLine(6,Add,1),Gun_SetLine(7,SetTo,0),},1)
+		CTrigger(FP,{Gun_Line(7,AtLeast,360)},{Gun_SetLine(6,Add,1),Gun_SetLine(7,SetTo,0),},1)
 		--NS_HD
 		--NS_SC
 		--NS_HDW
@@ -1180,7 +1180,7 @@ end
 	--0~20
 
 
-	CTrigger(FP,{Gun_Line(7,AtLeast,480)},{Gun_SetLine(6,Add,1),Gun_SetLine(7,SetTo,0),},1)
+	CTrigger(FP,{Gun_Line(7,AtLeast,360)},{Gun_SetLine(6,Add,1),Gun_SetLine(7,SetTo,0),},1)
 	local TotalM = CreateVar(FP)
 	local MarNum = CreateVar(FP)
 	local MarNum2 = CreateVar(FP)
@@ -1202,11 +1202,18 @@ end
 		UnitReadX(FP, i, MarID[i+1], 201, MarNum4[i+1])--*4
 		CIfEnd()
 	end
-	
+	CIfX(FP,{CD(OnlyMarineMode,0)})
 	CAdd(FP,TotalM,_Mul(MarNum3,20))
 	for i = 0, 4 do
 		CAdd(FP,TotalM,_Mul(MarNum4[i+1],20))
 	end
+	CElseX()
+	CAdd(FP,TotalM,_Mul(MarNum3,4))
+	for i = 0, 4 do
+		CAdd(FP,TotalM,_Mul(MarNum4[i+1],4))
+	end
+	CIfXEnd()
+
 	CIf(FP,{CD(GMode,4)})
 	
 	CMov(FP,TotalM,_Mul(_Mod(GTime,60),8))--무조건 시간기믹만 적용
@@ -1399,7 +1406,7 @@ end
 	Simple_SetLocX(FP,200, _Add(NPosX,Var_TempTable[2]), _Add(NPosY,Var_TempTable[3]), _Add(NPosX,Var_TempTable[2]), _Add(NPosY,Var_TempTable[3]))
 	CDoActions(FP, {CreateUnit(1, 94, 201, P6),KillUnit(94, P6)})
 	CForEnd()
-	CIf(FP,{Gun_Line(7,AtLeast,480),Memory(0x628438,AtLeast,1)},{Gun_SetLine(6,Add,1),Gun_SetLine(7,SetTo,0),})
+	CIf(FP,{Gun_Line(7,AtLeast,360),Memory(0x628438,AtLeast,1)},{Gun_SetLine(6,Add,1),Gun_SetLine(7,SetTo,0),})
 		f_Read(FP,0x628438,"X",Nextptrs,0xFFFFFF)
 		CMov(FP,CunitIndex,_Div(_Sub(Nextptrs,19025),_Mov(84)))
 		CDoActions(FP, {CreateUnit(1, 119, 1, P6)})
@@ -1518,19 +1525,19 @@ end
 		CIf(FP,{GNm(j)})
 		for l, m in pairs(k) do
 			if l == 4 then
-				f_TempRepeat({CD(GMode,1),Gun_Line(7,AtLeast,120*(10-1))},m,1,188,P6,nil,1)
-				f_TempRepeat({CD(GMode,2,AtLeast),Gun_Line(7,AtLeast,120*(10-1))},m,1,187,P6,nil,1)
+				f_TempRepeat({CD(GMode,1),Gun_Line(7,AtLeast,90*(10-1))},m,1,188,P6,nil,1)
+				f_TempRepeat({CD(GMode,2,AtLeast),Gun_Line(7,AtLeast,90*(10-1))},m,1,187,P6,nil,1)
 				--G_CB_TSetSpawn({CD(GMode,2,AtLeast),Gun_Line(7,AtLeast,120*(10-1))}, {m}, {NmSh}, 1, {OwnerTable={P6},RepeatType = 187,RotateTable="Main"})
 			else
 				for o = 1, 3 do
-					G_CB_TSetSpawn({CD(GMode,1),Gun_Line(7,AtLeast,120*((o-1)+((l-1)*3)))}, {m}, {NmSh}, 1, {OwnerTable={P6},RepeatType = RPT,RotateTable="Main"})
-					G_CB_TSetSpawn({CD(GMode,2,AtLeast),Gun_Line(7,AtLeast,120*((o-1)+((l-1)*3)))}, {m}, {SCSh}, 1, {OwnerTable={P6},RepeatType = RPT,RotateTable="Main"})
+					G_CB_TSetSpawn({CD(GMode,1),Gun_Line(7,AtLeast,90*((o-1)+((l-1)*3)))}, {m}, {NmSh}, 1, {OwnerTable={P6},RepeatType = RPT,RotateTable="Main"})
+					G_CB_TSetSpawn({CD(GMode,2,AtLeast),Gun_Line(7,AtLeast,90*((o-1)+((l-1)*3)))}, {m}, {SCSh}, 1, {OwnerTable={P6},RepeatType = RPT,RotateTable="Main"})
 				end
 			end
 		end
 		CIfEnd()
 	end
-	CTrigger(FP,{Gun_Line(7,AtLeast,120*(10))},{Gun_DoSuspend()},1)
+	CTrigger(FP,{Gun_Line(7,AtLeast,90*(10))},{Gun_DoSuspend()},1)
 	CIfEnd()
 
 
@@ -1795,33 +1802,33 @@ end
 	
 	function PSIGunUID(GenNum,CUT)
 		if DLC_Project == 1 then
-			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+0),CD(GMode,1)}, {CUT[1]}, {PSILHD1}, 1, {OwnerTable=P6,RepeatType={"Patrol_Gun"}})
-			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+0),CD(GMode,2)}, {CUT[1]}, {PSILSC1}, 1, {OwnerTable=P6,RepeatType={"Patrol_Gun"}})
-			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+0),CD(GMode,3)}, {CUT[1]}, {PSILSC1}, 1, {OwnerTable=P6,RepeatType={"Patrol_Gun"}})
-			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+0),CD(GMode,4)}, {CUT[1]}, {PSILSC1}, 1, {OwnerTable=P6,RepeatType=187})
-			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+120),CD(GMode,1)}, {CUT[2]}, {PSICHD1}, 1, {OwnerTable=P7,RepeatType={"Patrol_Gun"}})
-			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+120),CD(GMode,2)}, {CUT[2]}, {PSICSC1}, 1, {OwnerTable=P7,RepeatType={"Patrol_Gun"}})
-			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+120),CD(GMode,3)}, {CUT[2]}, {PSICSC1}, 1, {OwnerTable=P7,RepeatType={"Patrol_Gun"}})
-			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+120),CD(GMode,4)}, {CUT[2]}, {PSICSC1}, 1, {OwnerTable=P7,RepeatType=187})
-			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+240),CD(GMode,1)}, {CUT[3]}, {PSISHD1}, 1, {OwnerTable=P8,RepeatType={"Patrol_Gun"}})
-			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+240),CD(GMode,2)}, {CUT[3]}, {PSISSC1}, 1, {OwnerTable=P8,RepeatType={"Patrol_Gun"}})
-			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+240),CD(GMode,3)}, {CUT[3]}, {PSISSC1}, 1, {OwnerTable=P8,RepeatType={"Patrol_Gun"}})
-			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+240),CD(GMode,4)}, {CUT[3]}, {PSISSC1}, 1, {OwnerTable=P8,RepeatType=187})
+			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*240)+0),CD(GMode,1)}, {CUT[1]}, {PSILHD1}, 1, {OwnerTable=P6,RepeatType={"Patrol_Gun"}})
+			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*240)+0),CD(GMode,2)}, {CUT[1]}, {PSILSC1}, 1, {OwnerTable=P6,RepeatType={"Patrol_Gun"}})
+			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*240)+0),CD(GMode,3)}, {CUT[1]}, {PSILSC1}, 1, {OwnerTable=P6,RepeatType={"Patrol_Gun"}})
+			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*240)+0),CD(GMode,4)}, {CUT[1]}, {PSILSC1}, 1, {OwnerTable=P6,RepeatType=187})
+			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*240)+80),CD(GMode,1)}, {CUT[2]}, {PSICHD1}, 1, {OwnerTable=P7,RepeatType={"Patrol_Gun"}})
+			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*240)+80),CD(GMode,2)}, {CUT[2]}, {PSICSC1}, 1, {OwnerTable=P7,RepeatType={"Patrol_Gun"}})
+			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*240)+80),CD(GMode,3)}, {CUT[2]}, {PSICSC1}, 1, {OwnerTable=P7,RepeatType={"Patrol_Gun"}})
+			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*240)+80),CD(GMode,4)}, {CUT[2]}, {PSICSC1}, 1, {OwnerTable=P7,RepeatType=187})
+			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*240)+160),CD(GMode,1)}, {CUT[3]}, {PSISHD1}, 1, {OwnerTable=P8,RepeatType={"Patrol_Gun"}})
+			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*240)+160),CD(GMode,2)}, {CUT[3]}, {PSISSC1}, 1, {OwnerTable=P8,RepeatType={"Patrol_Gun"}})
+			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*240)+160),CD(GMode,3)}, {CUT[3]}, {PSISSC1}, 1, {OwnerTable=P8,RepeatType={"Patrol_Gun"}})
+			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*240)+160),CD(GMode,4)}, {CUT[3]}, {PSISSC1}, 1, {OwnerTable=P8,RepeatType=187})
 		else
-			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+0),CD(GMode,1)}, {CUT[1]}, {PSILHD1}, 1, {OwnerTable=P6,RepeatType={"Attack_Gun"}})
-			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+0),CD(GMode,2,AtLeast)}, {CUT[1]}, {PSILSC1}, 1, {OwnerTable=P6,RepeatType={"Attack_Gun"}})
-			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+120),CD(GMode,1)}, {CUT[2]}, {PSICHD1}, 1, {OwnerTable=P7,RepeatType={"Attack_Gun"}})
-			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+120),CD(GMode,2,AtLeast)}, {CUT[2]}, {PSICSC1}, 1, {OwnerTable=P7,RepeatType={"Attack_Gun"}})
-			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+240),CD(GMode,1)}, {CUT[3]}, {PSISHD1}, 1, {OwnerTable=P8,RepeatType={"Attack_Gun"}})
-			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+240),CD(GMode,2,AtLeast)}, {CUT[3]}, {PSISSC1}, 1, {OwnerTable=P8,RepeatType={"Attack_Gun"}})
+			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*240)+0),CD(GMode,1)}, {CUT[1]}, {PSILHD1}, 1, {OwnerTable=P6,RepeatType={"Attack_Gun"}})
+			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*240)+0),CD(GMode,2,AtLeast)}, {CUT[1]}, {PSILSC1}, 1, {OwnerTable=P6,RepeatType={"Attack_Gun"}})
+			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*240)+80),CD(GMode,1)}, {CUT[2]}, {PSICHD1}, 1, {OwnerTable=P7,RepeatType={"Attack_Gun"}})
+			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*240)+80),CD(GMode,2,AtLeast)}, {CUT[2]}, {PSICSC1}, 1, {OwnerTable=P7,RepeatType={"Attack_Gun"}})
+			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*240)+160),CD(GMode,1)}, {CUT[3]}, {PSISHD1}, 1, {OwnerTable=P8,RepeatType={"Attack_Gun"}})
+			G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*240)+160),CD(GMode,2,AtLeast)}, {CUT[3]}, {PSISSC1}, 1, {OwnerTable=P8,RepeatType={"Attack_Gun"}})
 		end
 		
-		G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+0),CD(GMode,1)}, {94}, {PSILHD1}, 1, {OwnerTable=P6})
-		G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+0),CD(GMode,2,AtLeast)}, {94}, {PSILSC1}, 1, {OwnerTable=P6})
-		G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+120),CD(GMode,1)}, {94}, {PSICHD1}, 1, {OwnerTable=P6})
-		G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+120),CD(GMode,2,AtLeast)}, {94}, {PSICSC1}, 1, {OwnerTable=P6})
-		G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+240),CD(GMode,1)}, {94}, {PSISHD1}, 1, {OwnerTable=P6})
-		G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*360)+240),CD(GMode,2,AtLeast)}, {94}, {PSISSC1}, 1, {OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*240)+0),CD(GMode,1)}, {94}, {PSILHD1}, 1, {OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*240)+0),CD(GMode,2,AtLeast)}, {94}, {PSILSC1}, 1, {OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*240)+80),CD(GMode,1)}, {94}, {PSICHD1}, 1, {OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*240)+80),CD(GMode,2,AtLeast)}, {94}, {PSICSC1}, 1, {OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*240)+160),CD(GMode,1)}, {94}, {PSISHD1}, 1, {OwnerTable=P6})
+		G_CB_TSetSpawn({Gun_Line(7,AtLeast,(GenNum*240)+160),CD(GMode,2,AtLeast)}, {94}, {PSISSC1}, 1, {OwnerTable=P6})
 		end
 		CIf(FP,GNm(1))
 		PSIGunUID(0,{86,25,75})
@@ -1844,7 +1851,7 @@ end
 		CIfEnd()
 
 		
-		CTrigger(FP,{Gun_Line(7,AtLeast,360*4)},{Gun_DoSuspend()},1)
+		CTrigger(FP,{Gun_Line(7,AtLeast,240*4)},{Gun_DoSuspend()},1)
 	CIfEnd()
 	
 	

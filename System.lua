@@ -276,7 +276,7 @@ CMov(FP, 0x6509B0, FP)
 		end
 		CS__InputVA(FP,iTbl3,0,Str1,Str1s,nil,0,Str1s)
 		CS__InputVA(FP,iTbl5,0,Str3,Str3s,nil,0,Str3s)
-		CElseIfX({CV(SelAtkType,4)})-- 방어무시
+		CElseIfX({CV(SelAtkType,4)})-- 강화성공확률
 		CS__SetValue(FP, Str3, "\x1FI\x04gnore \x04- \x07K\x04ills\x03: \x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D", 0xFFFFFFFF,1)
 		for i = 0, 9 do
 			TriggerX(FP, {CSVA1(SVA1(Str1,6+i), AtLeast, 0x0E*0x1000000, 0xFF000000),CD(CFlag,0)}, {SetCD(CFlag, 1),SetCSVA1(SVA1(Str1,6+i), SetTo, 0x1F, 0xFF)}, {preserved})
@@ -442,9 +442,9 @@ CMov(FP, 0x6509B0, FP)
 		for i = 0, 4 do
 			CIf(FP,{DeathsX(CurrentPlayer,Exactly,i,0,0xFF)})
 			TriggerX(FP,{Memory(0x582294+(4*i),AtLeast,1600);},{
-				SetMemory(0x6509B0, Add, 2),
+				SetMemory(0x6509B0, Add, 2),--21
 				SetDeaths(CurrentPlayer,SetTo,0,0),
-				SetDeathsX(CurrentPlayer,SetTo,0,1,0xFF00),
+				SetDeathsX(CurrentPlayer,SetTo,0,1,0xFF00),--유닛아이디 1 추가로 인한 CP + 12 = 33
 				SetMemory(0x6509B0, Subtract, 2),
 			},{preserved})
 			
@@ -454,6 +454,26 @@ CMov(FP, 0x6509B0, FP)
 			CSub(FP,0x6509B0,1)
 			TriggerX(FP, {Deaths(CurrentPlayer, AtMost, (3000-1)*256, 0)}, {SetDeaths(CurrentPlayer, Add, 100*256, 0)},{preserved})
 			TriggerX(FP, {Deaths(CurrentPlayer, AtLeast, (3000+1)*256, 0)}, {SetDeaths(CurrentPlayer, SetTo, 3000*256, 0)},{preserved})
+			CAdd(FP,0x6509B0,1)
+			CIfEnd()
+			
+			
+			CIf(FP,{DeathsX(CurrentPlayer, Exactly, 10, 0, 0xFF)})
+			CSub(FP,0x6509B0,1)
+			TriggerX(FP, {Deaths(CurrentPlayer, AtMost, (8500-1)*256, 0)}, {SetDeaths(CurrentPlayer, Add, 50*256, 0)},{preserved})
+			TriggerX(FP, {Deaths(CurrentPlayer, AtLeast, (8500+1)*256, 0)}, {SetDeaths(CurrentPlayer, SetTo, 8500*256, 0)},{preserved})
+			CAdd(FP,0x6509B0,1)
+			CIfEnd()
+			CIf(FP,{TTOR({
+				DeathsX(CurrentPlayer, Exactly, MarID[1], 0, 0xFF),
+				DeathsX(CurrentPlayer, Exactly, MarID[2], 0, 0xFF),
+				DeathsX(CurrentPlayer, Exactly, MarID[3], 0, 0xFF),
+				DeathsX(CurrentPlayer, Exactly, MarID[4], 0, 0xFF),
+				DeathsX(CurrentPlayer, Exactly, MarID[5], 0, 0xFF),
+			})})
+			CSub(FP,0x6509B0,1)
+			TriggerX(FP, {Deaths(CurrentPlayer, AtMost, (9999-1)*256, 0)}, {SetDeaths(CurrentPlayer, Add, 200*256, 0)},{preserved})
+			TriggerX(FP, {Deaths(CurrentPlayer, AtLeast, (9999+1)*256, 0)}, {SetDeaths(CurrentPlayer, SetTo, 9999*256, 0)},{preserved})
 			CAdd(FP,0x6509B0,1)
 			CIfEnd()
 			CSub(FP,0x6509B0,6)--19
@@ -1395,7 +1415,7 @@ Simple_SetLocX(FP, 0, NX,NY,NX,NY,{Simple_CalcLoc(0, 1024,1088,1024,1088)})
 DoActions(FP, MoveUnit(1, "Men", Force1, 39, 1))
 CForEnd()
 CIfEnd()
-TriggerX(FP, {ElapsedTime(AtLeast, 240),CD(EVFCcode,1)}, {SetCD(HongEnable,1)})
+--TriggerX(FP, {ElapsedTime(AtLeast, 240),CD(EVFCcode,1)}, {SetCD(HongEnable,1)})
 Trigger2X(FP, {CD(HongEnable,1),CD(EVFCcode,1)},{Order("Men", Force2, 64, Move, 6),ModifyUnitHitPoints(All, "Men", Force2, 64, 1),RotatePlayer({PlayWAVX("staredit\\wav\\hongparksa.ogg"),PlayWAVX("staredit\\wav\\hongparksa.ogg"),PlayWAVX("staredit\\wav\\hongparksa.ogg"),PlayWAVX("staredit\\wav\\hongparksa.ogg"),PlayWAVX("staredit\\wav\\hongparksa.ogg"),DisplayTextX("\n\n\n\n\x13\x04――――――――――――――――――――――――――――――――――――――――――――――――――――――\n\x13\x04！！！　\x07ＨＯＮＧＨＯＮＧＨＯＮＧＨＯＮＧＨＯＮＧ\x04　！！！\n\n\n\x13\x07누군가가 \x03DJMAX \x1C유니버스\x04에 \x08홍박사 바이러스\x04를 \x07심었습니다!!! \n\n\n\x13\x04！！！　\x07ＨＯＮＧＨＯＮＧＨＯＮＧＨＯＮＧＨＯＮＧ\x04　！！！\n\x13\x04――――――――――――――――――――――――――――――――――――――――――――――――――――――\x0d\x0d\x0d\x0d\x14\x14\x14\x14\x14\x14\x14\x14", 4)}, HumanPlayers, FP)})
 
 
