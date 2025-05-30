@@ -10,7 +10,7 @@
 	iTbl4 = GetiTblId(FP,1397,S1) --DMG
 	iTbl5 = GetiTblId(FP,764,S1) --DMG
 	iTbl9 = GetiTblId(FP,1299,S1) --실명
-	iTbl10 = GetiTblId(FP,831,S1) --패러사이트
+	iTbl10 = GetiTblId(FP,831,S1) --탐지기
 	Str1, Str1a, Str1s = SaveiStrArrX(FP,t01)
 	Str3, Str3a, Str3s = SaveiStrArrX(FP,t03)
 	t04 = "\x07。\x18˙\x0F+\x1C˚\x19 R\x04espect \x17V! \x19(つ>ㅅ<)つ \x1C。\x0F+\x18.\x07˚"--일반
@@ -191,51 +191,133 @@ CMov(FP, 0x6509B0, FP)
 			CIf(FP,{CD(AFlag,1)})
 				CAdd(FP,SelATK,SelATK)
 			CIfEnd()
+			local CTextR = CreateCText(FP,string.rep("\x0D", 75))--R
 
-			CIf(FP,{TTOR({CV(SelUID,190),CV(SelUID,126),CV(SelUID,174)})})--프사이or 노라드
-				
+			function SetCondUnitTbl(TBLID,arg) -- k1 = tblid k2 = cond k3 = str
+				local TBLPtr = CreateVar(FP)
+                f_GetTblptr(FP, TBLPtr, TBLID)
+				f_Memcpy(FP,TBLPtr,_TMem(Arr(CTextR[3],0),"X","X",1),CTextR[2])
+				for j,k in pairs(arg) do
+					CText = CreateCText(FP,k[3])
+					CIf(FP,k[2])
+                		f_Memcpy(FP,TBLPtr,_TMem(Arr(CText[3],0),"X","X",1),CText[2])
+					CIfEnd()
+				end
+			end
+			
+
+
+		
+			CIf(FP,{TTOR({
+				CV(SelUID,190),
+				CV(SelUID,126),
+				CV(SelUID,174),
+				CV(SelUID,132-1),
+				CV(SelUID,133-1),
+				CV(SelUID,134-1),
+				CV(SelUID,131-1),
+				CV(SelUID,123-1),
+				CV(SelUID,117-1),
+				CV(SelUID,169-1),
+				CV(SelUID,153-1),
+				CV(SelUID,107-1),
+				CV(SelUID,149-1),
+			})})--프사이or 노라드
 			local TBLPtr = CreateVar(FP)
 			local GunNum = CreateVar(FP)
 			f_Read(FP, _Add(_Mul(LCunitIndex,_Mov(0x970/4)),_Add(DUnitCalc[3],((0x20*2)/4))), GunNum)
-			CIf(FP,{CV(SelUID,190)})
-				local CText1 = CreateCText(FP, "\t\t\t\x1E。˙+˚Hell'o。+.˚\x12\x08。˙+˚H\x04ell'o\x08。+.˚\t\t\t\t\t  ")--HellO
-				local CText2 = CreateCText(FP, "\t\x11。˙+˚O\'men。+.˚\x12\x08。˙+˚O\x04\'men\x08。+.˚\t\t\t\t\t\t\t    ")--OMen
-				f_GetTblptr(FP, TBLPtr, 191)
-				CIf(FP,{CV(GunNum,1)})
-				f_Memcpy(FP,TBLPtr,_TMem(Arr(CText1[3],0),"X","X",1),CText1[2])
-				CIfEnd()
-				CIf(FP,{CV(GunNum,2)})
-				f_Memcpy(FP,TBLPtr,_TMem(Arr(CText2[3],0),"X","X",1),CText2[2])
-				CIfEnd()
-			CIfEnd()
-			CIf(FP,{CV(SelUID,126)})
-				local CTextR = CreateCText(FP, string.rep("\x0D", 75))--R
-				local CText1 = CreateCText(FP, "\t\x0E。˙+˚BlythE。+.˚\x12\x1C。˙+˚B\x04lyth\x1CE。+.˚\t\t\t\t\t\t\t\t   ")--BlythE
-				local CText2 = CreateCText(FP, "\x1C。+.˚Space of Soul\x12\x0ES\x04pace \x0Eo\x04f \x0ES\x04oul\x0E。+.˚\t\t\t\t\t\t\t\t")--Space of Soul
-				f_GetTblptr(FP, TBLPtr, 126+1)
-				f_Memcpy(FP,TBLPtr,_TMem(Arr(CTextR[3],0),"X","X",1),CTextR[2])
-				CIf(FP,{CV(GunNum,1)})
-				f_Memcpy(FP,TBLPtr,_TMem(Arr(CText1[3],0),"X","X",1),CText1[2])
-				CIfEnd()
-				CIf(FP,{CV(GunNum,2)})
-				f_Memcpy(FP,TBLPtr,_TMem(Arr(CText2[3],0),"X","X",1),CText2[2])
-				CIfEnd()
-			CIfEnd()
-			CIf(FP,{CV(SelUID,174)})
-				local CTextR = CreateCText(FP, string.rep("\x0D", 75))--R
-				local CText1 = CreateCText(FP, "\x08。+.˚Summer 2017\x12\x11S\x04ummer \x112\x04017\x11。+.˚\t\t\t\t\t\t\t\t  ")--Summer 2017
-				local CText2 = CreateCText(FP, "\x15。˙+˚Black Swan。+.˚\x12\x08。˙+˚B\x04lack \x08S\x04wan\x08。+.˚\t\t\t\t\t\t\t\t\t\t ")--Black Swan
-				f_GetTblptr(FP, TBLPtr, 174+1)
-				f_Memcpy(FP,TBLPtr,_TMem(Arr(CTextR[3],0),"X","X",1),CTextR[2])
-				CIf(FP,{CV(GunNum,1)})
-				f_Memcpy(FP,TBLPtr,_TMem(Arr(CText1[3],0),"X","X",1),CText1[2])
-				CIfEnd()
-				CIf(FP,{CV(GunNum,2)})
-				f_Memcpy(FP,TBLPtr,_TMem(Arr(CText2[3],0),"X","X",1),CText2[2])
-				CIfEnd()
+
+			--UnSCeacable 전용 유닛이름
+
+			SetCondUnitTbl(161,{
+				{161,CD(GMode,3,AtMost),"\x0E。˙+˚Diomedes。+.˚\x12\x1C。˙+˚D\x04iomedes\x1C。+.˚								          "},
+				{161,CD(GMode,4),"\x1E。+.˚Story of Maple\x12\x11S\x04tory of \x11M\x04aple\x11。+.˚\t\t\t\t\t\t\t      "},
+			})
+			SetCondUnitTbl(168,{
+				{168,CD(GMode,3,AtMost),"	\x15。˙+˚Dream it。+.˚\x12\x11。˙+˚D\x04ream \x11i\x04t\x11。+.˚							        "},
+				{168,CD(GMode,4),"\t\t\x10。˙+˚ELIXIR。+.˚\x12\x1E。˙+˚E\x04LIXI\x1ER。+.˚\t\t\t\t\t         "},
+			})
+			SetCondUnitTbl(115,{
+				{115,CD(GMode,3,AtMost),"				\x11。˙+˚D2。+.˚\x12\x10。˙+˚D\x042\x10。+.˚						"},
+				{115,CD(GMode,4),"\t\x0E。˙+˚My Head。+.˚\x12\x11。˙+˚\x11M\x04y \x11H\x04ead\x11。+.˚\t\t\t\t\t\t\t       "},
+			})
+
+			
+			SetCondUnitTbl(132,{
+				{132,CD(GMode,3,AtMost),"\x0E。˙+˚ Blue White\x12\x1CB\x04lue \x1CW\x04hite \x1C。+.˚							  "},
+				{132,CD(GMode,4),"\t\t\x06。˙+˚KICK IT。+.˚\x12\x08。˙+˚K\x04ICK \x08I\x04T\x06。+.˚\t\t\t\t\t     "},
+			})
+			
+			SetCondUnitTbl(133,{
+				{133,CD(GMode,3,AtMost),"\x1C。˙+˚ Only For You\x12\x1FO\x04nly \x1FF\x04or \x1FY\x04ou \x1F。+.˚							    "},
+				{133,CD(GMode,4),"\x1C。˙+˚Song For You\x12\x1FS\x04ong \x1FF\x04or \x1FY\x04ou\x1F。+.˚\t\t\t\t\t\t\t\t"},
+			})
+			SetCondUnitTbl(134,{
+				{134,CD(GMode,3,AtMost),"	\x15。˙+˚Kamui。+.˚\x12\x11。˙+˚K\x04amui\x11。+.˚								     "},
+				{134,CD(GMode,4),"\t\t\x11。˙+˚Away。+.˚\x12\x17。˙+˚A\x04way\x17。+.˚\t\t\t\t\t\t  "},
+			})
+			
+			SetCondUnitTbl(131,{
+				{131,CD(GMode,3,AtMost),"\x15。+.˚Misty E'ra 'Mui'\x12\x10M\x04isty \x10E\x04'ra '\x10M\x04ui'\x10。+.˚								 "},
+				{131,{CD(GMode,4),VRange(GunNum,1,2)},"\t\x15。+.˚Misty E'ra\x12\x11M\x04isty \x11E\x04'ra\x11。+.˚\t\t\t\t\t     "},
+				{131,{CD(GMode,4),VRange(GunNum,3,4)},"\x15。+.˚Misty E'ra 'Mui'\x12\x10M\x04isty \x10E\x04'ra '\x10M\x04ui'\x10。+.˚								 "},
+				{131,{CD(GMode,4),VRange(GunNum,5,6)},"\x15。+.˚∼One Day∼\x12\x1D∼\x1DO\x04ne \x1DD\x04ay\x1D∼。+.˚\t\t\t\t\t\t\t\t   "},
+			})
+
+
+		
+		
+			SetCondUnitTbl(123,{
+				{123,CD(GMode,3,AtMost),"		\x1E。˙+˚ALiCE。+.˚\x12\x11。˙+˚A\x04LiCE\x11。+.˚							   "},
+				{123,CD(GMode,4),"\t\t\x15。˙+˚Lisrim。+.˚\x12\x19。˙+˚L\x04isrim\x19。+.˚\t\t\t\t\t\t   "},
+			})
+			SetCondUnitTbl(117,{
+				{117,CD(GMode,3,AtMost),"		\x06。˙+˚ECiLA。+.˚\x12\x11。˙+˚E\x04CiLA\x11。+.˚						   "},
+				{117,CD(GMode,4),"\t\t\x18。˙+˚Licrom。+.˚\x12\x19。˙+˚L\x04icrom\x19。+.˚\t\t\t\t\t\t\t\t"},
+			})
+		
+		
+			SetCondUnitTbl(169,{
+				{169,CD(GMode,3,AtMost),"\x06。˙+˚Don't Die。+.˚\x12\x1B。˙+˚D\x04on't \x1BD\x04ie\x1B。+.˚									  "},
+				{169,CD(GMode,4),"\x06。˙+˚Never Die。+.˚\x12\x1E。˙+˚N\x04ever \x1ED\x04ie\x1E。+.˚\t\t\t\t\t\t\t\t\t   "},
+			})
+		
+			SetCondUnitTbl(153,{
+				{153,CD(GMode,3,AtMost),"	\x10。˙+˚Re:BIRTH。+.˚\x12\x1F。˙+˚R\x04e:\x1FB\x04IRTH\x1F。+.˚						         "},
+				{153,CD(GMode,4),"\x08。+.˚Insane Drift\x12\x1FI\x04nsane \x1FD\x04rift\x1F\x08。+.˚\t\t\t\t\t\t\t\t  "},
+			})
+		
+			SetCondUnitTbl(107,{
+				{107,CD(GMode,3,AtMost),"			\x1C。˙+˚Miles。+.˚\x12\x1F。˙+˚M\x04iles\x1F。+.˚					  "},
+				{107,CD(GMode,4),"\x10。+.˚Cotton Candy\x12\x1BC\x04otton \x1BC\x04andy\x1B。+.˚\t\t\t\t\t\t\t    "},
+			})
+		
+			SetCondUnitTbl(149,{
+				{149,CD(GMode,3,AtMost),"\x1F。˙+˚Hypernaid。+.˚\x12\x1C。˙+˚H\x04ypernaid\x1C。+.˚								          "},
+				{149,CD(GMode,4),"\t\x08。+.˚1! 2! 3! 4!\x12\x1F1\x04! \x1F2\x04! \x1F3\x04! \x1F4\x04!\x1F。+.˚\t\t\t\t\t\t"},
+			})
+
+				local CText1 = "\t\t\t\x1E。˙+˚Hell'o。+.˚\x12\x08。˙+˚H\x04ell'o\x08。+.˚\t\t\t\t\t  "--HellO
+				local CText2 = "\t\x11。˙+˚O\'men。+.˚\x12\x08。˙+˚O\x04\'men\x08。+.˚\t\t\t\t\t\t\t    "--OMen
+				SetCondUnitTbl(191,{
+					{191,CV(GunNum,1),CText1},
+					{191,CV(GunNum,2),CText2},
+				})
+				local CText1 = "\t\x0E。˙+˚BlythE。+.˚\x12\x1C。˙+˚B\x04lyth\x1CE。+.˚\t\t\t\t\t\t\t\t   "--BlythE
+				local CText2 = "\x1C。+.˚Space of Soul\x12\x0ES\x04pace \x0Eo\x04f \x0ES\x04oul\x0E。+.˚\t\t\t\t\t\t\t\t"--Space of Soul
+				SetCondUnitTbl(126+1,{
+					{126+1,CV(GunNum,1),CText1},
+					{126+1,CV(GunNum,2),CText2},
+				})
+				local CText1 = "\x08。+.˚Summer 2017\x12\x11S\x04ummer \x112\x04017\x11。+.˚\t\t\t\t\t\t\t\t  "--Summer 2017
+				local CText2 = "\x15。˙+˚Black Swan。+.˚\x12\x08。˙+˚B\x04lack \x08S\x04wan\x08。+.˚\t\t\t\t\t\t\t\t\t\t "--Black Swan
+				SetCondUnitTbl(174+1,{
+					{174+1,CV(GunNum,1),CText1},
+					{174+1,CV(GunNum,2),CText2},
+				})
 			CIfEnd()
 
-			CIfEnd()
+
 		CIfEnd()
 
 		CIf(FP, {CV(SelShbool,0)})
@@ -254,7 +336,7 @@ CMov(FP, 0x6509B0, FP)
 			TriggerX(FP, {CSVA1(SVA1(Str1,6+i), AtLeast, 0x0E*0x1000000, 0xFF000000),CD(CFlag,0)}, {SetCD(CFlag, 1),SetCSVA1(SVA1(Str1,6+i), SetTo, 0x07, 0xFF)}, {preserved})
 		end
 		CS__InputVA(FP,iTbl9,0,Str1,Str1s,nil,0,Str1s)
-		
+		CS__InputVA(FP,iTbl10,0,Str1,Str1s,nil,0,Str1s)
 		CS__InputVA(FP,iTbl5,0,Str3,Str3s,nil,0,Str3s)
 		CElseX()
 		CIfX(FP,{CV(SelClass,95)})-- SC타입
@@ -909,6 +991,7 @@ end
 	local ExchangeOre = CreateVar(FP)
 
 	CMov(FP,ExchangeOre,HPT)
+	CTrigger(FP, {CD(GMode,4)}, {AddV(ExchangeOre,ExchangeOre)}, {preserved})
 	CDoActions(FP, {TSetResources(Force1, Add, ExchangeOre, Ore)})
 	DisplayPrint(HumanPlayers,{"\x13"..StrD[1],HeroTextFunc,"\x04을(를) \x07처치하였다! \x1F＋ ",ExchangeOre," \x03Ｏｒｅ"..StrD[2]})
 	CIfEnd()
@@ -942,6 +1025,7 @@ end
 		CIfEnd()
 		PFNM = CreateVar(FP)
 		CMov(FP,PFNM,_Mod(GTime,60))
+		TriggerX(FP, {CV(PFNM,50,AtLeast)}, {SetV(PFNM,50)},{preserved})
 		f_TempRepeatX({CV(HeroIndex,149)}, 11, PFNM, 187, P8)
 		f_TempRepeatX({CV(HeroIndex,149)}, 69, PFNM, 187, P8)
 		f_TempRepeatX({CV(HeroIndex,188)}, 11, PFNM, 187, P8)
@@ -1062,6 +1146,7 @@ end
 	CMov(FP,GTime2,_Mul(_ReadF(0x57F23C),42))
 	CMov(FP,GTime,_Div(GTime2,1000))
 	CMov(FP,G_CB_RotateV,_Mul(_Div(_Mod(GTime2,60000),500),3))
+	CNeg(FP,G_CB_RotateV2,G_CB_RotateV)
 	CIf(FP,{CD(GMode,2,AtLeast),Deaths(P8, AtMost, 0, 189)})--콜은 MX난이도이상만 나옴, 워프게이트 깔때까지
 	--1~6 5분간격
 	--7~9 10분간격
@@ -1145,176 +1230,68 @@ end
 		
 NameTest = 0
 if NameTest == 1 then
+	
+
+		function CreateTestCrystal(TBLID,Text,KeyArr)
 	DoActions(FP, {
-		CreateUnit(1, 129-1, 6, FP),
-		CreateUnit(1, 130-1, 6, FP),
-		CreateUnit(1, 219-1, 6, FP),},1)
-		testc = CreateCcode()
-		testc2 = CreateCcode()
-		testc3 = CreateCcode()
-		temp,QKey = ToggleFunc({KeyPress("Q","Up"),KeyPress("Q","Down")},nil,1)--누를 경우 설명서 출력
-		temp,WKey = ToggleFunc({KeyPress("W","Up"),KeyPress("W","Down")},nil,1)--누를 경우 설명서 출력
-		temp,AKey = ToggleFunc({KeyPress("A","Up"),KeyPress("A","Down")},nil,1)--누를 경우 설명서 출력
-		temp,SKey = ToggleFunc({KeyPress("S","Up"),KeyPress("S","Down")},nil,1)--누를 경우 설명서 출력
-		temp,ZKey = ToggleFunc({KeyPress("Z","Up"),KeyPress("Z","Down")},nil,1)--누를 경우 설명서 출력
-		temp,XKey = ToggleFunc({KeyPress("X","Up"),KeyPress("X","Down")},nil,1)--누를 경우 설명서 출력
-		TriggerX(FP,{CD(QKey,1)},{SubCD(testc,1)},{preserved})
-		TriggerX(FP,{CD(WKey,1)},{AddCD(testc,1)},{preserved})
-		TriggerX(FP,{CD(AKey,1)},{SubCD(testc2,1)},{preserved})
-		TriggerX(FP,{CD(SKey,1)},{AddCD(testc2,1)},{preserved})
-		TriggerX(FP,{CD(ZKey,1)},{SubCD(testc3,1)},{preserved})
-		TriggerX(FP,{CD(XKey,1)},{AddCD(testc3,1)},{preserved})
-
-
+		CreateUnit(1, TBLID-1, 6, FP),SetInvincibility(Enable, TBLID-1, FP, 64)},1)
+		local testc = CreateCcode()
+		local testc2 = CreateCcode()
+		local temp,K1 = ToggleFunc({KeyPress(KeyArr[1],"Up"),KeyPress(KeyArr[1],"Down")},nil,1)--누를 경우 설명서 출력
+		local temp,K2 = ToggleFunc({KeyPress(KeyArr[2],"Up"),KeyPress(KeyArr[2],"Down")},nil,1)--누를 경우 설명서 출력
+		local temp,K3 = ToggleFunc({KeyPress(KeyArr[3],"Up"),KeyPress(KeyArr[3],"Down")},nil,1)--누를 경우 설명서 출력
+		local temp,K4 = ToggleFunc({KeyPress(KeyArr[4],"Up"),KeyPress(KeyArr[4],"Down")},nil,1)--누를 경우 설명서 출력
+		
+		TriggerX(FP,{CD(K1,1)},{SubCD(testc,1)},{preserved})
+		TriggerX(FP,{CD(K2,1)},{AddCD(testc,1)},{preserved})
+		TriggerX(FP,{CD(K3,1)},{SubCD(testc2,1)},{preserved})
+		TriggerX(FP,{CD(K4,1)},{AddCD(testc2,1)},{preserved})
+		local TestJ = def_sIndex()
 		TestJ = def_sIndex()
 		CJump(FP, TestJ)
 		TempiS1, TempiS1a, TempiS1s = SaveiStrArrX(FP,"\x0D\x0D\x0D\x0D\x0D\x0D")
 		TempiS2, TempiS1a, TempiS2s = SaveiStrArrX(FP,"\x0D\x0D\x0D\x0D\x0D\x0D")
-		--일반타입 그림자 \x15 표면 \x1B
-		--방어무시 그림자 \x1C 표면 \x1F
-		--스택타입 그림자 \x18 표면 \x07
-		--위험타입 그림자 \x06 표면 \x08
-
-		--Dejavu
-		--Ynn
-		--Young
-		--BV13
-		--Mincho
-		--Ann
-
-
-
-
-
-		--Aram
-		--Leon
-		--퀸 60000 1000 노멀
-		str33 = "\x1F。+.˚Only Marine\x12\x16O\x04nly \x16M\x04arine\x16。+.˚"
-		--str33 = "\t\x1C。˙+˚DeathsX。+.˚\x12\x1F。˙+˚D\x04eathsX\x1F。+.˚"
-		str44 = "\x08。+.˚Summer 2017\x12\x11S\x04ummer \x112\x04017\x11。+.˚"
-		--str44 = "\t\x11。˙+˚Turret。+.˚\x12\x15。˙+˚T\x04urret\x15。+.˚"
-		
-		--str44 = "\t\t\t\x15。˙+˚Leon。+.˚\x12\x1B。˙+˚L\x04eon。+.˚"
-		--str55 = "\x15。+.˚Misty E'ra 'Mui'\x12\x10M\x04isty \x10E\x04'ra '\x10M\x04ui'\x10。+.˚"
-		str55 = "\t\t\t\x1F。˙+˚Only Marine。+.˚\x16。˙+˚O\x04nly \x16M\x04arine\x16。+.˚"
-
-		--Yuri
-		--Sena
-		--Yona
-		--Sayu
-		--Sorang
-		
-		
-		
+		str33 = Text
 		str = str33.."\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D"
-	
 		S6 = MakeiTblString(1480,"None",'None',str,"Base",1)
 		Str2, Str2a, Str2s = SaveiStrArrX(FP,str)
-		BarTblptr = GetiTblId(FP,219,S6)
+		BarTblptr = GetiTblId(FP,TBLID,S6)
 		CJumpEnd(FP, TestJ)
-		
+
+
 		for i = 0, 19 do
-		CIf(FP,CD(testc2,i),{SetCp(0),DisplayText("Disc space:"..i, 4),SetCp(FP)})
+		CIf(FP,CD(testc2,i),{SetCp(0),DisplayText(TBLID.." Disc space:"..i, 4),SetCp(FP)})
 		CS__SetValue(FP,Str2,str33.."\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D"..string.rep(" ", i)..string.rep("\x0D",19-i),nil,0,nil,1) 
 		CIfEnd()
 		end
 		for i = 0, 19 do
-			CIf(FP,CD(testc,i),{SetCp(0),DisplayText("Disc tab:"..i, 4),SetCp(FP)})
+			CIf(FP,CD(testc,i),{SetCp(0),DisplayText(TBLID.." Disc tab:"..i, 4),SetCp(FP)})
 			CS__SetValue(FP,Str2,str33..string.rep("	", i)..string.rep("\x0D",19-i),nil,0,nil,1) 
 			CIfEnd()
 		end
 		CS__InputVA(FP,BarTblptr,0,Str2,Str2s,nil,0,Str2s)
-
-		
-		testc = CreateCcode()
-		testc2 = CreateCcode()
-		testc3 = CreateCcode()
-		temp,QKey = ToggleFunc({KeyPress("T","Up"),KeyPress("T","Down")},nil,1)--누를 경우 설명서 출력
-		temp,WKey = ToggleFunc({KeyPress("Y","Up"),KeyPress("Y","Down")},nil,1)--누를 경우 설명서 출력
-		temp,AKey = ToggleFunc({KeyPress("G","Up"),KeyPress("G","Down")},nil,1)--누를 경우 설명서 출력
-		temp,SKey = ToggleFunc({KeyPress("H","Up"),KeyPress("H","Down")},nil,1)--누를 경우 설명서 출력
-		temp,ZKey = ToggleFunc({KeyPress("B","Up"),KeyPress("B","Down")},nil,1)--누를 경우 설명서 출력
-		temp,XKey = ToggleFunc({KeyPress("N","Up"),KeyPress("N","Down")},nil,1)--누를 경우 설명서 출력
-		TriggerX(FP,{CD(QKey,1)},{SubCD(testc,1)},{preserved})
-		TriggerX(FP,{CD(WKey,1)},{AddCD(testc,1)},{preserved})
-		TriggerX(FP,{CD(AKey,1)},{SubCD(testc2,1)},{preserved})
-		TriggerX(FP,{CD(SKey,1)},{AddCD(testc2,1)},{preserved})
-		TriggerX(FP,{CD(ZKey,1)},{SubCD(testc3,1)},{preserved})
-		TriggerX(FP,{CD(XKey,1)},{AddCD(testc3,1)},{preserved})
-
-
-		TestJ = def_sIndex()
-		CJump(FP, TestJ)
-		TempiS1, TempiS1a, TempiS1s = SaveiStrArrX(FP,"\x0D\x0D\x0D\x0D\x0D\x0D")
-		TempiS2, TempiS1a, TempiS2s = SaveiStrArrX(FP,"\x0D\x0D\x0D\x0D\x0D\x0D")
-		
-		str = str44.."\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D"
-	
-		S6 = MakeiTblString(1480,"None",'None',str,"Base",1)
-		Str2, Str2a, Str2s = SaveiStrArrX(FP,str)
-		BarTblptr = GetiTblId(FP,130,S6)
-		CJumpEnd(FP, TestJ)
-		
-		for i = 0, 19 do
-		CIf(FP,CD(testc2,i),{SetCp(0),DisplayText("Khalis space:"..i, 4),SetCp(FP)})
-		CS__SetValue(FP,Str2,str44.."\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D"..string.rep(" ", i)..string.rep("\x0D",19-i),nil,0,nil,1) 
-		CIfEnd()
 		end
-		for i = 0, 19 do
-			CIf(FP,CD(testc,i),{SetCp(0),DisplayText("Khalis tab:"..i, 4),SetCp(FP)})
-			CS__SetValue(FP,Str2,str44..string.rep("	", i)..string.rep("\x0D",19-i),nil,0,nil,1) 
-			CIfEnd()
-		end
-		CS__InputVA(FP,BarTblptr,0,Str2,Str2s,nil,0,Str2s)
-
-
 		
-		testc = CreateCcode()
-		testc2 = CreateCcode()
-		testc3 = CreateCcode()
-		temp,QKey = ToggleFunc({KeyPress("U","Up"),KeyPress("U","Down")},nil,1)--누를 경우 설명서 출력
-		temp,WKey = ToggleFunc({KeyPress("I","Up"),KeyPress("I","Down")},nil,1)--누를 경우 설명서 출력
-		temp,AKey = ToggleFunc({KeyPress("J","Up"),KeyPress("J","Down")},nil,1)--누를 경우 설명서 출력
-		temp,SKey = ToggleFunc({KeyPress("K","Up"),KeyPress("K","Down")},nil,1)--누를 경우 설명서 출력
-		temp,ZKey = ToggleFunc({KeyPress("M","Up"),KeyPress("M","Down")},nil,1)--누를 경우 설명서 출력
-		temp,XKey = ToggleFunc({KeyPress(",","Up"),KeyPress(",","Down")},nil,1)--누를 경우 설명서 출력
-		TriggerX(FP,{CD(QKey,1)},{SubCD(testc,1)},{preserved})
-		TriggerX(FP,{CD(WKey,1)},{AddCD(testc,1)},{preserved})
-		TriggerX(FP,{CD(AKey,1)},{SubCD(testc2,1)},{preserved})
-		TriggerX(FP,{CD(SKey,1)},{AddCD(testc2,1)},{preserved})
-		TriggerX(FP,{CD(ZKey,1)},{SubCD(testc3,1)},{preserved})
-		TriggerX(FP,{CD(XKey,1)},{AddCD(testc3,1)},{preserved})
-
-
-		TestJ = def_sIndex()
-		CJump(FP, TestJ)
-		TempiS1, TempiS1a, TempiS1s = SaveiStrArrX(FP,"\x0D\x0D\x0D\x0D\x0D\x0D")
-		TempiS2, TempiS1a, TempiS2s = SaveiStrArrX(FP,"\x0D\x0D\x0D\x0D\x0D\x0D")
+		--str33 = "\x1F。+.˚Only Marine\x12\x16O\x04nly \x16M\x04arine\x16。+.˚"
+		--str33 = "\t\x1C。˙+˚DeathsX。+.˚\x12\x1F。˙+˚D\x04eathsX\x1F。+.˚"
+		--str44 = "\x08。+.˚Summer 2017\x12\x11S\x04ummer \x112\x04017\x11。+.˚"
+		--str44 = "\t\x11。˙+˚Turret。+.˚\x12\x15。˙+˚T\x04urret\x15。+.˚"
 		
-		str = str55.."\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D"
-	
-		S6 = MakeiTblString(1480,"None",'None',str,"Base",1)
-		Str2, Str2a, Str2s = SaveiStrArrX(FP,str)
-		BarTblptr = GetiTblId(FP,129,S6)
-		CJumpEnd(FP, TestJ)
-		for i = 0, 19 do
-		CIf(FP,CD(testc2,i),{SetCp(0),DisplayText("Uraj space:"..i, 4),SetCp(FP)})
-		CS__SetValue(FP,Str2,str55.."\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D"..string.rep(" ", i)..string.rep("\x0D",19-i),nil,0,nil,1) 
-		CIfEnd()
-		end
-		for i = 0, 19 do
-			CIf(FP,CD(testc,i),{SetCp(0),DisplayText("Uraj tab:"..i, 4),SetCp(FP)})
-			CS__SetValue(FP,Str2,str55..string.rep("	", i)..string.rep("\x0D",19-i),nil,0,nil,1) 
-			CIfEnd()
-		end
-		CS__InputVA(FP,BarTblptr,0,Str2,Str2s,nil,0,Str2s)
+		--str44 = "\t\t\t\x15。˙+˚Leon。+.˚\x12\x1B。˙+˚L\x04eon。+.˚"
+		--str55 = "\x15。+.˚Misty E'ra 'Mui'\x12\x10M\x04isty \x10E\x04'ra '\x10M\x04ui'\x10。+.˚"
+		--str55 = 
 
-		
+		--"\t\t\x10。˙+˚ELIXIR。+.˚\x12\x1E。˙+˚E\x04LIXI\x1ER。+.˚\t\t\t\t\t\t\t\t\t     "
+		--"\x1E。+.˚Story of Maple\x12\x11S\x04tory of \x11M\x04aple\x11。+.˚\t\t\t\t\t\t       "
+		--"\t\x0E。˙+˚My Head。+.˚\x12\x11。˙+˚\x11M\x04y \x11H\x04ead\x11。+.˚\t\t\t\t\t\t\t       "
+			
+		CreateTestCrystal(129,"\x1E。+.˚Story of Maple\x12\x11S\x04tory of \x11M\x04aple\x11。+.˚",{"Q","W","A","S"})
 
+		CreateTestCrystal(130,"\t\x0E。˙+˚My Head。+.˚\x12\x11。˙+˚\x11M\x04y \x11H\x04ead\x11。+.˚",{"E","R","D","F"})
+		CreateTestCrystal(219,"\t\t\x10。˙+˚ELIXIR。+.˚\x12\x1E。˙+˚E\x04LIXI\x1ER。+.˚",{"T","Y","G","H"})
 
-
-
-		--TriggerX(FP,{},{CreateUnit(1, 84, 64, FP),KillUnit(84, FP)},{preserved})
+		CreateTestCrystal(220,"\t\x15。+.˚Misty E'ra\x12\x11M\x04isty \x11E\x04'ra\x11。+.˚",{"U","I","J","K"})
+		CreateTestCrystal(221,"\x15。+.˚∼One Day∼\x12\x1D∼\x1DO\x04ne \x1DD\x04ay\x1D∼。+.˚",{"O","P","L","SEMICOLON"})
 		
 end
 	end

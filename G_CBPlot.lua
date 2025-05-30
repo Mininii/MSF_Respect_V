@@ -45,6 +45,7 @@ G_CB_Y = CreateVar(FP)
 G_CB_Shapes = {}
 G_CB_ShapeIndexAlloc = 1
 G_CB_RotateV = CreateVar(FP)
+G_CB_RotateV2 = CreateVar(FP)
 Call_RepeatOption = SetCallForward()
 SetCall(FP)
 RBX = CreateVar(FP)
@@ -155,6 +156,15 @@ CIf(FP,{TMemoryX(_Add(RPtr,40),AtLeast,150*16777216,0xFF000000)})
 			CTrigger(FP, {}, {TOrder(RUID, RPID, 1, Attack, RLocV);}, {preserved})
 			CDoActions(FP,{
 				TSetMemory(_Add(RPtr,2), SetTo, _Div(_ReadF(_Add(RUID,EPD(0x662350))),2)),
+			})
+			
+			CElseIfX_AddRepeatType(7,"Attack_HP25")
+			f_Read(FP,_Add(RPtr,10),CPos)
+			Convert_CPosXY()
+			Simple_SetLocX(FP,0,CPosX,CPosY,CPosX,CPosY,{Simple_CalcLoc(0,-4,-4,4,4)})
+			CTrigger(FP, {}, {TOrder(RUID, RPID, 1, Attack, RLocV);}, {preserved})
+			CDoActions(FP,{
+				TSetMemory(_Add(RPtr,2), SetTo, _Div(_ReadF(_Add(RUID,EPD(0x662350))),4)),
 			})
 			
 			CElseIfX_AddRepeatType(168,"Attack_Cell")
@@ -862,6 +872,8 @@ function CA_Func1()
 	CIf(FP,{CV(G_CB_TempTable[21],1,AtLeast)})
 		CIfX(FP,{CV(G_CB_TempTable[21],0xFFFFFFFF)})
 			CA_Rotate(G_CB_RotateV)
+		CElseIfX({CV(G_CB_TempTable[21],0xFFFFFFFE)})
+			CA_Rotate(G_CB_RotateV2)
 		CElseX()
 			CA_Rotate(G_CB_TempTable[21])
 		CIfXEnd()
@@ -1510,6 +1522,13 @@ function G_CB_TSetSpawn(Condition,G_CB_CUTable,G_CB_ShapeTable,PreserveFlag,G_CB
 					{G_CB_RTTV[2],0xFFFFFFFF},
 					{G_CB_RTTV[3],0xFFFFFFFF},
 					{G_CB_RTTV[4],0xFFFFFFFF},
+				}
+			elseif type(k) == "string" and k=="Main2" then
+				G_CB_Rotate = {
+					{G_CB_RTTV[1],0xFFFFFFFE},
+					{G_CB_RTTV[2],0xFFFFFFFE},
+					{G_CB_RTTV[3],0xFFFFFFFE},
+					{G_CB_RTTV[4],0xFFFFFFFE},
 				}
 			else
 				G_CB_Rotate = {

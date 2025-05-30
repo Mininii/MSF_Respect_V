@@ -322,12 +322,24 @@ function CreateUnitQueue()
 		TSetMemory(_Add(QueueUID,EPDF(0x662860)) ,SetTo,1+65536),
 	})
 		TriggerX(FP,{CVar(FP,QueuePID[2],Exactly,0xFFFFFFFF)},{SetCVar(FP,QueuePID[2],SetTo,7)},{preserved})
-		TriggerX(FP,{CV(QueueType,132),CV(QueueUID,68)},{SetMemoryX(0x664080 + (68*4),SetTo,4,4),SetMemoryB(0x663150 + (68),SetTo,12)},{preserved})
-		TriggerX(FP,{CV(QueueType,129),CV(QueueUID,68)},{SetMemoryX(0x664080 + (68*4),SetTo,4,4),SetMemoryB(0x663150 + (68),SetTo,12)},{preserved})
+		TriggerX(FP,{CV(QueueType,132),CV(QueueUID,68)},{
+			SetMemoryX(0x664080 + (68*4),SetTo,4,4),SetMemoryB(0x663150 + (68),SetTo,12),
+			SetMemoryX(0x664080 + (23*4),SetTo,4,4),SetMemoryB(0x663150 + (23),SetTo,12),
+		},{preserved})
+		TriggerX(FP,{CV(QueueType,129),CV(QueueUID,68)},{
+			SetMemoryX(0x664080 + (68*4),SetTo,4,4),SetMemoryB(0x663150 + (68),SetTo,12),
+			SetMemoryX(0x664080 + (23*4),SetTo,4,4),SetMemoryB(0x663150 + (23),SetTo,12),
+		},{preserved})
 		CTrigger(FP,{TTCVar(FP,QueueType[2],NotSame,2)},{TCreateUnitWithProperties(1,QueueUID,1,QueuePID,{energy = 100})},1,LocIndex)
         CTrigger(FP,{CVar(FP,QueueType[2],Exactly,2)},{TCreateUnitWithProperties(1,QueueUID,1,QueuePID,{energy = 100, burrowed = true})},1,LocIndex+1)
-		TriggerX(FP,{CV(QueueType,132),CV(QueueUID,68)},{SetMemoryX(0x664080 + (68*4),SetTo,0,4),SetMemoryB(0x663150 + (68),SetTo,4)},{preserved})
-		TriggerX(FP,{CV(QueueType,129),CV(QueueUID,68)},{SetMemoryX(0x664080 + (68*4),SetTo,0,4),SetMemoryB(0x663150 + (68),SetTo,4)},{preserved})
+		TriggerX(FP,{CV(QueueType,132),CV(QueueUID,68)},{
+			SetMemoryX(0x664080 + (68*4),SetTo,0,4),SetMemoryB(0x663150 + (68),SetTo,4),
+			SetMemoryX(0x664080 + (23*4),SetTo,0,4),SetMemoryB(0x663150 + (23),SetTo,4),
+		},{preserved})
+		TriggerX(FP,{CV(QueueType,129),CV(QueueUID,68)},{
+			SetMemoryX(0x664080 + (68*4),SetTo,0,4),SetMemoryB(0x663150 + (68),SetTo,4),
+			SetMemoryX(0x664080 + (23*4),SetTo,0,4),SetMemoryB(0x663150 + (23),SetTo,4),
+		},{preserved})
 	DoActions(FP, {
 		SetMemoryB(0x6644F8+4,SetTo,76),
 		SetMemoryB(0x6644F8+6,SetTo,83),
@@ -451,7 +463,7 @@ CIfEnd()
 TriggerX(FP,{CV(CreateUnitQueuePenaltyLock,0),CV(CreateUnitQueueNum,0)},{SubV(CreateUnitQueuePenaltyT,2)},{preserved})
 CIf(FP,{CV(CreateUnitQueuePenaltyLock,0),CV(CreateUnitQueueNum,1,AtLeast)})
 	local PTRet = CreateVar(FP)
-	CMov(FP,PTRet,_Div(CreateUnitQueueNum,100),2)
+	CMov(FP,PTRet,_Div(CreateUnitQueueNum,200),1)
 	TriggerX(FP,{CV(PTRet,50,AtLeast)},{SetV(PTRet,50)},{preserved})
 	CAdd(FP,CreateUnitQueuePenaltyT,PTRet)
 CIfEnd()
@@ -640,7 +652,7 @@ function SetUnitAbility(UnitID,WepID,DmgType,HP,Shield,Cooldown,Damage,Splash,Ob
 		table.insert(KillPointArr,{UnitID,KillPoint,StrRet})
 		KillPoint = 0
 	end
-	SetUnitsDatX(UnitID, {Class=LClass,GroupFlag=0xA,SuppCost=0,AdvFlag={0x40,0x40+0x8000},StarEditFlag=0x1C7,ComputerAI=3,HP=HP,Shield=Shield,GroundWeapon=TempWID,AirWeapon=TempWID2,SeekRange = SeekRange,KillScore=KillPoint,SizeL=Size,SizeU=Size,SizeR=Size,SizeD=Size
+	SetUnitsDatX(UnitID, {Class=LClass,GroupFlag=0xA,SuppCost=0,AdvFlag={0x40,0x40+0x8000+0x80},StarEditFlag=0x1C7,ComputerAI=3,HP=HP,Shield=Shield,GroundWeapon=TempWID,AirWeapon=TempWID2,SeekRange = SeekRange,KillScore=KillPoint,SizeL=Size,SizeU=Size,SizeR=Size,SizeD=Size
 })
 if ObjNum == nil then ObjNum = 1 end
 if DmgType == 5 then DmgType = 3 end

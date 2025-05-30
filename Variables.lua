@@ -109,7 +109,7 @@
 	UnitHPArr = CreateFArr(1700, FP)
 	if DLC_Project == 1 then 
 		ExRateT = {
-			{20,22,24,27,30},{11,12,13,15,17},{10,11,12,14,16},{9,10,11,13,14}
+			{20,22,24,27,30},{11,12,13,15,17},{10,11,12,14,16},{10,11,12,13,14}
 		}
 	else
 		ExRateT = {
@@ -117,6 +117,8 @@
 		}
 	end
 	--Vars
+	RepPlayerID = CreateVar(FP)
+	CunitHP = CreateVar(FP)
 	HongEnable = CreateCcode()
 	CurSpeed = CreateVar(FP)
 	SELimit = CreateCcode()
@@ -279,11 +281,11 @@
 	JYD = "Set Unit Order To: Junk Yard Dog"
 	
 	DelayMedicT = {
-		StrDesign("\x1D예약메딕\x04을 \x1B2Tick\x04으로 변경합니다. - \x1F390 Ore\x07"),
-		StrDesign("\x1D예약메딕\x04을 \x1B3Tick\x04으로 변경합니다. - \x1F430 Ore\x07"),
-		StrDesign("\x1D예약메딕\x04을 \x1B4Tick\x04으로 변경합니다. - \x1F470 Ore\x07"),
-		StrDesign("\x1D예약메딕\x04을 \x1B5Tick\x04으로 변경합니다. - \x1F510 Ore\x07"),
-		StrDesign("\x1D예약메딕\x04을 \x1B비활성화(1Tick)\x04하였습니다. - \x1F350 Ore\x07")}
+		StrDesign("\x1D예약메딕\x04을 \x1B2Tick\x04으로 변경합니다.\x07"),
+		StrDesign("\x1D예약메딕\x04을 \x1B3Tick\x04으로 변경합니다.\x07"),
+		StrDesign("\x1D예약메딕\x04을 \x1B4Tick\x04으로 변경합니다.\x07"),
+		StrDesign("\x1D예약메딕\x04을 \x1B5Tick\x04으로 변경합니다.\x07"),
+		StrDesign("\x1D예약메딕\x04을 \x1B비활성화(1Tick)\x04하였습니다.\x07")}
 
 	GiveRateT = {
 	StrDesign("\x04기부금액 단위가 \x1F5000 Ore\x04 \x04로 변경되었습니다."),

@@ -269,4 +269,23 @@ CIfEnd()
 
 
 SetCallEnd()
+
+SetClickableStat =SetCallForward()
+CMode = CreateVar(FP)
+ClickUnitID = CreateVar(FP)
+ClickFID = CreateVar(FP)
+ClickSID = CreateVar(FP)
+ClickIID = CreateVar(FP)
+SetCall(FP)
+	f_BreadX(FP, 0x6644F8, ClickUnitID, ClickFID)
+	f_WreadX(FP, 0x6CA318, ClickFID, ClickSID)
+	f_WreadX(FP, 0x666160, ClickSID, ClickIID)
+	f_BwriteX(FP, 0x66C150, ClickIID, SetTo, CMode)
+SetCallEnd()
+function SetUnitClickable(UnitID,Mode)
+	CallTrigger(FP, SetClickableStat, {SetV(ClickUnitID,UnitID),SetV(CMode,Mode)})
+	
+end
+
+
 end

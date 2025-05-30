@@ -50,6 +50,20 @@ def Exec_OggFile():
 	"unlock.ogg",
 	"Wavecall_R.ogg",
 	"zzirizziri.ogg",
+	"BGM_SongForYou.ogg",
+	"BGM_Never_Die.ogg",
+	"BGM_MyHead.ogg",
+	"BGM_Misty_ErA_OneDay.ogg",
+	"BGM_Misty_ErA.ogg",
+	"BGM_Lisrim.ogg",
+	"BGM_Licrom.ogg",
+	"BGM_KICK_IT.ogg",
+	"BGM_Insane_Drift.ogg",
+	"BGM_ELIXIR.ogg",
+	"BGM_CottonCandySoda.ogg",
+	"BGM_Away.ogg",
+	"BGM_1234.ogg",
+	"BGM_Maple.ogg"
 
 	]
 	for i in BGMArr:
