@@ -194,6 +194,7 @@ CMov(FP, 0x6509B0, FP)
 			local CTextR = CreateCText(FP,string.rep("\x0D", 75))--R
 
 			function SetCondUnitTbl(TBLID,arg) -- k1 = tblid k2 = cond k3 = str
+				CIf(FP,{CV(SelUID,TBLID-1)})
 				local TBLPtr = CreateVar(FP)
                 f_GetTblptr(FP, TBLPtr, TBLID)
 				f_Memcpy(FP,TBLPtr,_TMem(Arr(CTextR[3],0),"X","X",1),CTextR[2])
@@ -203,10 +204,9 @@ CMov(FP, 0x6509B0, FP)
                 		f_Memcpy(FP,TBLPtr,_TMem(Arr(CText[3],0),"X","X",1),CText[2])
 					CIfEnd()
 				end
+				CIfEnd()
 			end
 			
-
-
 		
 			CIf(FP,{TTOR({
 				CV(SelUID,190),
@@ -226,6 +226,19 @@ CMov(FP, 0x6509B0, FP)
 			local TBLPtr = CreateVar(FP)
 			local GunNum = CreateVar(FP)
 			f_Read(FP, _Add(_Mul(LCunitIndex,_Mov(0x970/4)),_Add(DUnitCalc[3],((0x20*2)/4))), GunNum)
+			CombSet = {
+			"\x11A\x04ssault \x11M\x04arine - \x1F60000 Ore",
+			"\x1BS\x04niper \x1BM\x04arine - \x1F60000 Ore",
+			"\x10S\x04hotgun \x10M\x04arine - \x1F60000 Ore",
+			"\x18M\x04achineGun \x18M\x04arine - \x1F60000 Ore"}
+			SetCondUnitTbl(220,{
+			{220,CV(GunNum,1),CombSet[1]},
+			{220,CV(GunNum,2),CombSet[2]},
+			{220,CV(GunNum,3),CombSet[3]},
+			{220,CV(GunNum,4),CombSet[4]}
+			}
+			)
+			"		\x0E® \x03M\x04arine\x03。+.˚\x19\x12。˙+˚R\x04espect												 "
 
 			--UnSCeacable 전용 유닛이름
 
@@ -900,7 +913,7 @@ for i = 0, 4 do
 		f_LoadCp()
 		CIfEnd()
 
-		CIf(FP,{DeathsX(CurrentPlayer, Exactly, MarID[i+1], 0, 0xFF),},{SetScore(i, Add, 4, Custom)})
+		CIf(FP,{DeathsX(CurrentPlayer, Exactly, MarID[i+1], 0, 0xFF),CD(OnlyMarineMode,0)},{SetScore(i, Add, 4, Custom)})
 		f_SaveCp()
 		TriggerX(FP,{CD(SELimit,4,AtMost)}, {AddCD(SELimit,1),RotatePlayer({PlayWAVX("staredit\\wav\\Marinedead.ogg"),PlayWAVX("staredit\\wav\\Marinedead.ogg")},HumanPlayers, FP)},{preserved})
 		CIf(FP,{CD(gMAXCcodeArr[2], 0)})
@@ -914,7 +927,6 @@ for i = 0, 4 do
 		f_TempRepeat({CD(GMode,4)}, 67, 1, 218, P8)
 		f_TempRepeat({CD(GMode,4)}, 71, 1, 218, P8)
 		end
-
 		CIfX(FP, {Deaths(i, Exactly, 2, 217)})
 		DisplayPrint(HumanPlayers,{"\x12"..StrD[1]..string.char(ColorCode[i+1]).."名取さな \x04의 \x17리\x04스펙트"..string.char(ColorCode[i+1]).." 마\x04린이 \x08폭사\x04당했어...",StrD[2]})
 		CElseX()
@@ -924,6 +936,55 @@ for i = 0, 4 do
 		CallTriggerX(FP, CallTombTrig, CD(gMAXCcodeArr[2],1),{SetV(TPL,i),SetV(TUID,MarID[i+1])})
 		f_LoadCp()
 		CIfEnd()
+
+
+
+
+		
+		--[[
+		ARCr
+		RFCr
+		SGCr
+		MGCr
+		]]
+		MarText = {
+			--[[
+		"\x11A\x04ssault \x11M\x04arine",
+		"\x1BS\x04niper \x1BM\x04arine",
+		"\x10S\x04hotgun \x10M\x04arine",
+		"\x18M\x04achineGun \x18M\x04arine",]]
+		"\x11어\x04썰트 \x11마\x04린",
+		"\x1B스\x04나이퍼 \x1B마\x04린",
+		"\x10샷\x04건 \x10마\x04린",
+		"\x18머\x04신건 \x18마\x04린"
+		}
+		for j = 1, 4 do
+		CIf(FP,{DeathsX(CurrentPlayer, Exactly, MarID[j], 0, 0xFF),CD(OnlyMarineMode,1)},{SetScore(i, Add, 3, Custom)})
+		f_SaveCp()
+		TriggerX(FP,{CD(SELimit,4,AtMost)}, {AddCD(SELimit,1),RotatePlayer({PlayWAVX("staredit\\wav\\Marinedead.ogg"),PlayWAVX("staredit\\wav\\Marinedead.ogg")},HumanPlayers, FP)},{preserved})
+		CIf(FP,{CD(gMAXCcodeArr[2], 0)})
+		if DLC_Project == 1 then
+		f_Read(FP, _Sub(BackupCp,15), CPos)
+		Convert_CPosXY()
+		--218
+		--f_TempRepeat({CD(GMode,4)}, 89, 1, 218, P8)
+		--f_TempRepeat({CD(GMode,4)}, 61, 1, 218, P8)
+		--f_TempRepeat({CD(GMode,4)}, 63, 1, 218, P8)
+		--f_TempRepeat({CD(GMode,4)}, 67, 1, 218, P8)
+		--f_TempRepeat({CD(GMode,4)}, 71, 1, 218, P8)
+		end
+		CIfX(FP, {Deaths(i, Exactly, 2, 217)})
+		DisplayPrint(HumanPlayers,{"\x12"..StrD[1]..string.char(ColorCode[i+1]).."名取さな \x04의 ",MarText[j],"이 \x08폭사\x04당했어...",StrD[2]})
+		CElseX()
+		DisplayPrint(HumanPlayers,{"\x12"..StrD[1],PName(i)," \x04의 ",MarText[j],"이 \x08폭사\x04당했어...",StrD[2]})
+		CIfXEnd()
+		CIfEnd()
+		CallTriggerX(FP, CallTombTrig, CD(gMAXCcodeArr[2],1),{SetV(TPL,i),SetV(TUID,MarID[j])})
+		f_LoadCp()
+		CIfEnd()
+		end
+
+
 		
 		CIf(FP,{DeathsX(CurrentPlayer, Exactly, 215, 0, 0xFF),},{})
 		f_SaveCp()
@@ -934,7 +995,11 @@ for i = 0, 4 do
 		TriggerX(FP, {CV(EXCC_TempVarArr[5],0)}, {SetScore(i, Subtract, 1, Custom)},{preserved})
 		TriggerX(FP, {CV(EXCC_TempVarArr[5],20)}, {SetScore(i, Subtract, 2, Custom)},{preserved})
 		TriggerX(FP, {CV(EXCC_TempVarArr[5],10)}, {SetScore(i, Subtract, 3, Custom)},{preserved})
-		TriggerX(FP, {CV(EXCC_TempVarArr[5],MarID[i+1])}, {SetScore(i, Subtract, 4, Custom)},{preserved})
+		TriggerX(FP, {CV(EXCC_TempVarArr[5],MarID[i+1]),CD(OnlyMarineMode,0)}, {SetScore(i, Subtract, 4, Custom)},{preserved})
+		TriggerX(FP, {CV(EXCC_TempVarArr[5],MarID[1]),CD(OnlyMarineMode,1)}, {SetScore(i, Subtract, 3, Custom)},{preserved})
+		TriggerX(FP, {CV(EXCC_TempVarArr[5],MarID[2]),CD(OnlyMarineMode,1)}, {SetScore(i, Subtract, 3, Custom)},{preserved})
+		TriggerX(FP, {CV(EXCC_TempVarArr[5],MarID[3]),CD(OnlyMarineMode,1)}, {SetScore(i, Subtract, 3, Custom)},{preserved})
+		TriggerX(FP, {CV(EXCC_TempVarArr[5],MarID[4]),CD(OnlyMarineMode,1)}, {SetScore(i, Subtract, 3, Custom)},{preserved})
 		f_LoadCp()
 		CIfEnd()
 
@@ -1285,13 +1350,14 @@ if NameTest == 1 then
 		--"\x1E。+.˚Story of Maple\x12\x11S\x04tory of \x11M\x04aple\x11。+.˚\t\t\t\t\t\t       "
 		--"\t\x0E。˙+˚My Head。+.˚\x12\x11。˙+˚\x11M\x04y \x11H\x04ead\x11。+.˚\t\t\t\t\t\t\t       "
 			
-		CreateTestCrystal(129,"\x1E。+.˚Story of Maple\x12\x11S\x04tory of \x11M\x04aple\x11。+.˚",{"Q","W","A","S"})
-
-		CreateTestCrystal(130,"\t\x0E。˙+˚My Head。+.˚\x12\x11。˙+˚\x11M\x04y \x11H\x04ead\x11。+.˚",{"E","R","D","F"})
-		CreateTestCrystal(219,"\t\t\x10。˙+˚ELIXIR。+.˚\x12\x1E。˙+˚E\x04LIXI\x1ER。+.˚",{"T","Y","G","H"})
-
-		CreateTestCrystal(220,"\t\x15。+.˚Misty E'ra\x12\x11M\x04isty \x11E\x04'ra\x11。+.˚",{"U","I","J","K"})
-		CreateTestCrystal(221,"\x15。+.˚∼One Day∼\x12\x1D∼\x1DO\x04ne \x1DD\x04ay\x1D∼。+.˚",{"O","P","L","SEMICOLON"})
+		CreateTestCrystal(129,"\x11® \x03M\x04arine\x03。+.˚\x12\x11。˙+˚\x11A\x04ssault",{"Q","W","A","S"})
+		CreateTestCrystal(130,"\x1B® \x03M\x04arine\x03。+.˚\x12\x1B。˙+˚\x1BS\x04niper",{"E","R","D","F"})
+		CreateTestCrystal(219,"\x10® \x03M\x04arine\x03。+.˚\x12\x10。˙+˚\x10S\x04hotgun",{"T","Y","G","H"})
+		CreateTestCrystal(221,"\x18® \x03M\x04arine\x03。+.˚\x12\x18。˙+˚\x18M\x04achineGun",{"U","I","J","K"})
+		
+		
+		
+		
 		
 end
 	end
@@ -1346,6 +1412,7 @@ end
 	--219
 	--130
 	--129
+CIf(FP,{CD(GS,1)})
 Trigger2(FP,{Command(P7,AtLeast,100,42)},{KillUnitAt(1, 42, 64, P7)},{preserved})
 Trigger2(FP,{Command(FP,AtLeast,100,42)},{KillUnitAt(1, 42, 64, FP)},{preserved})
 Trigger2X(FP,{CD(CocoonCcode,1)},{SetInvincibility(Disable, "Men", P6, 64)},{preserved})
@@ -1395,5 +1462,5 @@ CIfEnd()
 --TriggerX(FP, {ElapsedTime(AtLeast, 240),CD(EVFCcode,1)}, {SetCD(HongEnable,1)})
 Trigger2X(FP, {CD(HongEnable,1),CD(EVFCcode,1)},{Order("Men", Force2, 64, Move, 6),ModifyUnitHitPoints(All, "Men", Force2, 64, 1),RotatePlayer({PlayWAVX("staredit\\wav\\hongparksa.ogg"),PlayWAVX("staredit\\wav\\hongparksa.ogg"),PlayWAVX("staredit\\wav\\hongparksa.ogg"),PlayWAVX("staredit\\wav\\hongparksa.ogg"),PlayWAVX("staredit\\wav\\hongparksa.ogg"),DisplayTextX("\n\n\n\n\x13\x04――――――――――――――――――――――――――――――――――――――――――――――――――――――\n\x13\x04！！！　\x07ＨＯＮＧＨＯＮＧＨＯＮＧＨＯＮＧＨＯＮＧ\x04　！！！\n\n\n\x13\x07누군가가 \x03DJMAX \x1C유니버스\x04에 \x08홍박사 바이러스\x04를 \x07심었습니다!!! \n\n\n\x13\x04！！！　\x07ＨＯＮＧＨＯＮＧＨＯＮＧＨＯＮＧＨＯＮＧ\x04　！！！\n\x13\x04――――――――――――――――――――――――――――――――――――――――――――――――――――――\x0d\x0d\x0d\x0d\x14\x14\x14\x14\x14\x14\x14\x14", 4)}, HumanPlayers, FP)})
 
-
+CIfEnd()
 end

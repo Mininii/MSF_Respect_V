@@ -31,7 +31,7 @@ EVFMode = 1
 DLC_Project = 1 
 X4_Mode = 0
 MapText = {"\x04Marine Special Forces \x17R\x04espect \x17V","\x04Marine Special Forces \x17R\x04espect \x17V \x06L\x11I\x17B\x18E\x1CR\x0ET\x10Y"}
-TestSet(0)
+TestSet(2)
 FP = P8
 SetForces({P1,P2,P3,P4,P5},{P6,P7,P8},{},{},{P1,P2,P3,P4,P5,P6,P7,P8})
 SetFixedPlayer(FP)

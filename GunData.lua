@@ -62,6 +62,26 @@ function Include_GunData(Size,LineNum)
 			f_TempRepeatX({CD(GMode,4)}, 70, 10, 187, P8, {WTime,LTime2})
 			f_TempRepeatX({CD(GMode,4)}, 12, 10, 187, P8, {WTime,LTime2})
 			f_TempRepeatX({CD(GMode,4)}, 8, 10, 187, P8, {WTime,LTime2})
+			CIf(FP,{CD(OnlyMarineMode,1),CV(GunID,133),CV(DUnitCalc[4][3],5,AtMost)})
+			--219
+			
+			
+			
+			
+			
+				CIf(FP,{Memory(0x628438,AtLeast,1)},{})
+				f_Read(FP,0x628438,"X",Nextptrs,0xFFFFFF)
+				CMov(FP,CunitIndex,_Div(_Sub(Nextptrs,19025),_Mov(84)))
+				CDoActions(FP, {CreateUnit(1, 219, 1, P6)})
+				CTrigger(FP,{CV(DUnitCalc[4][3],4)},{Set_EXCC2(DUnitCalc, CunitIndex, 2, SetTo, 1),SetCD(EAR,1)},{preserved})
+				CTrigger(FP,{CV(DUnitCalc[4][3],3)},{Set_EXCC2(DUnitCalc, CunitIndex, 2, SetTo, 2),SetCD(ERF,1)},{preserved})
+				CTrigger(FP,{CV(DUnitCalc[4][3],5)},{Set_EXCC2(DUnitCalc, CunitIndex, 2, SetTo, 3),SetCD(ESG,1)},{preserved})
+				CTrigger(FP,{CV(DUnitCalc[4][3],2)},{Set_EXCC2(DUnitCalc, CunitIndex, 2, SetTo, 4),SetCD(EMG,1)},{preserved})
+				CIfEnd()
+
+	
+			CIfEnd()
+		
 		end
 		f_Read(FP,BackupCp,GunID,"X",0xFF,1)
 		f_Read(FP,_Sub(BackupCp,6),GunPlayer,"X",0xFF)
@@ -92,8 +112,6 @@ function Include_GunData(Size,LineNum)
 		GunBGM(190,25,"\x08O\x04\'men",150000,nil,2)
 		GunBGM(175,23,"\x1DL\x04ENA \x1DT\x04ower",555555)
 		GunBGM(147,23,"\x08D\x04IE \x08I\x04N",555555)
-
-		
 		--UnSCeacable 전용
 		CIfX(FP,{CD(GMode,3,AtMost)})
 		GunBGM(148,9,"\x1CH\x04ypernaid",150000)

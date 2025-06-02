@@ -47,7 +47,7 @@
 		{33,"staredit\\wav\\BGM_Misty_ErA_OneDay.ogg",75*1000},
 		{34,"staredit\\wav\\BGM_Misty_ErA.ogg",87*1000},
 		{35,"staredit\\wav\\BGM_Lisrim.ogg",44*1000},
-		{36,"staredit\\wav\\BGM_Licrom.ogg",42*1000},
+		{36,"staredit\\wav\\BGM_Licrom.ogg",51*1000},
 		{37,"staredit\\wav\\BGM_KICK_IT.ogg",25*1000},
 		{38,"staredit\\wav\\BGM_Insane_Drift.ogg",88*1000},
 		{39,"staredit\\wav\\BGM_ELIXIR.ogg",50*1000},
@@ -460,7 +460,7 @@
 				TriggerX(FP, {CV(SelUID,196)}, {RotatePlayer({DisplayTextX(StrDesignX("\x10S\x04C \x10S\x04tyle").."\n"..StrDesignX("\x04- \x03위험도 \x04: \x10★★★★★\x11★★★★★\x08★★★★★ \x04-").."\n"..StrDesignX("\x11정의할 수 없는, 정리하지 못한 난이도입니다."), 4)}, HumanPlayers, FP)}, {preserved})
 			end
 			TriggerX(FP, {CV(SelUID,145)}, {RotatePlayer({DisplayTextX(StrDesignX("\x0FE\x04VF \x0FM\x04ode").."\n"..StrDesignX("\x04- \x03활성화 가능 옵션 \x04-").."\n"..StrDesignX("\x07속시원한 빠른 플레이\x04를 원할 경우 사용할 수 있습니다. ").."\n"..StrDesignX("\x03특징 : \x1B마린, 스킬 공격력 \x0850% 증가\x04, \x17Fever Power \x04활성화").."\n"..StrDesignX("\x17Fever Power \x04사용 중에는 모든 마린의 체력, 쉴드가 100%로 고정되고, 환전률 \x072배\x04가 적용되며 잠시동안 \x08공격속도\x04가 \x07매우 빨라집니다."), 4)}, HumanPlayers, FP)}, {preserved})
-			TriggerX(FP, {CV(SelUID,158)}, {RotatePlayer({DisplayTextX(StrDesignX("\x1FO\x04nly \x1FM\x04arine \x1FM\x04ode").."\n"..StrDesignX("\x04- \x03활성화 가능 옵션 \x04-").."\n"..StrDesignX("\x1F영웅마린\x04만 사용하길 원할 경우 사용할 수 있습니다. ").."\n"..StrDesignX("\x03특징 : \x1B영웅마린\x04만 사용 가능, \x07일부 건작 밸런스 \x04변경"), 4)}, HumanPlayers, FP)}, {preserved})
+			TriggerX(FP, {CV(SelUID,158)}, {RotatePlayer({DisplayTextX(StrDesignX("\x1FO\x04nly \x1FM\x04arine \x1FM\x04ode").."\n"..StrDesignX("\x04- \x03활성화 가능 옵션 \x04-").."\n"..StrDesignX("\x1F영웅마린\x04만 사용하길 원할 경우 사용할 수 있습니다. ").."\n"..StrDesignX("\x03특징 : \x1B스페셜 마린, 리스펙트 마린 제거, 4종 마린 추가."), 4)}, HumanPlayers, FP)}, {preserved})
 			
 		else
 
@@ -477,7 +477,7 @@
 	
 if DLC_Project == 1 then
 	Trigger2X(FP, {Bring(AllPlayers, AtLeast, 1, 96, 11)}, {SetCD(EVFCcode,1),RemoveUnit(145, AllPlayers),RotatePlayer({DisplayTextX("\n\n\n\n\n\n\n\n\n",4),DisplayTextX(StrDesignX("\x0FE\x04VF \x0FM\x04ode\x04가 활성화되었습니다.").."\n"..StrDesignX("\x1B마린, 스킬 공격력 \x0850% 증가\x04, \x17Fever Power \x04활성화").."\n"..StrDesignX("\x17Fever Power \x04사용 중에는 모든 마린의 체력, 쉴드가 100%로 고정되고, 환전률 \x072배\x04가 적용되며 잠시동안 \x08공격속도\x04가 \x07매우 빨라집니다."), 4),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg")}, HumanPlayers, FP)})
-	Trigger2X(FP, {Bring(AllPlayers, AtLeast, 1, 96, 48)}, {SetCD(OnlyMarineMode,1),RemoveUnit(158, AllPlayers),RotatePlayer({DisplayTextX("\n\n\n\n\n\n\n\n\n",4),DisplayTextX(StrDesignX("\x1FO\x04nly \x1FM\x04arine \x1FM\x04ode\x04가 활성화되었습니다.").."\n"..StrDesignX("\x1B영웅마린\x04만 사용 가능\x04, \x07일부 건작 밸런스 \x04변경"), 4),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg")}, HumanPlayers, FP)})
+	Trigger2X(FP, {Bring(AllPlayers, AtLeast, 1, 96, 48)}, {SetCD(OnlyMarineMode,1),RemoveUnit(158, AllPlayers),RotatePlayer({DisplayTextX("\n\n\n\n\n\n\n\n\n",4),DisplayTextX(StrDesignX("\x1FO\x04nly \x1FM\x04arine \x1FM\x04ode\x04가 활성화되었습니다.").."\n"..StrDesignX("\x1B스페셜 마린, 리스펙트 마린 제거, 4종 마린 추가."), 4),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg")}, HumanPlayers, FP)})
 else
 	Trigger2X(FP, {Bring(AllPlayers, AtLeast, 1, 96, 11)}, {SetCD(EVFCcode,1),RemoveUnit(145, AllPlayers),RotatePlayer({DisplayTextX("\n\n\n\n\n\n\n\n\n",4),DisplayTextX(StrDesignX("\x0FE\x04VF \x0FM\x04ode\x04가 활성화되었습니다.").."\n"..StrDesignX("\x1B마린 공격력 \x0850% 증가\x04, \x17Fever Power \x04활성화").."\n"..StrDesignX("\x17Fever Power \x04사용 중에는 모든 마린의 체력, 쉴드가 100%로 고정되고, 환전률 \x072배\x04가 적용됩니다."), 4),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg")}, HumanPlayers, FP)})
 end
@@ -753,16 +753,6 @@ end
 			SetMemory(0x662350 + (MarID[5]*4),SetTo,9999*256),
 			SetMemoryW(0x660E00 + (MarID[5] *2), SetTo, 9999),
 
-			SetMemoryB(0x57F27C + (0 * 228) + 5,SetTo,0),
-			SetMemoryB(0x57F27C + (1 * 228) + 5,SetTo,0),
-			SetMemoryB(0x57F27C + (2 * 228) + 5,SetTo,0),
-			SetMemoryB(0x57F27C + (3 * 228) + 5,SetTo,0),
-			SetMemoryB(0x57F27C + (4 * 228) + 5,SetTo,0),
-			SetMemoryB(0x57F27C + (0 * 228) + 50,SetTo,0),
-			SetMemoryB(0x57F27C + (1 * 228) + 50,SetTo,0),
-			SetMemoryB(0x57F27C + (2 * 228) + 50,SetTo,0),
-			SetMemoryB(0x57F27C + (3 * 228) + 50,SetTo,0),
-			SetMemoryB(0x57F27C + (4 * 228) + 50,SetTo,0),
 
 			
 		})
@@ -776,6 +766,59 @@ end
 
 			
 		})
+		CIfX(FP,{CD(OnlyMarineMode,0)},{
+			
+		})--이름설정 및
+		 OLPatchArr = {}
+		for i = 0,4 do 
+			
+			table.insert(OLPatchArr,SetMemoryB(0x58D088+(46*i)+8,SetTo,0))
+			table.insert(OLPatchArr,SetMemoryB(0x58D088+(46*i)+9,SetTo,0))
+			table.insert(OLPatchArr,SetMemoryB(0x58D088+(46*i)+10,SetTo,0))
+			table.insert(OLPatchArr,SetMemoryB(0x58D088+(46*i)+11,SetTo,0))
+		end
+		DoActions2X(FP,OLPatchArr)
+
+		CElseX()
+		OLPatchArr2 = {}
+		for i = 0,4 do 
+			
+			table.insert(OLPatchArr2,SetMemoryB(0x58D088+(46*i)+17,SetTo,0))
+			table.insert(OLPatchArr2,SetMemoryB(0x58D088+(46*i)+21,SetTo,0))
+			table.insert(OLPatchArr2,SetMemoryB(0x58D088+(46*i)+22,SetTo,0))
+			table.insert(OLPatchArr2,SetMemoryB(0x58D088+(46*i)+23,SetTo,0))
+			table.insert(OLPatchArr2,SetMemoryB(0x58D088+(46*i)+43,SetTo,0))
+		end
+		DoActions2X(FP,OLPatchArr2)
+		DoActions2X(FP,{SetMemoryW(0x663888 + (8 *2),SetTo,NMCost+HMCost2),
+			SetMemoryB(0x57F27C + (0 * 228) + 5,SetTo,0),
+			SetMemoryB(0x57F27C + (1 * 228) + 5,SetTo,0),
+			SetMemoryB(0x57F27C + (2 * 228) + 5,SetTo,0),
+			SetMemoryB(0x57F27C + (3 * 228) + 5,SetTo,0),
+			SetMemoryB(0x57F27C + (4 * 228) + 5,SetTo,0),
+			SetMemoryB(0x57F27C + (0 * 228) + 12,SetTo,0),
+			SetMemoryB(0x57F27C + (1 * 228) + 12,SetTo,0),
+			SetMemoryB(0x57F27C + (2 * 228) + 12,SetTo,0),
+			SetMemoryB(0x57F27C + (3 * 228) + 12,SetTo,0),
+			SetMemoryB(0x57F27C + (4 * 228) + 12,SetTo,0),
+			SetMemoryB(0x6616E0+MarID[1],SetTo,123),
+			SetMemoryB(0x6636B8+MarID[1],SetTo,123),
+			SetMemoryB(0x6616E0+MarID[2],SetTo,124),
+			SetMemoryB(0x6636B8+MarID[2],SetTo,124),
+			SetMemoryB(0x6616E0+MarID[3],SetTo,125),
+			SetMemoryB(0x6636B8+MarID[3],SetTo,125),
+			SetMemoryB(0x6616E0+MarID[4],SetTo,126),
+			SetMemoryB(0x6636B8+MarID[4],SetTo,126),
+		})
+		--[[
+		"\x11A\x04ssault \x11M\x04arine",
+		"\x1BS\x04niper \x1BM\x04arine",
+		"\x10S\x04hotgun \x10M\x04arine",
+		"\x18M\x04achineGun \x18M\x04arine",
+		]]
+
+		CIfXEnd()
+
 		
 		
 	end
@@ -812,7 +855,7 @@ if DLC_Project == 1 then
 				SetCVar(FP,ExRate[2],SetTo,ExRateT[j][p]);})
 		end
 		for p = 1, 5 do
-			local TT = "\x13\x04마린키우기 \x17R\x04espect \x17V \x06L\x11I\x17B\x18E\x1CR\x0ET\x10Y\n\x13"..MSDiff[j].." "..string.char(ColorCode[p])..p.."인 \x17환전률 : \x1B"..ExRateT[j][p].."%\n\x13\x04Marine + \x1F"..HMCost.." Ore\x04 = \x1BH\x04ero \x1BM\x04arine\n\x13\x04Only Marine Mode에서는 \x1BH\x04ero \x1BM\x04arine 까지만 뽑을 수 있으며\n\x13\x1BH\x04ero \x1BM\x04arine에 틱당 100의 \x1C쉴드\x04가 재생됩니다."
+			local TT = "\x13\x04마린키우기 \x17R\x04espect \x17V \x06L\x11I\x17B\x18E\x1CR\x0ET\x10Y\n\x13"..MSDiff[j].." "..string.char(ColorCode[p])..p.."인 \x17환전률 : \x1B"..ExRateT[j][p].."%\n\x13\x04Marine + \x1F"..HMCost.." Ore\x04 = \x1BH\x04ero \x1BM\x04arine\n\x13\x04Only Marine Mode에서는 스페셜마린, 리스펙트 마린이 제거되며\n\x13\x074종 마린이 추가됩니다."
 			Trigger2X(FP, {CD(GMode,j),CV(SetPlayers,p),CD(OnlyMarineMode,1);}, {
 				RotatePlayer({SetMissionObjectivesX(TT)},HumanPlayers,FP);
 				SetCVar(FP,ExRate[2],SetTo,ExRateT[j][p]);})
@@ -1025,6 +1068,25 @@ DoActions(FP,{
 		players = {i},
 		conditions = {
 			Label(0);
+			CD(OnlyMarineMode,0);
+			Bring(i,AtLeast,1,32,13); 
+			Accumulate(i,AtLeast,HMCost,Ore);
+			Accumulate(i,AtMost,0x7FFFFFFF,Ore);
+		},
+		actions = {
+			ModifyUnitEnergy(1,32,i,13,0);
+			RemoveUnitAt(1,32,13,i);
+			SetResources(i,Subtract,HMCost,Ore);
+			AddCD(HMCr[i+1],1);
+			DisplayText(StrDesign("\x1F광물\x04을 소모하여 \x1DM\x04arine을 \x1BH\x04ero M\x04arine으로 \x19변환\x04하였습니다. - \x1F"..N_to_EmN(HMCost).." O r e"),4);
+			PreserveTrigger();
+		},
+		}
+		Trigger { -- 조합 영웅마린
+		players = {i},
+		conditions = {
+			Label(0);
+			CD(OnlyMarineMode,1);
 			Bring(i,AtLeast,1,32,13); 
 			Accumulate(i,AtLeast,HMCost,Ore);
 			Accumulate(i,AtMost,0x7FFFFFFF,Ore);
@@ -1041,6 +1103,7 @@ DoActions(FP,{
 		
 		
 		if DLC_Project == 1 then
+
 			--[[
 			Trigger { -- 조합 스마
 			players = {i},
@@ -1122,6 +1185,39 @@ DoActions(FP,{
 				PreserveTrigger();
 			},
 			}
+
+			--16 17 18 19
+			CombArr = {
+				{16,MarID[1],ARCr[i+1],"\x11A\x04ssault \x11M\x04arine",EAR},
+				{17,MarID[2],RFCr[i+1],"\x1BS\x04niper \x1BM\x04arine",ERF},
+				{18,MarID[3],SGCr[i+1],"\x10S\x04hotgun \x10M\x04arine",ESG},
+				{19,MarID[4],MGCr[i+1],"\x18M\x04achineGun \x18M\x04arine",EMG}
+			}
+			for j = 1,4 do
+			Trigger { -- 조합 근
+			players = {i},
+			conditions = {
+				Label(0);
+				CD(CombArr[j][5],1),
+				CD(OnlyMarineMode,1);
+				Bring(i,AtLeast,1,20,CombArr[j][1]); 
+				Accumulate(i,AtLeast,OLModeMarCost,Ore);
+				Accumulate(i,AtMost,0x7FFFFFFF,Ore);
+			},
+			actions = {
+				ModifyUnitEnergy(1,20,i,13,0);
+				RemoveUnitAt(1,20,13,i);
+				SetResources(i,Subtract,OLModeMarCost,Ore);
+				AddCD(CombArr[j][3],1);
+				DisplayText(StrDesign("\x1F광물\x04을 소모하여 \x1BH\x04ero M\x04arine을 ",CombArr[j][4],"으로 \x19변환\x04하였습니다. - \x1F"..N_to_EmN(OLModeMarCost).." O r e"),4);
+				PreserveTrigger();
+			},
+			}
+		
+			end
+		
+		
+
 		else
 			Trigger { -- 조합 스마
 			players = {i},
@@ -1337,7 +1433,7 @@ DoActions(FP,{
 		--SMUpPtrArr
 		--RMUpMaskRetArr
 		--RMUpPtrArr
-
+		CIf(FP,{CD(OnlyMarineMode,0)})
 		DoActionsX(FP,{SetCVar(FP,CurHealUpgrade[i+1][2],SetTo,0),SetCVar(FP,CurRebirthUp[i+1][2],SetTo,0),SetCVar(FP,CurSMUp[i+1][2],SetTo,0),SetCVar(FP,CurRMUp[i+1][2],SetTo,0)})
 
 
@@ -1465,7 +1561,16 @@ DoActions(FP,{
 		TriggerX(FP,{CD(SMRebirthT2[i+1],0)},{SetInvincibility(Disable, 10, i, 64)},{preserved})
 		TriggerX(FP,{CD(RMRebirthT2[i+1],0)},{SetInvincibility(Disable, MarID[i+1], i, 64)},{preserved})
 		CIfXEnd()
-
+		CIfEnd()
+		TriggerX(FP, {CD(OnlyMarineMode,1)}, {
+			SetInvincibility(Disable, 32, i, 64),
+			SetInvincibility(Disable, 20, i, 64),
+			SetInvincibility(Disable, MarID[1], i, 64),
+			SetInvincibility(Disable, MarID[2], i, 64),
+			SetInvincibility(Disable, MarID[3], i, 64),
+			SetInvincibility(Disable, MarID[4], i, 64),
+		}, {preserved})
+			
 		--local HealUpgradeT = CreateCcode()
 		--CIf(FP,CV(HealUpgrade[i+1],1,AtLeast),{})
 		--for j = 1, 5 do
@@ -1493,8 +1598,12 @@ DoActions(FP,{
 			AddCD(NMCr[i+1],1),SetCp(FP)
 		})
 		if DLC_Project==1 then
-			UnitButton(i,8,{},{SetCp(i),
+			UnitButton(i,8,{CD(OnlyMarineMode,0)},{SetCp(i),
 				DisplayText(StrDesign("\x1BH\x04ero M\x04arine을 을 \x19소환\x04하였습니다. - \x1F"..NMCost+HMCost.." O r e"),4);
+				AddCD(HMCr[i+1],1),SetCp(FP)
+			})
+			UnitButton(i,8,{CD(OnlyMarineMode,1)},{SetCp(i),
+				DisplayText(StrDesign("\x1BH\x04ero M\x04arine을 을 \x19소환\x04하였습니다. - \x1F"..NMCost+HMCost2.." O r e"),4);
 				AddCD(HMCr[i+1],1),SetCp(FP)
 			})
 		else
@@ -1559,8 +1668,17 @@ DoActions(FP,{
 		{NMCr[i+1],32,1500*256},
 		{HMCr[i+1],20,3000*256},
 		{SMCr[i+1],10,6000*256},
-		{RMCr[i+1],MarID[i+1],5000*256}}
-		for p = 1, 4 do
+		{RMCr[i+1],MarID[i+1],5000*256},
+		{ARCr[i+1],MarID[1],5000*256},
+		{RFCr[i+1],MarID[2],5000*256},
+		{SGCr[i+1],MarID[3],5000*256},
+		{MGCr[i+1],MarID[4],5000*256}}
+
+
+
+
+
+		for p = 1, 8 do
 			CallTriggerX(FP, Call_MarCr,{CD(MCT[p][1],1,AtLeast),Memory(0x628438, AtLeast, 1)}, {SubCD(MCT[p][1],1),
 				SetV(MID,MCT[p][2]),
 				SetV(MPID,i),

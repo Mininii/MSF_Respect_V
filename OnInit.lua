@@ -144,6 +144,19 @@
 		SetWeaponsDatX(121, {TargetFlag = 0x020 + 1 + 2 + 0x10,DamageType=3,RangeMax = 7*32,DmgBase = SMSkillBaseAtk2,DmgFactor=SMSkillFactorAtk2,Splash={5,10,15}})
 		SetWeaponsDatX(122, {TargetFlag = 0x020 + 1 + 2 + 0x10,DamageType=3,RangeMax = 7*32,DmgBase = SMSkillBaseAtk3,DmgFactor=SMSkillFactorAtk3,Splash={10,20,30}})
 		
+		
+		--[[
+		"\x11A\x04ssault \x11M\x04arine",
+		"\x1BS\x04niper \x1BM\x04arine",
+		"\x10S\x04hotgun \x10M\x04arine",
+		"\x18M\x04achineGun \x18M\x04arine",
+		]]
+		
+		SetWeaponsDatX(123, {UpgradeType = 8,TargetFlag = 0x020 + 1 + 2,DamageType=3,RangeMax = 8*32,Cooldown = 15,DmgBase = SMSkillBaseAtk3,DmgFactor=SMSkillFactorAtk3})
+		SetWeaponsDatX(124, {UpgradeType = 9,TargetFlag = 0x020 + 1 + 2,DamageType=1,RangeMax = 12*32,Cooldown = 75,DmgBase = SMSkillBaseAtk3,DmgFactor=SMSkillFactorAtk3})
+		SetWeaponsDatX(125, {UpgradeType = 10,TargetFlag = 0x020 + 1 + 2,DamageType=2,RangeMax = 3*32,Cooldown = 30,DmgBase = SMSkillBaseAtk3,DmgFactor=SMSkillFactorAtk3,Splash={3,5,15}})
+		SetWeaponsDatX(126, {UpgradeType = 11,TargetFlag = 0x020 + 1 + 2,DamageType=2,RangeMax = 6*32,Cooldown = 1,DmgBase = SMSkillBaseAtk3,DmgFactor=SMSkillFactorAtk3,Splash={1,3,10}})
+		
 
 
 
@@ -246,6 +259,10 @@
 		DoActions(FP, {
 			SetMemoryB(0x58D088+(46*i)+0,SetTo,255),
 			SetMemoryB(0x58D088+(46*i)+7,SetTo,255),
+			SetMemoryB(0x58D088+(46*i)+8,SetTo,100),
+			SetMemoryB(0x58D088+(46*i)+9,SetTo,100),
+			SetMemoryB(0x58D088+(46*i)+10,SetTo,100),
+			SetMemoryB(0x58D088+(46*i)+11,SetTo,100),
 			SetMemoryB(0x58D088+(46*i)+15,SetTo,255),
 			SetMemoryB(0x58D088+(46*i)+18,SetTo,1),
 			SetMemoryB(0x58D088+(46*i)+19,SetTo,1),

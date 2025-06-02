@@ -25,6 +25,14 @@
 		QueueMaxUnit = 1650
 
 	end
+		ARBaseAtk = 150
+		ARFactorAtk = 80
+		SNBaseAtk = 0
+		SNFactorAtk = 300
+		SGBaseAtk = 0
+		SGFactorAtk = 140
+		MGBaseAtk = 0
+		MGFactorAtk = 10
 	if DLC_Project == 1 then
 		AutoHealDiv = 100 -- 자동힐 나누기 계수
 		NMBaseAtk=40 -- 파벳베이스 : 1/2 데미지로 설정할것
@@ -54,6 +62,7 @@
 		SMSkillFactorAtk3 = 35
 		RMSkillBaseAtk = 350
 		RMSkillFactorAtk = 100
+		
 	else
 		NMBaseAtk=5 -- 파벳베이스 : 1/2 데미지로 설정할것
 		NMFactorAtk=3 -- 파벳베이스 : 1/2 데미지로 설정할것
@@ -67,6 +76,7 @@
 	if DLC_Project == 1 then
 		NMCost = 20000
 		HMCost = 40000
+		HMCost2 = 20000
 		SMCost = 50000--유닛죽이기용
 		RMCost = 300000--건작용
 		SMCost2 = 100000 -- 온리마린 딜개쌘거
@@ -79,7 +89,7 @@
 		RMCost = 10000
 		RMtoSMCost = 2000
 	end
-
+	OLModeMarCost = 60000
 	if X4_Mode == 1 then
 		AutoHealDiv = AutoHealDiv / 2
 		NMBaseAtk= NMBaseAtk * 2
@@ -99,6 +109,7 @@
 		SMSkillFactorAtk3 = SMSkillFactorAtk3 * 2
 		RMSkillBaseAtk = RMSkillBaseAtk * 2
 		RMSkillFactorAtk = RMSkillFactorAtk * 2
+
 
 	end
 
@@ -165,6 +176,10 @@
 	HMCr = CreateCcodeArr(5)
 	SMCr = CreateCcodeArr(5)
 	RMCr = CreateCcodeArr(5)
+	ARCr = CreateCcodeArr(5)
+	RFCr = CreateCcodeArr(5)
+	SGCr = CreateCcodeArr(5)
+	MGCr = CreateCcodeArr(5)
 	CrCheck1 = CreateCcodeArr(5)
 	CrCheck2 = CreateCcodeArr(5)
 	CSPtr = CreateVar(FP)
@@ -185,6 +200,10 @@
 	LCP = CreateVar(FP)
 	HLine, ChatSize, ChatOff, HCheck = CreateVars(4,FP) 
 	GS = CreateCcode()
+	EAR = CreateCcode()
+	ERF = CreateCcode()
+	ESG = CreateCcode()
+	EMG = CreateCcode()
 	
 	SMPtr = CreateVarArr(5, FP)
 	RMPtr = CreateVarArr(5, FP)
