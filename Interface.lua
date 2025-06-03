@@ -1210,7 +1210,7 @@ DoActions(FP,{
 				SetResources(i,Subtract,OLModeMarCost,Ore);
 				AddCD(CombArr[j][3],1);
 				DisplayText(StrDesign("\x1F광물\x04을 소모하여 \x1BH\x04ero M\x04arine을 ",CombArr[j][4],"으로 \x19변환\x04하였습니다. - \x1F"..N_to_EmN(OLModeMarCost).." O r e"),4);
-				PreserveTrigger();
+				PreserveTrigger(); 
 			},
 			}
 		

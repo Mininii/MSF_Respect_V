@@ -871,7 +871,8 @@ end
 				G_CB_SetSpawn({GNm(j)}, {k}, {"ACAS"}, {"CenCross2"}, "MAX", 129, nil, nil, P8,1)
 				end
 				for j,k in pairs(CenT3) do
-				G_CB_SetSpawn({GNm(j),CD(GMode,4)}, {k}, {"ACAS"}, {"CenCross3"}, "MAX", "Era_Attack_HP50", nil, nil, P8,1)
+				G_CB_SetSpawn({GNm(j),CD(GMode,4),CD(OnlyMarineMode,0)}, {k}, {"ACAS"}, {"CenCross3"}, "MAX", "Era_Attack_HP50", nil, nil, P8,1)
+				G_CB_SetSpawn({GNm(j),CD(GMode,4),CD(OnlyMarineMode,1)}, {k}, {"ACAS"}, {"CenCross3"}, "MAX", "Era_Patrol_HP50", nil, nil, P8,1)
 				end
 				
 			end
@@ -1327,6 +1328,7 @@ end
 	CAdd(FP,TotalM,MarNum2)
 	
 	if DLC_Project == 1 then
+
 	UnitReadX(FP, Force1, 10, 201, MarNum3)--*3
 	for i = 0, 4 do
 		CIf(FP,{HumanCheck(i, 1)})
@@ -1339,9 +1341,9 @@ end
 		CAdd(FP,TotalM,_Mul(MarNum4[i+1],20))
 	end
 	CElseX()
-	CAdd(FP,TotalM,_Mul(MarNum3,4))
+	--CAdd(FP,TotalM,_Mul(MarNum3,4))
 	for i = 0, 4 do
-		CAdd(FP,TotalM,_Mul(MarNum4[i+1],4))
+		CAdd(FP,TotalM,_Mul(MarNum4[i+1],3))
 	end
 	CIfXEnd()
 

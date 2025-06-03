@@ -1431,7 +1431,7 @@ CCIText3 = "\x13\x07。\x18˙\x0F+\x1C˚ \x03N\x04ew\x03G\x04ame\x03S\x04tart �
 TriggerX(FP, {CD(ChryCcode2,480,AtLeast)}, {SetInvincibility(Disable, 201, P8, 64),
 	RotatePlayer({DisplayTextX(CCIText, 4),PlayWAVX("staredit\\wav\\unlock.ogg"),PlayWAVX("staredit\\wav\\unlock.ogg"),PlayWAVX("staredit\\wav\\unlock.ogg"),PlayWAVX("staredit\\wav\\unlock.ogg")}, HumanPlayers, FP),
 })
-TriggerX(FP,{CD(GunCcode,0)},{AddCD(WinCcode,1)},{preserved})
+TriggerX(FP,{CD(GunCcode,0),Bring(Force2, AtMost, 0, "Buildings", 64)},{AddCD(WinCcode,1)},{preserved})
 TriggerX(FP, {CD(WinCcode,480,AtLeast)}, {KillUnit(125, AllPlayers),KillUnit(125, P12),RotatePlayer({DisplayTextX(CCIText2, 4),PlayWAVX("staredit\\wav\\unlock.ogg"),PlayWAVX("staredit\\wav\\unlock.ogg"),PlayWAVX("staredit\\wav\\unlock.ogg"),PlayWAVX("staredit\\wav\\unlock.ogg")}, HumanPlayers, FP),})
 f_TempRepeat(CD(WinCcode,480,AtLeast), 189, 1, 0, P8, {1024,1088}, 1)
 TriggerX(FP,{CD(WinCcode2,1,AtLeast)},{AddCD(WinCcode2,1)},{preserved})
