@@ -184,8 +184,11 @@ f_Div(FP,CunitIndex,_Sub(Nextptrs,19025),_Mov(84))
 
 DoActions(FP, {
 	SetMemory(0x66EC48+(33*4), SetTo, 70),
+	SetMemory(0x66EC48+(8*4), SetTo, 70),
+	
 	
 })
+TriggerX(FP,{CD(OnlyMarineMode,1),CV(MID,MarID[1])},{SetMemoryB(0x669E28+228, SetTo, 16)},{preserved})
 
 for y = 0, 3 do
 	if y == 0 then RS1 = Cleared RS2=Cleared end
@@ -197,6 +200,8 @@ end
 
 DoActions(FP, {
 	SetMemory(0x66EC48+(33*4), SetTo, 20),
+	SetMemory(0x66EC48+(8*4), SetTo, 6),
+	SetMemoryB(0x669E28+228, SetTo, 0)
 })
 
 CIf(FP,{TMemoryX(_Add(Nextptrs,40),AtLeast,150*16777216,0xFF000000)},{TSetDeathsX(_Add(Nextptrs,9),SetTo,0,0,0xFF0000)})

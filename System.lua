@@ -63,7 +63,7 @@ local SelATK = CreateVar(FP)
 local SelClass = CreateVar(FP)
 local SelAtkType = CreateVar(FP)
 local SelShbool = CreateVar(FP)
-
+local SelDef = CreateVar(FP)
 
 --실험적 메딕 인식 트리거
 
@@ -167,6 +167,8 @@ CMov(FP, 0x6509B0, FP)
 			CMov(FP,LCunitIndex,_Div(_Sub(SelEPD,19025),_Mov(84)))
 			f_BreadX(FP, 0x6647B0, SelUID, SelShbool)
 			f_BreadX(FP, 0x663DD0, SelUID, SelClass)
+			f_BreadX(FP, 0x662180, SelUID, SelDef)
+			
 			TriggerX(FP,CV(SelUID,5),SetV(SelUID,6),{preserved})
 			TriggerX(FP,CV(SelUID,23),SetV(SelUID,24),{preserved})
 			TriggerX(FP,CV(SelUID,25),SetV(SelUID,26),{preserved})
@@ -194,7 +196,6 @@ CMov(FP, 0x6509B0, FP)
 			local CTextR = CreateCText(FP,string.rep("\x0D", 75))--R
 
 			function SetCondUnitTbl(TBLID,arg) -- k1 = tblid k2 = cond k3 = str
-				CIf(FP,{CV(SelUID,TBLID-1)})
 				local TBLPtr = CreateVar(FP)
                 f_GetTblptr(FP, TBLPtr, TBLID)
 				f_Memcpy(FP,TBLPtr,_TMem(Arr(CTextR[3],0),"X","X",1),CTextR[2])
@@ -204,7 +205,6 @@ CMov(FP, 0x6509B0, FP)
                 		f_Memcpy(FP,TBLPtr,_TMem(Arr(CText[3],0),"X","X",1),CText[2])
 					CIfEnd()
 				end
-				CIfEnd()
 			end
 			
 		
@@ -222,6 +222,7 @@ CMov(FP, 0x6509B0, FP)
 				CV(SelUID,153-1),
 				CV(SelUID,107-1),
 				CV(SelUID,149-1),
+				CV(SelUID,220-1),
 			})})--프사이or 노라드
 			local TBLPtr = CreateVar(FP)
 			local GunNum = CreateVar(FP)
@@ -231,14 +232,22 @@ CMov(FP, 0x6509B0, FP)
 			"\x1BS\x04niper \x1BM\x04arine - \x1F60000 Ore",
 			"\x10S\x04hotgun \x10M\x04arine - \x1F60000 Ore",
 			"\x18M\x04achineGun \x18M\x04arine - \x1F60000 Ore"}
+			CIf(FP,{CD(OnlyMarineMode,1)})
 			SetCondUnitTbl(220,{
 			{220,CV(GunNum,1),CombSet[1]},
 			{220,CV(GunNum,2),CombSet[2]},
 			{220,CV(GunNum,3),CombSet[3]},
 			{220,CV(GunNum,4),CombSet[4]}
-			}
-			)
-			"		\x0E® \x03M\x04arine\x03。+.˚\x19\x12。˙+˚R\x04espect												 "
+			})
+		
+		
+		
+		
+			--12
+			--13
+			--12
+			--12
+			CIfEnd()
 
 			--UnSCeacable 전용 유닛이름
 
@@ -332,69 +341,86 @@ CMov(FP, 0x6509B0, FP)
 
 
 		CIfEnd()
-
+		--1 2 3
 		CIf(FP, {CV(SelShbool,0)})
 			CS__SetValue(FP, Str1, "\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D", nil, 17,1)
 		CIfEnd()
 		KillsV = CreateVar(FP)
 		f_Read(FP, _Add(SelEPD,35), KillsV)
 		CrShift(FP, KillsV, 24)
-		CS__ItoCustom(FP,SVA1(Str3,30),KillsV,nil,nil,{10,3},1,nil,"\x080",0x08,{0,1,2})
+		CS__ItoCustom(FP,SVA1(Str3,33),KillsV,nil,nil,{10,3},1,nil,"\x080",0x08,{0,1,2})
 		local CFlag = CreateCcode()
 		DoActionsX(FP, {SetCD(CFlag,0)})
+		local DefAPB = {
+			string.byte("I")*0x1000000+0x1F,
+			string.byte("S")*0x1000000+0x1C,
+			string.byte("M")*0x1000000+0x0F,
+			string.byte("L")*0x1000000+0x11}
 
 		CIfX(FP, {CD(NWepCcode,1)})
-		CS__SetValue(FP, Str3, "\x0EN\x04o \x0EW\x04eapons \x04- \x07K\x04ills\x03: \x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D", 0xFFFFFFFF,1)
+		CS__SetValue(FP, Str3, "\x0EN\x04o \x0EW\x04eapons\x04(\x0D\x04) \x04- \x07K\x04ills\x03: \x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D", 0xFFFFFFFF,1)
+		for i = 0,3 do
+			TriggerX(FP,{CV(SelDef,i)},{SetCSVA1(SVA1(Str3,11+1), SetTo, DefAPB[i+1], 0xFF0000FF)},{preserved})
+		end
 		for i = 0, 9 do
 			TriggerX(FP, {CSVA1(SVA1(Str1,6+i), AtLeast, 0x0E*0x1000000, 0xFF000000),CD(CFlag,0)}, {SetCD(CFlag, 1),SetCSVA1(SVA1(Str1,6+i), SetTo, 0x07, 0xFF)}, {preserved})
 		end
 		CS__InputVA(FP,iTbl9,0,Str1,Str1s,nil,0,Str1s)
 		CS__InputVA(FP,iTbl10,0,Str1,Str1s,nil,0,Str1s)
-		CS__InputVA(FP,iTbl5,0,Str3,Str3s,nil,0,Str3s)
 		CElseX()
 		CIfX(FP,{CV(SelClass,95)})-- SC타입
-		CS__SetValue(FP, Str3, "\x08S\x04C \x08S\x04tyle \x04- \x07K\x04ills\x03: \x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D", 0xFFFFFFFF,1)
+		CS__SetValue(FP, Str3, "\x08S\x04C \x08S\x04tyle\x04(\x0D\x04) \x04- \x07K\x04ills\x03: \x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D", 0xFFFFFFFF,1)
+		for i = 0,3 do
+			TriggerX(FP,{CV(SelDef,i)},{SetCSVA1(SVA1(Str3,9+1), SetTo, DefAPB[i+1], 0xFF0000FF)},{preserved})
+		end
 		for i = 0, 9 do
 			TriggerX(FP, {CSVA1(SVA1(Str1,6+i), AtLeast, 0x0E*0x1000000, 0xFF000000),CD(CFlag,0)}, {SetCD(CFlag, 1),SetCSVA1(SVA1(Str1,6+i), SetTo, 0x08, 0xFF)}, {preserved})
 		end
 		CS__InputVA(FP,iTbl4,0,Str1,Str1s,nil,0,Str1s)
-		CS__InputVA(FP,iTbl5,0,Str3,Str3s,nil,0,Str3s)
 		
 		CElseIfX({CV(SelUID,96)})-- 곰탱이일경우
 		CS__SetValue(FP, Str3, "\x08강되 \x03투표 \x04기능 (\x103인 \x03이상\x04)\x14\x0D\x14\x0D\x0D\x0D\x0D\x0D\x0D", 0xFFFFFFFF,1)
 		CS__InputVA(FP,iTbl3,0,Str1,Str1s,nil,0,Str1s)
-		CS__InputVA(FP,iTbl5,0,Str3,Str3s,nil,0,Str3s)
 		CElseIfX({CV(SelAtkType,3)})-- 일반형
-		CS__SetValue(FP, Str3, "\x1BN\x04ormal \x04- \x07K\x04ills\x03: \x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D", 0xFFFFFFFF,1)
+		CS__SetValue(FP, Str3, "\x1BN\x04ormal\x04(\x0D\x04) \x04- \x07K\x04ills\x03: \x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D", 0xFFFFFFFF,1)
+		for i = 0,3 do
+			TriggerX(FP,{CV(SelDef,i)},{SetCSVA1(SVA1(Str3,7+1), SetTo, DefAPB[i+1], 0xFF0000FF)},{preserved})
+		end
 		for i = 0, 9 do
 			TriggerX(FP, {CSVA1(SVA1(Str1,6+i), AtLeast, 0x0E*0x1000000, 0xFF000000),CD(CFlag,0)}, {SetCD(CFlag, 1),SetCSVA1(SVA1(Str1,6+i), SetTo, 0x1B, 0xFF)}, {preserved})
 		end
 		CS__InputVA(FP,iTbl3,0,Str1,Str1s,nil,0,Str1s)
-		CS__InputVA(FP,iTbl5,0,Str3,Str3s,nil,0,Str3s)
 		CElseIfX({CV(SelAtkType,4)})-- 강화성공확률
-		CS__SetValue(FP, Str3, "\x1FI\x04gnore \x04- \x07K\x04ills\x03: \x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D", 0xFFFFFFFF,1)
+		CS__SetValue(FP, Str3, "\x1FI\x04gnore\x04(\x0D\x04) \x04- \x07K\x04ills\x03: \x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D", 0xFFFFFFFF,1)
+		for i = 0,3 do
+			TriggerX(FP,{CV(SelDef,i)},{SetCSVA1(SVA1(Str3,7+1), SetTo, DefAPB[i+1], 0xFF0000FF)},{preserved})
+		end
 		for i = 0, 9 do
 			TriggerX(FP, {CSVA1(SVA1(Str1,6+i), AtLeast, 0x0E*0x1000000, 0xFF000000),CD(CFlag,0)}, {SetCD(CFlag, 1),SetCSVA1(SVA1(Str1,6+i), SetTo, 0x1F, 0xFF)}, {preserved})
 		end
 		CS__InputVA(FP,iTbl3,0,Str1,Str1s,nil,0,Str1s)
-		CS__InputVA(FP,iTbl5,0,Str3,Str3s,nil,0,Str3s)
 		CElseIfX(CV(SelAtkType,1))--폭발형
-		CS__SetValue(FP, Str3, "\x11E\x04xplosion \x04- \x07K\x04ills\x03: \x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D", 0xFFFFFFFF,1)
+		CS__SetValue(FP, Str3, "\x11E\x04xplosion\x04(\x0D\x04) \x04- \x07K\x04ills\x03: \x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D", 0xFFFFFFFF,1)
+		for i = 0,3 do
+			TriggerX(FP,{CV(SelDef,i)},{SetCSVA1(SVA1(Str3,10+1), SetTo, DefAPB[i+1], 0xFF0000FF)},{preserved})
+		end
 		for i = 0, 9 do
 			TriggerX(FP, {CSVA1(SVA1(Str1,6+i), AtLeast, 0x0E*0x1000000, 0xFF000000),CD(CFlag,0)}, {SetCD(CFlag, 1),SetCSVA1(SVA1(Str1,6+i), SetTo, 0x11, 0xFF)}, {preserved})
 		end
 		CS__InputVA(FP,iTbl3,0,Str1,Str1s,nil,0,Str1s)
-		CS__InputVA(FP,iTbl5,0,Str3,Str3s,nil,0,Str3s)
 		CElseIfX(CV(SelAtkType,2))--진동형
-		CS__SetValue(FP, Str3, "\x1DC\x04oncussive \x04- \x07K\x04ills\x03: \x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D", 0xFFFFFFFF,1)
+		CS__SetValue(FP, Str3, "\x1DC\x04oncussive\x04(\x0D\x04) \x04- \x07K\x04ills\x03: \x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D", 0xFFFFFFFF,1)
+		for i = 0,3 do
+			TriggerX(FP,{CV(SelDef,i)},{SetCSVA1(SVA1(Str3,11+1), SetTo, DefAPB[i+1], 0xFF0000FF)},{preserved})
+		end
 		for i = 0, 9 do
 			TriggerX(FP, {CSVA1(SVA1(Str1,6+i), AtLeast, 0x0E*0x1000000, 0xFF000000),CD(CFlag,0)}, {SetCD(CFlag, 1),SetCSVA1(SVA1(Str1,6+i), SetTo, 0x1D, 0xFF)}, {preserved})
 		end
 		CS__InputVA(FP,iTbl3,0,Str1,Str1s,nil,0,Str1s)
-		CS__InputVA(FP,iTbl5,0,Str3,Str3s,nil,0,Str3s)
 		CIfXEnd()
 		CS__InputVA(FP,iTbl10,0,Str1,Str1s,nil,0,Str1s)
 		CIfXEnd()
+		CS__InputVA(FP,iTbl5,0,Str3,Str3s,nil,0,Str3s)
 		
 		
 		
@@ -545,12 +571,22 @@ CMov(FP, 0x6509B0, FP)
 			
 			CIf(FP,{CD(OnlyMarineMode,1)})
 			CAdd(FP,0x6509B0,6)--25
-			CIf(FP,{DeathsX(CurrentPlayer, Exactly, 20, 0, 0xFF)})
-			CSub(FP,0x6509B0,1)
-			TriggerX(FP, {Deaths(CurrentPlayer, AtMost, (3000-1)*256, 0)}, {SetDeaths(CurrentPlayer, Add, 100*256, 0)},{preserved})
-			TriggerX(FP, {Deaths(CurrentPlayer, AtLeast, (3000+1)*256, 0)}, {SetDeaths(CurrentPlayer, SetTo, 3000*256, 0)},{preserved})
-			CAdd(FP,0x6509B0,1)
-			CIfEnd()
+			
+			TriggerX(FP,{DeathsX(CurrentPlayer, Exactly, MarID[4], 0, 0xFF)},{--망가마린 공속무한
+				SetMemory(0x6509B0, Subtract, 4),--21
+				SetDeaths(CurrentPlayer,SetTo,0,0),
+				SetDeathsX(CurrentPlayer,SetTo,0,1,0xFF00),--유닛아이디 1 추가로 인한 CP + 12 = 33
+				SetMemory(0x6509B0, Add, 4),
+			},{preserved})
+
+				CIf(FP,{DeathsX(CurrentPlayer, Exactly, MarID[3], 0, 0xFF)})--탱커 체젠
+				CSub(FP,0x6509B0,23)
+				TriggerX(FP, {Deaths(CurrentPlayer, AtMost, (9999-1)*256, 0)}, {SetDeaths(CurrentPlayer, Add, 999*256, 0)},{preserved})
+				TriggerX(FP, {Deaths(CurrentPlayer, AtLeast, (9999+1)*256, 0)}, {SetDeaths(CurrentPlayer, SetTo, 9999*256, 0)},{preserved})
+				CAdd(FP,0x6509B0,23)
+				CIfEnd()
+--[[
+
 			
 			
 			CIf(FP,{DeathsX(CurrentPlayer, Exactly, 10, 0, 0xFF)})
@@ -571,9 +607,9 @@ CMov(FP, 0x6509B0, FP)
 			TriggerX(FP, {Deaths(CurrentPlayer, AtLeast, (9999+1)*256, 0)}, {SetDeaths(CurrentPlayer, SetTo, 9999*256, 0)},{preserved})
 			CAdd(FP,0x6509B0,1)
 			CIfEnd()
+]]
 			CSub(FP,0x6509B0,6)--19
 			CIfEnd()
-
 
 			for j = 1, 5 do
 				
@@ -964,14 +1000,10 @@ for i = 0, 4 do
 		TriggerX(FP,{CD(SELimit,4,AtMost)}, {AddCD(SELimit,1),RotatePlayer({PlayWAVX("staredit\\wav\\Marinedead.ogg"),PlayWAVX("staredit\\wav\\Marinedead.ogg")},HumanPlayers, FP)},{preserved})
 		CIf(FP,{CD(gMAXCcodeArr[2], 0)})
 		if DLC_Project == 1 then
-		f_Read(FP, _Sub(BackupCp,15), CPos)
-		Convert_CPosXY()
-		--218
-		--f_TempRepeat({CD(GMode,4)}, 89, 1, 218, P8)
-		--f_TempRepeat({CD(GMode,4)}, 61, 1, 218, P8)
-		--f_TempRepeat({CD(GMode,4)}, 63, 1, 218, P8)
-		--f_TempRepeat({CD(GMode,4)}, 67, 1, 218, P8)
-		--f_TempRepeat({CD(GMode,4)}, 71, 1, 218, P8)
+			f_TempRepeat({CD(GMode,4)}, 79, 1, 2, P8)
+			f_TempRepeat({CD(GMode,4)}, 95, 1, 2, P8)
+			f_TempRepeat({CD(GMode,4)}, 80, 1, 2, P8)
+			f_TempRepeat({CD(GMode,4)}, 34, 1, 2, P8)
 		end
 		CIfX(FP, {Deaths(i, Exactly, 2, 217)})
 		DisplayPrint(HumanPlayers,{"\x12"..StrD[1]..string.char(ColorCode[i+1]).."名取さな \x04의 ",MarText[j],"이 \x08폭사\x04당했어...",StrD[2]})
@@ -1056,6 +1088,8 @@ end
 	local ExchangeOre = CreateVar(FP)
 
 	CMov(FP,ExchangeOre,HPT)
+	
+	CTrigger(FP, {CD(OnlyMarineMode,1)}, {AddV(ExchangeOre,ExchangeOre)}, {preserved})
 	CTrigger(FP, {CD(GMode,4)}, {AddV(ExchangeOre,ExchangeOre)}, {preserved})
 	CDoActions(FP, {TSetResources(Force1, Add, ExchangeOre, Ore)})
 	DisplayPrint(HumanPlayers,{"\x13"..StrD[1],HeroTextFunc,"\x04을(를) \x07처치하였다! \x1F＋ ",ExchangeOre," \x03Ｏｒｅ"..StrD[2]})
@@ -1350,10 +1384,10 @@ if NameTest == 1 then
 		--"\x1E。+.˚Story of Maple\x12\x11S\x04tory of \x11M\x04aple\x11。+.˚\t\t\t\t\t\t       "
 		--"\t\x0E。˙+˚My Head。+.˚\x12\x11。˙+˚\x11M\x04y \x11H\x04ead\x11。+.˚\t\t\t\t\t\t\t       "
 			
-		CreateTestCrystal(129,"\x11® \x03M\x04arine\x03。+.˚\x12\x11。˙+˚\x11A\x04ssault",{"Q","W","A","S"})
-		CreateTestCrystal(130,"\x1B® \x03M\x04arine\x03。+.˚\x12\x1B。˙+˚\x1BS\x04niper",{"E","R","D","F"})
-		CreateTestCrystal(219,"\x10® \x03M\x04arine\x03。+.˚\x12\x10。˙+˚\x10S\x04hotgun",{"T","Y","G","H"})
-		CreateTestCrystal(221,"\x18® \x03M\x04arine\x03。+.˚\x12\x18。˙+˚\x18M\x04achineGun",{"U","I","J","K"})
+		CreateTestCrystal(129,"\t\t\x11® \x03M\x04arine\x03。+.˚\x12\x11。˙+˚\x11A\x04ssault",{"Q","W","A","S"})
+		CreateTestCrystal(130,"\t\t\x1B® \x03M\x04arine\x03。+.˚\x12\x1B。˙+˚\x1BS\x04niper",{"E","R","D","F"})
+		CreateTestCrystal(219,"\t\t\x10® \x03M\x04arine\x03。+.˚\x12\x10。˙+˚\x10S\x04hotgun",{"T","Y","G","H"})
+		CreateTestCrystal(220,"\t\t\x18® \x03M\x04arine\x03。+.˚\x12\x18。˙+˚\x18M\x04achineGun",{"U","I","J","K"})
 		
 		
 		

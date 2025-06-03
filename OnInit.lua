@@ -151,17 +151,19 @@
 		"\x10S\x04hotgun \x10M\x04arine",
 		"\x18M\x04achineGun \x18M\x04arine",
 		]]
+
+
+
+
+
+
+
+
+		SetWeaponsDatX(123, {UpgradeType = 8,TargetFlag = 0x020 + 1 + 2,DamageType=3,RangeMax = 8*32,Cooldown = 15,DmgBase = ARBaseAtk,DmgFactor=ARFactorAtk})
+		SetWeaponsDatX(124, {UpgradeType = 9,TargetFlag = 0x020 + 1 + 2,DamageType=1,RangeMax = 12*32,Cooldown = 45,DmgBase = SNBaseAtk,DmgFactor=SNFactorAtk})
+		SetWeaponsDatX(125, {UpgradeType = 10,TargetFlag = 0x020 + 1 + 2,DamageType=2,RangeMax = 3*32,Cooldown = 20,DmgBase = SGBaseAtk,DmgFactor=SGFactorAtk,Splash={3,5,15}})
+		SetWeaponsDatX(126, {UpgradeType = 11,TargetFlag = 0x020 + 1 + 2,DamageType=2,RangeMax = 6*32,Cooldown = 1,DmgBase = MGBaseAtk,DmgFactor=MGFactorAtk,Splash={1,5,20}})
 		
-		SetWeaponsDatX(123, {UpgradeType = 8,TargetFlag = 0x020 + 1 + 2,DamageType=3,RangeMax = 8*32,Cooldown = 15,DmgBase = SMSkillBaseAtk3,DmgFactor=SMSkillFactorAtk3})
-		SetWeaponsDatX(124, {UpgradeType = 9,TargetFlag = 0x020 + 1 + 2,DamageType=1,RangeMax = 12*32,Cooldown = 75,DmgBase = SMSkillBaseAtk3,DmgFactor=SMSkillFactorAtk3})
-		SetWeaponsDatX(125, {UpgradeType = 10,TargetFlag = 0x020 + 1 + 2,DamageType=2,RangeMax = 3*32,Cooldown = 30,DmgBase = SMSkillBaseAtk3,DmgFactor=SMSkillFactorAtk3,Splash={3,5,15}})
-		SetWeaponsDatX(126, {UpgradeType = 11,TargetFlag = 0x020 + 1 + 2,DamageType=2,RangeMax = 6*32,Cooldown = 1,DmgBase = SMSkillBaseAtk3,DmgFactor=SMSkillFactorAtk3,Splash={1,3,10}})
-		
-
-
-
-
-
 
 
 
