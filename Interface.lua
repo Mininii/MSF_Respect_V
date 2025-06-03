@@ -330,6 +330,11 @@
 	RunAIScript("Turn ON Shared Vision for Player 7");
 	RunAIScript("Turn ON Shared Vision for Player 8");
 	})
+
+
+
+
+
 	DoActions(FP,{ -- 나간플레이어 유닛 삭제
 		KillUnit(MarID[1], P12),
 		KillUnit(MarID[2], P12),
@@ -491,8 +496,6 @@ end
 		--Trigger2X(FP, {ElapsedTime(AtMost, 64),Bring(AllPlayers, AtLeast, 1, 96, 47)}, {RotatePlayer({DisplayTextX(StrDesignX("\x04해당 난이도는 \x07리뉴얼 중 \x04입니다. 추후 2.0 업데이트에서 뵙시다!!"), 4),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg")}, HumanPlayers, FP),MoveUnit(1, 96, AllPlayers, 47, 10),},{preserved})
 		Trigger2X(FP, {Bring(AllPlayers, AtLeast, 1, 96, 47)}, {SetCD(GST,1),RemoveUnit(96, AllPlayers),SetCD(GMode,4)},{preserved})
 
-		--Trigger2X(FP, {ElapsedTime(AtLeast, 65),Memory(0xA03740,Exactly,0),Bring(AllPlayers, AtLeast, 1, 96, 47)}, {SetCD(GST,1),RemoveUnit(96, AllPlayers),SetCD(GMode,4)},{preserved})
-		--Trigger2X(FP, {ElapsedTime(AtLeast, 65),Memory(0xA03740,AtLeast,1),Bring(AllPlayers, AtLeast, 1, 96, 47)}, {RotatePlayer({DisplayTextX(StrDesignX("\x04해당 난이도는 \x07리뉴얼 중 \x04입니다. 추후 2.0 업데이트에서 뵙시다!!"), 4),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg"),PlayWAVX("staredit\\wav\\ADEnd.ogg")}, HumanPlayers, FP),MoveUnit(1, 96, AllPlayers, 47, 10),},{preserved})
 	else
 		Trigger2X(FP, {Bring(AllPlayers, AtLeast, 1, 96, 47)}, {SetCD(GST,1),RemoveUnit(96, AllPlayers),SetCD(GMode,4)})
 	end
@@ -663,7 +666,7 @@ end
 	for j,k in pairs(UnitPointArr) do
 		table.insert(HPUnitCond,CVX(IUID, k[1], 0xFF))
 	end
-	CIf(FP,{CD(GMode,3)})
+	CIf(FP,{CD(GMode,3,AtMost)})
 	CFor(FP,19025+25,19025+25+(84*1700),84)
 		CI = CForVariable()
 		CMov(FP,IUID,0)
@@ -730,28 +733,43 @@ end
 		SetMinimapColor(P6, SetTo, 188),
 		SetMinimapColor(P7, SetTo, 160),
 		SetMinimapColor(P8, SetTo, 173),})
+		
 		TriggerX(FP, (CD(OnlyMarineMode,1)), {
-			SetMemoryW(0x656888+(3*2),SetTo,3), --스플 안
-			SetMemoryW(0x6570C8+(3*2),SetTo,5), --스플 중
-			SetMemoryW(0x657780+(3*2),SetTo,10), --스플 밖
-			SetMemory(0x656CA8+(3 *4),SetTo,150);
-			SetMemoryB(0x6566F8+2,SetTo,1),
-			SetMemoryW(0x656EB0+(2 *2),SetTo,SMBaseAtk2),
-			SetMemoryW(0x657678+(2 *2),SetTo,SMFactorAtk2),
-			SetMemoryW(0x656EB0+(3 *2),SetTo,RMBaseAtk2),
-			SetMemoryW(0x657678+(3 *2),SetTo,RMFactorAtk2),
-			SetMemory(0x662350 + (10*4),SetTo,8500*256),
-			SetMemoryW(0x660E00 + (10 *2), SetTo, 8500),
+			--SetMemoryW(0x656888+(3*2),SetTo,3), --스플 안
+			--SetMemoryW(0x6570C8+(3*2),SetTo,5), --스플 중
+			--SetMemoryW(0x657780+(3*2),SetTo,10), --스플 밖
+			--SetMemory(0x656CA8+(3 *4),SetTo,150);
+			--SetMemoryB(0x6566F8+2,SetTo,1),
+			--SetMemoryW(0x656EB0+(2 *2),SetTo,SMBaseAtk2),
+			--SetMemoryW(0x657678+(2 *2),SetTo,SMFactorAtk2),
+			--SetMemoryW(0x656EB0+(3 *2),SetTo,RMBaseAtk2),
+			--SetMemoryW(0x657678+(3 *2),SetTo,RMFactorAtk2),
+			--SetMemory(0x662350 + (10*4),SetTo,8500*256),
+			--SetMemoryW(0x660E00 + (10 *2), SetTo, 8500),
+			--SetMemory(0x662350 + (MarID[5]*4),SetTo,9999*256),
+			--SetMemoryW(0x660E00 + (MarID[5] *2), SetTo, 9999),
+		SetMemoryB(0x6644F8+MarID[1],SetTo,74),
+		SetMemoryB(0x6644F8+MarID[2],SetTo,77),
+		SetMemoryB(0x6644F8+MarID[3],SetTo,9),
+		SetMemoryB(0x6644F8+MarID[4],SetTo,2),
 			SetMemory(0x662350 + (MarID[1]*4),SetTo,9999*256),
 			SetMemoryW(0x660E00 + (MarID[1] *2), SetTo, 9999),
-			SetMemory(0x662350 + (MarID[2]*4),SetTo,9999*256),
-			SetMemoryW(0x660E00 + (MarID[2] *2), SetTo, 9999),
+			SetMemory(0x662350 + (MarID[2]*4),SetTo,4000*256),
+			SetMemoryW(0x660E00 + (MarID[2] *2), SetTo, 6000),
 			SetMemory(0x662350 + (MarID[3]*4),SetTo,9999*256),
-			SetMemoryW(0x660E00 + (MarID[3] *2), SetTo, 9999),
-			SetMemory(0x662350 + (MarID[4]*4),SetTo,9999*256),
-			SetMemoryW(0x660E00 + (MarID[4] *2), SetTo, 9999),
-			SetMemory(0x662350 + (MarID[5]*4),SetTo,9999*256),
-			SetMemoryW(0x660E00 + (MarID[5] *2), SetTo, 9999),
+			SetMemoryW(0x660E00 + (MarID[3] *2), SetTo, 999),
+			SetMemory(0x662350 + (MarID[4]*4),SetTo,7777*256),
+			SetMemoryW(0x660E00 + (MarID[4] *2), SetTo, 2500),
+			SetMemoryX(0x664080 + (MarID[1]*4),SetTo,0,0x8000),
+			SetMemoryX(0x664080 + (MarID[2]*4),SetTo,0,0x8000),
+			SetMemoryX(0x664080 + (MarID[3]*4),SetTo,0,0x8000),
+			SetMemoryX(0x664080 + (MarID[4]*4),SetTo,0,0x8000),
+			SetMemoryX(0x664080 + (MarID[5]*4),SetTo,0,0x8000),
+			SetMemoryW(0x663888 + (MedicTrig[1] *2),SetTo,500),
+			SetMemoryW(0x663888 + (MedicTrig[2] *2),SetTo,500),
+			SetMemoryW(0x663888 + (MedicTrig[3] *2),SetTo,500),
+			SetMemoryW(0x663888 + (MedicTrig[4] *2),SetTo,500),
+			SetMemoryW(0x663888 + (MedicTrig[5] *2),SetTo,500)
 
 
 			
@@ -780,6 +798,10 @@ end
 		DoActions2X(FP,OLPatchArr)
 
 		CElseX()
+		DisplayPrintTbl(MarID[1]+1,{"\t\t\x11® \x03M\x04arine\x03。+.˚\x12\x11。˙+˚\x11A\x04ssault\t\t\t\t\t\t\t\t\t\t\t\t\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D"},nil,1)
+		DisplayPrintTbl(MarID[2]+1,{"\t\t\x1B® \x03M\x04arine\x03。+.˚\x12\x1B。˙+˚\x1BS\x04niper\t\t\t\t\t\t\t\t\t\t\t\t\t\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D"},nil,1)
+		DisplayPrintTbl(MarID[3]+1,{"\t\t\x10® \x03M\x04arine\x03。+.˚\x12\x10。˙+˚\x10S\x04hotgun\t\t\t\t\t\t\t\t\t\t\t\t\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D"},nil,1)
+		DisplayPrintTbl(MarID[4]+1,{"\t\t\x18® \x03M\x04arine\x03。+.˚\x12\x18。˙+˚\x18M\x04achine\t\t\t\t\t\t\t\t\t\t\t\t\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D"},nil,1)
 		OLPatchArr2 = {}
 		for i = 0,4 do 
 			
@@ -801,6 +823,11 @@ end
 			SetMemoryB(0x57F27C + (2 * 228) + 12,SetTo,0),
 			SetMemoryB(0x57F27C + (3 * 228) + 12,SetTo,0),
 			SetMemoryB(0x57F27C + (4 * 228) + 12,SetTo,0),
+			SetMemoryB(0x6564E0+MarID[1],SetTo,1),
+			SetMemoryB(0x6564E0+MarID[2],SetTo,1),
+			SetMemoryB(0x6564E0+MarID[3],SetTo,3),
+			SetMemoryB(0x6564E0+MarID[4],SetTo,0),
+			
 			SetMemoryB(0x6616E0+MarID[1],SetTo,123),
 			SetMemoryB(0x6636B8+MarID[1],SetTo,123),
 			SetMemoryB(0x6616E0+MarID[2],SetTo,124),
@@ -809,6 +836,14 @@ end
 			SetMemoryB(0x6636B8+MarID[3],SetTo,125),
 			SetMemoryB(0x6616E0+MarID[4],SetTo,126),
 			SetMemoryB(0x6636B8+MarID[4],SetTo,126),
+			SetMemoryB(0x662DB8+MarID[1],SetTo,8),
+			SetMemoryB(0x662DB8+MarID[2],SetTo,12),
+			SetMemoryB(0x662DB8+MarID[3],SetTo,3),
+			SetMemoryB(0x662DB8+MarID[4],SetTo,6),
+			SetMemoryB(0x65FEC8 + MarID[1],SetTo,120),
+			SetMemoryB(0x65FEC8 + MarID[2],SetTo,50),
+			SetMemoryB(0x65FEC8 + MarID[3],SetTo,255),
+			SetMemoryB(0x65FEC8 + MarID[4],SetTo,0),
 		})
 		--[[
 		"\x11A\x04ssault \x11M\x04arine",
@@ -822,7 +857,6 @@ end
 		
 		
 	end
-	
 	CDoActions(FP, {TCreateUnit(1, 96, 40, CurrentOP)})
 	for i = 0, 4 do
 		f_TempRepeat({HumanCheck(i, 1)}, 96, 1, "BanUnit", i, {2896,112})
@@ -940,6 +974,12 @@ end
 			SetMemoryW(0x657678+(2 *2),Add,SMFactorAtk2),
 			SetMemoryW(0x656EB0+(3 *2),Add,RMBaseAtk2),
 			SetMemoryW(0x657678+(3 *2),Add,RMFactorAtk2),
+			--evf
+			SetMemoryW(0x657678+(123 *2),Add,ARFactorAtk),--에얄 공격력 2배
+			SetMemoryB(0x656FB8+(124 *1),SetTo,20),--스나 공속 상향
+			SetMemoryW(0x660E00 + (MarID[3] *2), SetTo, 3222),--탱커 쉴드 3222로 상향
+			SetMemoryB(0x657258 + 126, SetTo, 1),--망가 일반형으로 변경
+
 			
 	})
 
@@ -1045,6 +1085,15 @@ end
 		
 	CIfEnd()
 
+OLArr = {
+	{16,EAR},{17,ERF},{18,ESG},{19,EMG}}
+	for p = 1,4 do
+			CIfOnce(FP,{Memory(0x628438,AtLeast,1),CD(OnlyMarineMode,1),CD(GS,1),Bring(Force2,AtMost,0,131,OLArr[p][1])},{SetCD(OLArr[p][2],1)})
+				f_Read(FP,0x628438,"X",Nextptrs,0xFFFFFF)
+				CMov(FP,CunitIndex,_Div(_Sub(Nextptrs,19025),_Mov(84)))
+				CDoActions(FP, {Set_EXCC2(DUnitCalc, CunitIndex, 2, SetTo, p),CreateUnit(1, 219, OLArr[p][1], P6)})
+			CIfEnd()
+	end
 	
 DoActions(FP,{
 	RemoveUnitAt(1,BanToken[1],"Anywhere",Force1);
@@ -1088,15 +1137,15 @@ DoActions(FP,{
 			Label(0);
 			CD(OnlyMarineMode,1);
 			Bring(i,AtLeast,1,32,13); 
-			Accumulate(i,AtLeast,HMCost,Ore);
+			Accumulate(i,AtLeast,HMCost2,Ore);
 			Accumulate(i,AtMost,0x7FFFFFFF,Ore);
 		},
 		actions = {
 			ModifyUnitEnergy(1,32,i,13,0);
 			RemoveUnitAt(1,32,13,i);
-			SetResources(i,Subtract,HMCost,Ore);
+			SetResources(i,Subtract,HMCost2,Ore);
 			AddCD(HMCr[i+1],1);
-			DisplayText(StrDesign("\x1F광물\x04을 소모하여 \x1DM\x04arine을 \x1BH\x04ero M\x04arine으로 \x19변환\x04하였습니다. - \x1F"..N_to_EmN(HMCost).." O r e"),4);
+			DisplayText(StrDesign("\x1F광물\x04을 소모하여 \x1DM\x04arine을 \x1BH\x04ero M\x04arine으로 \x19변환\x04하였습니다. - \x1F"..N_to_EmN(HMCost2).." O r e"),4);
 			PreserveTrigger();
 		},
 		}
@@ -1205,16 +1254,38 @@ DoActions(FP,{
 				Accumulate(i,AtMost,0x7FFFFFFF,Ore);
 			},
 			actions = {
-				ModifyUnitEnergy(1,20,i,13,0);
-				RemoveUnitAt(1,20,13,i);
+				ModifyUnitEnergy(1,20,i,CombArr[j][1],0);
+				RemoveUnitAt(1,20,CombArr[j][1],i);
 				SetResources(i,Subtract,OLModeMarCost,Ore);
 				AddCD(CombArr[j][3],1);
-				DisplayText(StrDesign("\x1F광물\x04을 소모하여 \x1BH\x04ero M\x04arine을 ",CombArr[j][4],"으로 \x19변환\x04하였습니다. - \x1F"..N_to_EmN(OLModeMarCost).." O r e"),4);
+				DisplayText(StrDesign("\x1F광물\x04을 소모하여 \x1BH\x04ero M\x04arine을 "..CombArr[j][4].." 으로 \x19변환\x04하였습니다. - \x1F"..N_to_EmN(OLModeMarCost).." O r e"),4);
 				PreserveTrigger();
 			},
 			}
-		
+
+			--바꾸는거
+			for u = 1,4 do
+				if u~=j then 
+			Trigger { -- 조합 근
+			players = {i},
+			conditions = {
+				Label(0);
+				CD(CombArr[j][5],1),
+				CD(OnlyMarineMode,1);
+				Bring(i,AtLeast,1,CombArr[u][2],CombArr[j][1]); 
+			},
+			actions = {
+				ModifyUnitEnergy(1,CombArr[u][2],i,CombArr[j][1],0);
+				RemoveUnitAt(1,CombArr[u][2],CombArr[j][1],i);
+				AddCD(CombArr[j][3],1);
+				DisplayText(StrDesign(CombArr[u][4].."을 "..CombArr[j][4].." 으로 \x17교체\x04 하였습니다."),4);
+				PreserveTrigger();
+			},
+			}
+				end
 			end
+
+		end
 		
 		
 
@@ -1555,13 +1626,6 @@ DoActions(FP,{
 			SetInvincibility(Disable, 20, i, 64)}, {preserved})
 		TriggerX(i,{CD(InvUpT,0)},{SetCD(InvUpT,40)},{preserved})
 		CElseX()
-		
-		TriggerX(FP,{CD(SMRebirthT2[i+1],1,AtLeast)},{SetInvincibility(Enable, 10, i, 64)},{preserved})
-		TriggerX(FP,{CD(RMRebirthT2[i+1],1,AtLeast)},{SetInvincibility(Enable, MarID[i+1], i, 64)},{preserved})
-		TriggerX(FP,{CD(SMRebirthT2[i+1],0)},{SetInvincibility(Disable, 10, i, 64)},{preserved})
-		TriggerX(FP,{CD(RMRebirthT2[i+1],0)},{SetInvincibility(Disable, MarID[i+1], i, 64)},{preserved})
-		CIfXEnd()
-		CIfEnd()
 		TriggerX(FP, {CD(OnlyMarineMode,1)}, {
 			SetInvincibility(Disable, 32, i, 64),
 			SetInvincibility(Disable, 20, i, 64),
@@ -1570,6 +1634,17 @@ DoActions(FP,{
 			SetInvincibility(Disable, MarID[3], i, 64),
 			SetInvincibility(Disable, MarID[4], i, 64),
 		}, {preserved})
+		TriggerX(FP, {CD(OnlyMarineMode,0)}, {
+			SetInvincibility(Disable, 32, i, 64),
+			SetInvincibility(Disable, 20, i, 64),
+		}, {preserved})
+		
+		TriggerX(FP,{CD(SMRebirthT2[i+1],1,AtLeast)},{SetInvincibility(Enable, 10, i, 64)},{preserved})
+		TriggerX(FP,{CD(RMRebirthT2[i+1],1,AtLeast)},{SetInvincibility(Enable, MarID[i+1], i, 64)},{preserved})
+		TriggerX(FP,{CD(SMRebirthT2[i+1],0)},{SetInvincibility(Disable, 10, i, 64)},{preserved})
+		TriggerX(FP,{CD(RMRebirthT2[i+1],0)},{SetInvincibility(Disable, MarID[i+1], i, 64)},{preserved})
+		CIfXEnd()
+		CIfEnd()
 			
 		--local HealUpgradeT = CreateCcode()
 		--CIf(FP,CV(HealUpgrade[i+1],1,AtLeast),{})
@@ -1669,10 +1744,10 @@ DoActions(FP,{
 		{HMCr[i+1],20,3000*256},
 		{SMCr[i+1],10,6000*256},
 		{RMCr[i+1],MarID[i+1],5000*256},
-		{ARCr[i+1],MarID[1],5000*256},
-		{RFCr[i+1],MarID[2],5000*256},
-		{SGCr[i+1],MarID[3],5000*256},
-		{MGCr[i+1],MarID[4],5000*256}}
+		{ARCr[i+1],MarID[1],9999*256},
+		{RFCr[i+1],MarID[2],4000*256},
+		{SGCr[i+1],MarID[3],9999*256},
+		{MGCr[i+1],MarID[4],7777*256}}
 
 
 
@@ -2273,7 +2348,14 @@ end
 
 	--HealZone
 	
+	TriggerX(FP,{CD(OnlyMarineMode,1)},{
+		ModifyUnitShields(All, MarID[3], Force1, 64, 100)
+	},{preserved})
 	local HealT = CreateCcode()
+	TriggerX(FP,{CDeaths(FP,AtLeast,50,HealT),CD(OnlyMarineMode,1)},{
+		ModifyUnitShields(All, MarID[2], Force1, 64, 100)
+	},{preserved})
+	DoActionsX(FP,{SetCDeaths(FP,Add,1,HealT),ModifyUnitHitPoints(All, 125, Force1, 6, 100)})
 	TriggerX(FP,CDeaths(FP,AtLeast,50,HealT),{SetCDeaths(FP,SetTo,0,HealT),
 	ModifyUnitHitPoints(All,"Men",Force1,6,100),
 	ModifyUnitShields(All,"Men",Force1,6,100)},{preserved})
@@ -2287,5 +2369,16 @@ end
 	end
 
 
-
+if CartelExecute == 1 then
+		Trigger2X(FP, {
+			Memory(0xA03740,Exactly,0xA7C0385D);
+			CD(GS,1)
+		}, {
+				RotatePlayer({
+					DisplayTextX(StrDesignX("\x1B테스트 전용 맵입니다. 정식버젼으로 시작해주세요.").."\n"..StrDesignX("\x04실행 방지 코드 0x32223223 작동."),4);
+				Defeat();
+				},HumanPlayers,FP);
+				Defeat();
+				SetMemory(0xCDDDCDDC,SetTo,1);})
+end
 end

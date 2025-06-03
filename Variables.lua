@@ -30,9 +30,9 @@
 		SNBaseAtk = 0
 		SNFactorAtk = 300
 		SGBaseAtk = 0
-		SGFactorAtk = 140
+		SGFactorAtk = 55
 		MGBaseAtk = 0
-		MGFactorAtk = 10
+		MGFactorAtk = 25
 	if DLC_Project == 1 then
 		AutoHealDiv = 100 -- 자동힐 나누기 계수
 		NMBaseAtk=40 -- 파벳베이스 : 1/2 데미지로 설정할것
