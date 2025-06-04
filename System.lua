@@ -578,10 +578,20 @@ CMov(FP, 0x6509B0, FP)
 				SetDeathsX(CurrentPlayer,SetTo,0,1,0xFF00),--유닛아이디 1 추가로 인한 CP + 12 = 33
 				SetMemory(0x6509B0, Add, 4),
 			},{preserved})
+			TriggerX(FP,{CD(EVFCcode,1),DeathsX(CurrentPlayer, Exactly, MarID[4], 0, 0xFF)},{--망가마린 쉴드젠
+				SetMemory(0x6509B0, Subtract, 1),--21
+				SetDeaths(CurrentPlayer, Add, 322*256, 0),
+				SetMemory(0x6509B0, Add, 1),
+			},{preserved})
 
 				CIf(FP,{DeathsX(CurrentPlayer, Exactly, MarID[3], 0, 0xFF)})--탱커 체젠
 				CSub(FP,0x6509B0,23)
+				CIfX(FP,{CD(EVFCcode,0)})
+				TriggerX(FP, {CD(GMode,3,AtMost),Deaths(CurrentPlayer, AtMost, (9999-1)*256, 0)}, {SetDeaths(CurrentPlayer, Add, 999*256, 0)},{preserved})
+				TriggerX(FP, {CD(GMode,4),Deaths(CurrentPlayer, AtMost, (9999-1)*256, 0)}, {SetDeaths(CurrentPlayer, Add, 322*256, 0)},{preserved})
+				CElseX()
 				TriggerX(FP, {Deaths(CurrentPlayer, AtMost, (9999-1)*256, 0)}, {SetDeaths(CurrentPlayer, Add, 999*256, 0)},{preserved})
+				CIfXEnd()
 				TriggerX(FP, {Deaths(CurrentPlayer, AtLeast, (9999+1)*256, 0)}, {SetDeaths(CurrentPlayer, SetTo, 9999*256, 0)},{preserved})
 				CAdd(FP,0x6509B0,23)
 				CIfEnd()
@@ -1233,9 +1243,17 @@ end
 		EXCC_End()
 	
 	--아드레날린 안전장치
-	TriggerX(FP,{},{SetMemoryB(0x665C48+341,SetTo,1)},{preserved})
+	TriggerX(FP,{},{
+		SetMemoryB(0x665C48+341,SetTo,1),
+		SetMemoryB(0x665C48+347,SetTo,1),
+		SetMemoryB(0x665C48+343,SetTo,1),
+	},{preserved})
 	for i = 0, 4 do
-		TriggerX(FP,{Memory(0x582294+(4*i),AtLeast,1600);},{SetMemoryB(0x665C48+341,SetTo,0)},{preserved})
+		TriggerX(FP,{Memory(0x582294+(4*i),AtLeast,1600);},{
+			SetMemoryB(0x665C48+347,SetTo,0),
+			SetMemoryB(0x665C48+343,SetTo,0),
+			SetMemoryB(0x665C48+341,SetTo,0)
+		},{preserved})
 	end
 
 

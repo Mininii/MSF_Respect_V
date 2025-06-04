@@ -775,21 +775,18 @@ end
 			
 		})
 		
-		TriggerX(FP, (CD(OnlyMarineMode,0)), {
-			SetMemoryB(0x57F27C + (0 * 228) + 50,SetTo,1),
-			SetMemoryB(0x57F27C + (1 * 228) + 50,SetTo,1),
-			SetMemoryB(0x57F27C + (2 * 228) + 50,SetTo,1),
-			SetMemoryB(0x57F27C + (3 * 228) + 50,SetTo,1),
-			SetMemoryB(0x57F27C + (4 * 228) + 50,SetTo,1),
-
-			
-		})
 		CIfX(FP,{CD(OnlyMarineMode,0)},{
 			
 		})--이름설정 및
 		 OLPatchArr = {}
 		for i = 0,4 do 
-			
+            table.insert(OLPatchArr,SetMemoryB(0x57F27C + (i * 228) + 5,SetTo,1))
+            table.insert(OLPatchArr,SetMemoryB(0x57F27C + (i * 228) + 50,SetTo,1))
+            table.insert(OLPatchArr,SetMemoryB(0x57F27C + (i * 228) + 26,SetTo,0))
+            table.insert(OLPatchArr,SetMemoryB(0x57F27C + (i * 228) + 22,SetTo,0))
+            table.insert(OLPatchArr,SetMemoryB(0x57F27C + (i * 228) + 27,SetTo,0))
+            table.insert(OLPatchArr,SetMemoryB(0x57F27C + (i * 228) + 28,SetTo,0))
+            table.insert(OLPatchArr,SetMemoryB(0x57F27C + (i * 228) + 29,SetTo,0))
 			table.insert(OLPatchArr,SetMemoryB(0x58D088+(46*i)+8,SetTo,0))
 			table.insert(OLPatchArr,SetMemoryB(0x58D088+(46*i)+9,SetTo,0))
 			table.insert(OLPatchArr,SetMemoryB(0x58D088+(46*i)+10,SetTo,0))
@@ -797,36 +794,73 @@ end
 		end
 		DoActions2X(FP,OLPatchArr)
 
-		CElseX()
+
+
+
+		CElseX({}) -- CD(OnlyMarineMode,1)
+		OLPatchArr2 = {}
+		for i = 0,4 do 
+            table.insert(OLPatchArr2,SetMemoryB(0x58D088+(46*i)+17,SetTo,0))
+            table.insert(OLPatchArr2,SetMemoryB(0x58D088+(46*i)+21,SetTo,0))
+            table.insert(OLPatchArr2,SetMemoryB(0x58D088+(46*i)+22,SetTo,0))
+            table.insert(OLPatchArr2,SetMemoryB(0x58D088+(46*i)+23,SetTo,0))
+            table.insert(OLPatchArr2,SetMemoryB(0x58D088+(46*i)+43,SetTo,0))
+            table.insert(OLPatchArr2,SetMemoryB(0x57F27C + (i * 228) + 26,SetTo,1))
+            table.insert(OLPatchArr2,SetMemoryB(0x57F27C + (i * 228) + 22,SetTo,1))
+            table.insert(OLPatchArr2,SetMemoryB(0x57F27C + (i * 228) + 27,SetTo,1))
+            table.insert(OLPatchArr2,SetMemoryB(0x57F27C + (i * 228) + 28,SetTo,1))
+            table.insert(OLPatchArr2,SetMemoryB(0x57F27C + (i * 228) + 29,SetTo,1))
+            table.insert(OLPatchArr2,SetMemoryB(0x57F27C + (i * 228) + 5,SetTo,0))
+        end
+
+			ChangeAllwire(FP,MarID[1],100,100,100) -- 어썰트 와이어프레임 알렉세이
+			table.insert(OLPatchArr2,SetMemoryW(0x662F88+(MarID[1]*2),SetTo,93))
+			
+			table.insert(OLPatchArr2,SetMemoryW(0x662BF0+(MarID[1]*2),SetTo,230))
+			table.insert(OLPatchArr2,SetMemoryW(0x662BF0+(MarID[1]*2),SetTo,230))
+			table.insert(OLPatchArr2,SetMemoryW(0x65FFB0+(MarID[1]*2),SetTo,233))
+			table.insert(OLPatchArr2,SetMemoryW(0x663C10+(MarID[1]*2),SetTo,234))
+			table.insert(OLPatchArr2,SetMemoryW(0x661440+(MarID[1]*2),SetTo,237))
+			table.insert(OLPatchArr2,SetMemoryW(0x663B38+(MarID[1]*2),SetTo,226))
+			table.insert(OLPatchArr2,SetMemoryW(0x661EE8+(MarID[1]*2),SetTo,229))
+		--ChangeWireframe(FP, MarID[2], 16) -- 스나마린 와이어프레임 사라 = 기본적으로 사라로 되어있음
+			ChangeAllwire(FP,MarID[3],51,51,51) -- 샷건 와이어프레임 감케
+			table.insert(OLPatchArr2,SetMemoryW(0x662F88+(MarID[3]*2),SetTo,36))
+			
+			table.insert(OLPatchArr2,SetMemoryW(0x662BF0+(MarID[3]*2),SetTo,959))
+			table.insert(OLPatchArr2,SetMemoryW(0x65FFB0+(MarID[3]*2),SetTo,966))
+			table.insert(OLPatchArr2,SetMemoryW(0x663C10+(MarID[3]*2),SetTo,963))
+			table.insert(OLPatchArr2,SetMemoryW(0x661440+(MarID[3]*2),SetTo,966))
+			table.insert(OLPatchArr2,SetMemoryW(0x663B38+(MarID[3]*2),SetTo,955))
+			table.insert(OLPatchArr2,SetMemoryW(0x661EE8+(MarID[3]*2),SetTo,958))
+			ChangeAllwire(FP,MarID[4],50,50,50) -- 머신건 와이어프레임 자폭맨
+			table.insert(OLPatchArr2,SetMemoryW(0x662F88+(MarID[4]*2),SetTo,33))
+			table.insert(OLPatchArr2,SetMemoryW(0x662BF0+(MarID[4]*2),SetTo,805))
+			table.insert(OLPatchArr2,SetMemoryW(0x65FFB0+(MarID[4]*2),SetTo,808))
+			table.insert(OLPatchArr2,SetMemoryW(0x663C10+(MarID[4]*2),SetTo,809))
+			table.insert(OLPatchArr2,SetMemoryW(0x661440+(MarID[4]*2),SetTo,812))
+			table.insert(OLPatchArr2,SetMemoryW(0x663B38+(MarID[4]*2),SetTo,801))
+			table.insert(OLPatchArr2,SetMemoryW(0x661EE8+(MarID[4]*2),SetTo,804))
+		
+		
 		DisplayPrintTbl(MarID[1]+1,{"\t\t\x11® \x03M\x04arine\x03。+.˚\x12\x11。˙+˚\x11A\x04ssault\t\t\t\t\t\t\t\t\t\t\t\t\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D"},nil,1)
 		DisplayPrintTbl(MarID[2]+1,{"\t\t\x1B® \x03M\x04arine\x03。+.˚\x12\x1B。˙+˚\x1BS\x04niper\t\t\t\t\t\t\t\t\t\t\t\t\t\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D"},nil,1)
 		DisplayPrintTbl(MarID[3]+1,{"\t\t\x10® \x03M\x04arine\x03。+.˚\x12\x10。˙+˚\x10S\x04hotgun\t\t\t\t\t\t\t\t\t\t\t\t\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D"},nil,1)
 		DisplayPrintTbl(MarID[4]+1,{"\t\t\x18® \x03M\x04arine\x03。+.˚\x12\x18。˙+˚\x18M\x04achine\t\t\t\t\t\t\t\t\t\t\t\t\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D"},nil,1)
-		OLPatchArr2 = {}
-		for i = 0,4 do 
-			
-			table.insert(OLPatchArr2,SetMemoryB(0x58D088+(46*i)+17,SetTo,0))
-			table.insert(OLPatchArr2,SetMemoryB(0x58D088+(46*i)+21,SetTo,0))
-			table.insert(OLPatchArr2,SetMemoryB(0x58D088+(46*i)+22,SetTo,0))
-			table.insert(OLPatchArr2,SetMemoryB(0x58D088+(46*i)+23,SetTo,0))
-			table.insert(OLPatchArr2,SetMemoryB(0x58D088+(46*i)+43,SetTo,0))
-		end
+
 		DoActions2X(FP,OLPatchArr2)
 		DoActions2X(FP,{SetMemoryW(0x663888 + (8 *2),SetTo,NMCost+HMCost2),
-			SetMemoryB(0x57F27C + (0 * 228) + 5,SetTo,0),
-			SetMemoryB(0x57F27C + (1 * 228) + 5,SetTo,0),
-			SetMemoryB(0x57F27C + (2 * 228) + 5,SetTo,0),
-			SetMemoryB(0x57F27C + (3 * 228) + 5,SetTo,0),
-			SetMemoryB(0x57F27C + (4 * 228) + 5,SetTo,0),
-			SetMemoryB(0x57F27C + (0 * 228) + 12,SetTo,0),
-			SetMemoryB(0x57F27C + (1 * 228) + 12,SetTo,0),
-			SetMemoryB(0x57F27C + (2 * 228) + 12,SetTo,0),
-			SetMemoryB(0x57F27C + (3 * 228) + 12,SetTo,0),
-			SetMemoryB(0x57F27C + (4 * 228) + 12,SetTo,0),
-			SetMemoryB(0x6564E0+MarID[1],SetTo,1),
-			SetMemoryB(0x6564E0+MarID[2],SetTo,1),
-			SetMemoryB(0x6564E0+MarID[3],SetTo,3),
-			SetMemoryB(0x6564E0+MarID[4],SetTo,0),
+			--SetMemoryB(0x57F27C + (0 * 228) + 12,SetTo,0),
+			--SetMemoryB(0x57F27C + (1 * 228) + 12,SetTo,0),
+			--SetMemoryB(0x57F27C + (2 * 228) + 12,SetTo,0),
+			--SetMemoryB(0x57F27C + (3 * 228) + 12,SetTo,0),
+			--SetMemoryB(0x57F27C + (4 * 228) + 12,SetTo,0),
+
+
+			SetMemoryB(0x662180+MarID[1],SetTo,1),
+			SetMemoryB(0x662180+MarID[2],SetTo,1),
+			SetMemoryB(0x662180+MarID[3],SetTo,3),
+			SetMemoryB(0x662180+MarID[4],SetTo,2),
 			
 			SetMemoryB(0x6616E0+MarID[1],SetTo,123),
 			SetMemoryB(0x6636B8+MarID[1],SetTo,123),
@@ -969,6 +1003,18 @@ end
 			SetMemoryW(0x657678+(3 *2),Add,RMFactorAtk), -- 추가공격력
 			
 		})
+		SCPatchArr = {}
+		for i = 450,493 do
+			table.insert(SCPatchArr, SetMemoryB(0x669E28+i, SetTo, 17))
+		
+		end
+		Trigger2X(FP, {CD(GMode,4)}, SCPatchArr)
+
+		TriggerX(FP, {CD(GMode,4),CD(OnlyMarineMode,1)}, {--온리마린 SC
+			SetMemoryW(0x657678+(125*2),Add,SGFactorAtk), --샷건 SC 딜 두배
+			SetMemoryW(0x660E00 + (MarID[3] *2), SetTo, 322),--탱커 쉴드 322로 하향
+			
+		})
 		TriggerX(FP, {CD(EVFCcode,1),CD(OnlyMarineMode,1)}, {
 			SetMemoryW(0x656EB0+(2 *2),Add,SMBaseAtk2),
 			SetMemoryW(0x657678+(2 *2),Add,SMFactorAtk2),
@@ -978,10 +1024,15 @@ end
 			SetMemoryW(0x657678+(123 *2),Add,ARFactorAtk),--에얄 공격력 2배
 			SetMemoryB(0x656FB8+(124 *1),SetTo,20),--스나 공속 상향
 			SetMemoryW(0x660E00 + (MarID[3] *2), SetTo, 3222),--탱커 쉴드 3222로 상향
-			SetMemoryB(0x657258 + 126, SetTo, 1),--망가 일반형으로 변경
-
-			
+			SetMemoryB(0x657258 + 126, SetTo, 1),--망가 폭발형으로 변경
+			SetMemoryW(0x656888+(126*2),SetTo,15), --스플 안
+			SetMemoryW(0x6570C8+(126*2),SetTo,15), --스플 중
+			SetMemoryW(0x657780+(126*2),SetTo,15), --스플 밖
 	})
+		TriggerX(FP, {CD(GMode,4),CD(OnlyMarineMode,1),CD(EVFCcode,1)}, {--온리마린 EVF SC
+			SetMemoryW(0x660E00 + (MarID[3] *2), SetTo, 999),--탱커 쉴드 999
+			
+		})
 
 	TriggerX(FP, {CD(EVFCcode,1)}, {
 		SetMemoryW(0x656EB0+(0 *2),Add,NMBaseAtk), -- 공격력
@@ -1065,7 +1116,10 @@ end
 		TriggerX(FP, {HumanCheck(i, 1)}, {SetCp(i),RunAIScriptAt("Enter Transport", 64),SetCp(FP)})
 	end
 
-	Trigger2X(FP, {CV(SetPlayers,1)},{SetResources(Force1, Add, 10000, Ore),RotatePlayer({DisplayTextX(StrDesignX("솔로 플레이 보너스 \x04: \x1F10000 ore\x04, 마린 1기"), 4)}, HumanPlayers, FP)})
+	Trigger2X(FP, {CV(SetPlayers,1)},{SetResources(Force1, Add, 10000, Ore),RotatePlayer({DisplayTextX(StrDesignX("솔로 플레이 보너스 \x04: \x1F10000 ore\x04, 마린 1기,벙커 2개 지급"), 4)}, HumanPlayers, FP)})
+	for i = 0,4 do
+		TriggerX(FP,{CV(SetPlayers,1),HumanCheck(i, 1)},{GiveUnits(All, 125, P11, 6, i)})
+	end
 	Trigger2X(FP, {CD(GMode,4)},{SetResources(Force1, Add, 50000, Ore),CreateUnit(3, 20, 6, Force1),RotatePlayer({DisplayTextX(StrDesignX("\x10S\x04C \x1CS\x04tyle 특전 \x04: \x1F50000 ore\x04, \x1B영웅마린 \x043기"), 4)}, HumanPlayers, FP)})
 	CIfEnd()
 	
@@ -1086,9 +1140,15 @@ end
 	CIfEnd()
 
 OLArr = {
-	{16,EAR},{17,ERF},{18,ESG},{19,EMG}}
+	{16,EAR,205},{17,ERF,206},{18,ESG,207},{19,EMG,208}}
 	for p = 1,4 do
-			CIfOnce(FP,{Memory(0x628438,AtLeast,1),CD(OnlyMarineMode,1),CD(GS,1),Bring(Force2,AtMost,0,131,OLArr[p][1])},{SetCD(OLArr[p][2],1)})
+			CIfOnce(FP,{Memory(0x628438,AtLeast,1),CD(OnlyMarineMode,1),CD(GS,1),Bring(Force2,AtMost,0,131,OLArr[p][1])},{SetCD(OLArr[p][2],1),
+			SetMemory(0x584DE4+  (OLArr[p][3]*12 + 0)*4 ,SetTo, 1);
+			SetMemory(0x584DE4+  (OLArr[p][3]*12 + 1)*4 ,SetTo, 1);
+			SetMemory(0x584DE4+  (OLArr[p][3]*12 + 2)*4 ,SetTo, 1);
+			SetMemory(0x584DE4+  (OLArr[p][3]*12 + 3)*4 ,SetTo, 1);
+			SetMemory(0x584DE4+  (OLArr[p][3]*12 + 4)*4 ,SetTo, 1);
+		})
 				f_Read(FP,0x628438,"X",Nextptrs,0xFFFFFF)
 				CMov(FP,CunitIndex,_Div(_Sub(Nextptrs,19025),_Mov(84)))
 				CDoActions(FP, {Set_EXCC2(DUnitCalc, CunitIndex, 2, SetTo, p),CreateUnit(1, 219, OLArr[p][1], P6)})
@@ -1237,21 +1297,24 @@ DoActions(FP,{
 
 			--16 17 18 19
 			CombArr = {
-				{16,MarID[1],ARCr[i+1],"\x11A\x04ssault \x11M\x04arine",EAR},
-				{17,MarID[2],RFCr[i+1],"\x1BS\x04niper \x1BM\x04arine",ERF},
-				{18,MarID[3],SGCr[i+1],"\x10S\x04hotgun \x10M\x04arine",ESG},
-				{19,MarID[4],MGCr[i+1],"\x18M\x04achineGun \x18M\x04arine",EMG}
+				{16,MarID[1],ARCr[i+1],"\x11A\x04ssault \x11M\x04arine",EAR,22},
+				{17,MarID[2],RFCr[i+1],"\x1BS\x04niper \x1BM\x04arine",ERF,27},
+				{18,MarID[3],SGCr[i+1],"\x10S\x04hotgun \x10M\x04arine",ESG,28},
+				{19,MarID[4],MGCr[i+1],"\x18M\x04achineGun \x18M\x04arine",EMG,29}
 			}
+
 			for j = 1,4 do
 			Trigger { -- 조합 근
 			players = {i},
 			conditions = {
 				Label(0);
+				CD(CombiSetting[i+1],0);
 				CD(CombArr[j][5],1),
 				CD(OnlyMarineMode,1);
 				Bring(i,AtLeast,1,20,CombArr[j][1]); 
 				Accumulate(i,AtLeast,OLModeMarCost,Ore);
 				Accumulate(i,AtMost,0x7FFFFFFF,Ore);
+				
 			},
 			actions = {
 				ModifyUnitEnergy(1,20,i,CombArr[j][1],0);
@@ -1262,6 +1325,25 @@ DoActions(FP,{
 				PreserveTrigger();
 			},
 			}
+				
+			UnitButton(i,CombArr[j][6],{CD(CombArr[j][5],1),CD(OnlyMarineMode,1),Accumulate(i, AtLeast, NMCost+HMCost2+OLModeMarCost, Ore)},{SetCp(i),
+				DisplayText(StrDesign("\x1F광물\x04을 소모하여 "..CombArr[j][4].." 을 \x19소환\x04하였습니다. - \x1F"..N_to_EmN(NMCost+HMCost2+OLModeMarCost).." O r e"),4);
+				AddCD(CombArr[j][3],1);
+				SetResources(i, Subtract, 100000, Ore);
+				SetCp(FP),
+			})
+			UnitButton(i,CombArr[j][6],{CD(CombArr[j][5],1),CD(OnlyMarineMode,1),Accumulate(i, AtMost, NMCost+HMCost2+OLModeMarCost-1, Ore)},{SetCp(i),
+				DisplayText(StrDesign("\x1F잔액\x04이 부족합니다."),4);
+				SetCp(FP),
+			})
+			UnitButton(i,CombArr[j][6],{CD(CombArr[j][5],0),CD(OnlyMarineMode,1),},{SetCp(i),
+				DisplayText(StrDesign("\x04조건이 충족되지 않아 사용할 수 없습니다."),4);
+				SetCp(FP),
+			})
+			UnitButton(i,CombArr[j][6],{CD(OnlyMarineMode,0),},{SetCp(i),
+				DisplayText(StrDesign("\x04해당 모드에서는 사용할 수 없습니다."),4);
+				SetCp(FP),
+			})
 
 			--바꾸는거
 			for u = 1,4 do
@@ -1270,6 +1352,7 @@ DoActions(FP,{
 			players = {i},
 			conditions = {
 				Label(0);
+				CD(CombiSetting[i+1],0);
 				CD(CombArr[j][5],1),
 				CD(OnlyMarineMode,1);
 				Bring(i,AtLeast,1,CombArr[u][2],CombArr[j][1]); 
@@ -1607,6 +1690,7 @@ DoActions(FP,{
 		--		CMov(FP,CurInvUp[i+1],InvUp[i+1])
 		--	CIfXEnd()
 		--CIfEnd()
+		--[[
 		local InvUpT = CreateCcode()
 		CIfX(FP,CV(InvUp[i+1],1,AtLeast),{SubCD(InvUpT,1)})
 		
@@ -1626,24 +1710,14 @@ DoActions(FP,{
 			SetInvincibility(Disable, 20, i, 64)}, {preserved})
 		TriggerX(i,{CD(InvUpT,0)},{SetCD(InvUpT,40)},{preserved})
 		CElseX()
-		TriggerX(FP, {CD(OnlyMarineMode,1)}, {
-			SetInvincibility(Disable, 32, i, 64),
-			SetInvincibility(Disable, 20, i, 64),
-			SetInvincibility(Disable, MarID[1], i, 64),
-			SetInvincibility(Disable, MarID[2], i, 64),
-			SetInvincibility(Disable, MarID[3], i, 64),
-			SetInvincibility(Disable, MarID[4], i, 64),
-		}, {preserved})
-		TriggerX(FP, {CD(OnlyMarineMode,0)}, {
-			SetInvincibility(Disable, 32, i, 64),
-			SetInvincibility(Disable, 20, i, 64),
-		}, {preserved})
 		
 		TriggerX(FP,{CD(SMRebirthT2[i+1],1,AtLeast)},{SetInvincibility(Enable, 10, i, 64)},{preserved})
 		TriggerX(FP,{CD(RMRebirthT2[i+1],1,AtLeast)},{SetInvincibility(Enable, MarID[i+1], i, 64)},{preserved})
 		TriggerX(FP,{CD(SMRebirthT2[i+1],0)},{SetInvincibility(Disable, 10, i, 64)},{preserved})
 		TriggerX(FP,{CD(RMRebirthT2[i+1],0)},{SetInvincibility(Disable, MarID[i+1], i, 64)},{preserved})
 		CIfXEnd()
+		]]
+		
 		CIfEnd()
 			
 		--local HealUpgradeT = CreateCcode()
@@ -1696,17 +1770,29 @@ DoActions(FP,{
 			})
 		end
 		
-		UnitButton(i,12,{MemoryX(0x664080 + (MarID[i+1]*4),Exactly,0,0x8000)},{SetCp(i),
+		UnitButton(i,12,{CD(OnlyMarineMode,0),MemoryX(0x664080 + (MarID[i+1]*4),Exactly,0,0x8000)},{SetCp(i),
 			SetMemoryX(0x664080 + (MarID[i+1]*4),SetTo,0x8000,0x8000),
 			DisplayText(StrDesign("\x19R\x04espect \x19M\x04arine 의 \x03디텍터 \x04기능을 \x07활성화\x04합니다"),4);
 			SetCp(FP),
 		})
 		
-		UnitButton(i,12,{MemoryX(0x664080 + (MarID[i+1]*4),Exactly,0x8000,0x8000)},{SetCp(i),
+		UnitButton(i,12,{CD(OnlyMarineMode,0),MemoryX(0x664080 + (MarID[i+1]*4),Exactly,0x8000,0x8000)},{SetCp(i),
 			SetMemoryX(0x664080 + (MarID[i+1]*4),SetTo,0,0x8000),
 			DisplayText(StrDesign("\x19R\x04espect \x19M\x04arine 의 \x03디텍터 \x04기능을 \x08비활성화\x04합니다"),4);
 			SetCp(FP),
 		})
+		UnitButton(i,12,{CD(OnlyMarineMode,1),CD(CombiSetting[i+1],0)},{SetCp(i),
+			SetCD(CombiSetting[i+1],1),
+			DisplayText(StrDesign("\x1B4종 마린 조합 기능\x04을 \x08비활성화\x04합니다"),4);
+			SetCp(FP),
+		})
+		UnitButton(i,12,{CD(OnlyMarineMode,1),CD(CombiSetting[i+1],1)},{SetCp(i),
+			SetCD(CombiSetting[i+1],0),
+			DisplayText(StrDesign("\x1B4종 마린 조합 기능\x04을 \x07활성화\x04합니다"),4);
+			SetCp(FP),
+		})
+
+
 		UnitButton(i,74,{},{SetCp(i),
 			SetDeaths(i, Add, 1, 74),
 			DisplayText(StrDesign("\x04원격 \x1B스팀팩\x04기능을 사용합니다."),4);
@@ -1946,6 +2032,11 @@ DoActions(FP,{
 
 		
 		CIfEnd()
+		
+		TriggerX(FP,{CD(OnlyMarineMode,0),CD(SMRebirthT2[i+1],101,AtLeast)},{SetInvincibility(Enable, 10, i, 64)},{preserved})
+		TriggerX(FP,{CD(OnlyMarineMode,0),CD(RMRebirthT2[i+1],101,AtLeast)},{SetInvincibility(Enable, MarID[i+1], i, 64)},{preserved})
+		TriggerX(FP,{CD(OnlyMarineMode,0),CD(SMRebirthT2[i+1],1,AtLeast),CD(SMRebirthT2[i+1],100,AtMost)},{SetInvincibility(Disable, 10, i, 64)},{preserved})
+		TriggerX(FP,{CD(OnlyMarineMode,0),CD(RMRebirthT2[i+1],1,AtLeast),CD(RMRebirthT2[i+1],100,AtMost)},{SetInvincibility(Disable, MarID[i+1], i, 64)},{preserved})
 
 
 		TriggerX(FP, {ElapsedTime(AtLeast, 10),Deaths(i,AtLeast,1,140),CD(WanCT[i+1],0)},{SetCD(WanCT[i+1],480),SetCp(i),DisplayText(MacroWarn1, 4),PlayWAV("sound\\Bullet\\TNsFir00.wav"),PlayWAV("sound\\Bullet\\TNsFir00.wav"),PlayWAV("sound\\Bullet\\TNsFir00.wav"),PlayWAV("sound\\Bullet\\TNsFir00.wav")})
@@ -2368,7 +2459,7 @@ end
 		ObserverChatToNone(FP,0x58D740+(20*59),i,"INSERT",10,nil,{SetMemory(0x6509B0,SetTo,i),DisplayText("\x0D\x0D!H"..StrDesign("\x02채팅→대상없음\x04에게 메세지를 보냅니다.(귓말 명령어 등 전용)").."\x0D\x0D",4),PlayWAV("staredit\\wav\\button3.wav"),SetMemory(0x6509B0,SetTo,FP)})
 	end
 
-
+--[[
 if CartelExecute == 1 then
 		Trigger2X(FP, {
 			Memory(0xA03740,Exactly,0xA7C0385D);
@@ -2381,4 +2472,5 @@ if CartelExecute == 1 then
 				Defeat();
 				SetMemory(0xCDDDCDDC,SetTo,1);})
 end
+]]
 end

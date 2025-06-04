@@ -195,7 +195,7 @@ for y = 0, 3 do
 	if y == 1 then RS1 = Set RS2=Cleared end
 	if y == 2 then RS1 = Cleared RS2=Set end
 	if y == 3 then RS1 = Set RS2=Set end
-	CTrigger(FP, {Switch(RandSwitch1,RS1),Switch(RandSwitch2,RS2)}, {TCreateUnitWithProperties(1, MID, 16+y, MPID,{energy = 100,invincible = true})}, {preserved})
+	CTrigger(FP, {Switch(RandSwitch1,RS1),Switch(RandSwitch2,RS2)}, {TCreateUnitWithProperties(1, MID, 16+y, MPID,{energy = 100})}, {preserved})
 end
 
 DoActions(FP, {

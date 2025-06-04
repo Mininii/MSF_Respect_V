@@ -70,7 +70,7 @@
 	end
 
 	for i = 0, 227 do
-	SetUnitsDatX(i,{AdvFlag={0x200000,0x200000},Armor=0})--모든 유닛을 마법사로, 아머를 0으로
+	SetUnitsDatX(i,{AdvFlag={0x200000,0x210000},Armor=0})--모든 유닛을 마법사로, 바이오닉 플래그 제거, 아머를 0으로
 	end
 	--SetUnitsDatX(130,{GroupFlag=0x11})--그룹플래그
 	--SetUnitsDatX(131,{GroupFlag=0x11})--그룹플래그
@@ -97,6 +97,24 @@
 	SetUnitsDatX(72,{SizeL = 1, SizeU = 1, SizeR = 1, SizeD = 1})--이펙트유닛 크기 1로 조정
 	SetUnitsDatX(1,{SizeL = 1, SizeU = 1, SizeR = 1, SizeD = 1,})--이펙트유닛 크기 1로 조정
 
+function SetMemoryWX(Offset,Type,Value,Flag) -- 1이면 활성화 0이면 비활성화
+	local ret = bit32.band(Offset, 0xFFFFFFFF)%4
+	if ret == 0 then
+		Mask = Value
+		Value = Value * Flag
+	elseif ret == 2 then
+		Mask = Value * 0x10000
+		Value = Value * 0x10000 * Flag
+	else
+		SetMemoryW_InputData_Error()
+	end
+	return FSetMemoryX(Offset-ret,Type,Value,Mask)
+end
+
+
+	for i = 0, 129 do
+		PatchInsert(SetMemoryWX(0x657998 + (i*2), SetTo, 0x8,1))--모든 무기 유닛 대상 바이오닉,지상,공중
+	end
 	for i = 0, 227 do
 		SetUnitsDatX(i,{AdvFlag={0,0x4000}})--모든유닛 로보틱 제거
 	end
@@ -116,17 +134,23 @@
 	SetUnitsDatX(12,{Playerable = 2, Reqptr=5,SuppCost=0,MinCost=0,GasCost=0,BuildTime=1})--플레이어만 사용가능, 요구조건을 무조건?으로
 	SetUnitsDatX(20,{Playerable = 2, Reqptr=5,SuppCost=1})--플레이어만 사용가능, 요구조건을 무조건?으로
 	SetUnitsDatX(5,{Playerable = 2, Reqptr=5,MinCost=0,GasCost=0})--플레이어만 사용가능, 요구조건을 무조건?으로
+	SetUnitsDatX(26,{Playerable = 2, Reqptr=5,MinCost=0,GasCost=0})--플레이어만 사용가능, 요구조건을 무조건?으로
+	SetUnitsDatX(22,{Playerable = 2, Reqptr=5,SuppCost=1,MinCost=0,GasCost=0,BuildTime=1})--플레이어만 사용가능, 요구조건을 무조건?으로
+	SetUnitsDatX(27,{Playerable = 2, Reqptr=5,SuppCost=1,MinCost=0,GasCost=0,BuildTime=1})--플레이어만 사용가능, 요구조건을 무조건?으로
+	SetUnitsDatX(28,{Playerable = 2, Reqptr=5,SuppCost=1,MinCost=0,GasCost=0,BuildTime=1})--플레이어만 사용가능, 요구조건을 무조건?으로
+	SetUnitsDatX(29,{Playerable = 2, Reqptr=5,SuppCost=1,MinCost=0,GasCost=0,BuildTime=1})--플레이어만 사용가능, 요구조건을 무조건?으로
+	
 	if DLC_Project == 1 then
 		if X4_Mode == 1 then
 			SetUnitsDatX(125,{Playerable = 2, HP=167772,MinCost=2000,BuildTime=15,Reqptr=271,AdvFlag={0x4000+0x8000,0x4000+0x8000}})--플레이어만 사용가능, 요구조건을 무조건?으로
 		else
 			SetUnitsDatX(125,{Playerable = 2, HP=45000,MinCost=2000,BuildTime=15,Reqptr=271,AdvFlag={0x4000+0x8000,0x4000+0x8000}})--플레이어만 사용가능, 요구조건을 무조건?으로
 		end
-		SetUnitsDatX(32,{SizeL = 8, SizeU = 7, SizeR = 4, SizeD = 11,Class=17,HP=3000,MinCost=0,SuppCost=1,AdvFlag={0x4000,0x4000},SeekRange=6})--플레이어만 사용가능, 요구조건을 무조건?으로
-		SetUnitsDatX(20,{SizeL = 8, SizeU = 7, SizeR = 4, SizeD = 11,Class=17,HP=6000,Shield = 3000,SuppCost=1,MinCost=0,AdvFlag={0x4000,0x4000},SeekRange=7})--플레이어만 사용가능, 요구조건을 무조건?으로
-		SetUnitsDatX(10,{SizeL = 8, SizeU = 7, SizeR = 4, SizeD = 11,Class=94,HP=15000,Shield = 15000,MinCost=0,SuppCost=1,AdvFlag={0x4000,0x4000}})--플레이어만 사용가능, 요구조건을 무조건?으로
+		SetUnitsDatX(32,{SizeL = 8, SizeU = 7, SizeR = 4, SizeD = 11,Class=17,HP=3000,MinCost=0,SuppCost=1,AdvFlag={0x4000,0x4000+0x10000+0x10000},SeekRange=6})--플레이어만 사용가능, 요구조건을 무조건?으로
+		SetUnitsDatX(20,{SizeL = 8, SizeU = 7, SizeR = 4, SizeD = 11,Class=17,HP=6000,Shield = 3000,SuppCost=1,MinCost=0,AdvFlag={0x4000,0x4000+0x10000+0x10000},SeekRange=7})--플레이어만 사용가능, 요구조건을 무조건?으로
+		SetUnitsDatX(10,{SizeL = 8, SizeU = 7, SizeR = 4, SizeD = 11,Class=94,HP=15000,Shield = 15000,MinCost=0,SuppCost=1,AdvFlag={0x4000,0x4000+0x10000+0x10000}})--플레이어만 사용가능, 요구조건을 무조건?으로
 		for i =0,4 do
-			SetUnitsDatX(MarID[i+1],{SizeL = 8, SizeU = 7, SizeR = 4, SizeD = 11,Class=94,HP=20000,Shield=20000,SuppCost=1,MinCost=0,AdvFlag={0x4000+0x8000,0x4000+0x8000}})--플레이어만 사용가능, 요구조건을 무조건?으로
+			SetUnitsDatX(MarID[i+1],{SizeL = 8, SizeU = 7, SizeR = 4, SizeD = 11,Class=94,HP=20000,Shield=20000,SuppCost=1,MinCost=0,AdvFlag={0x4000+0x8000+0x10000,0x4000+0x8000+0x10000}})--플레이어만 사용가능, 요구조건을 무조건?으로
 		end
 		SetWeaponsDatX(0, {TargetFlag = 0x020 + 1 + 2,DamageType=3,RangeMax = 6*32,DmgBase = NMBaseAtk,DmgFactor=NMFactorAtk,ObjectNum = 2})--파벳 베이스 : 투사체를 두개로
 		if X4_Mode == 1 then
@@ -159,10 +183,10 @@
 
 
 
-		SetWeaponsDatX(123, {UpgradeType = 8,TargetFlag = 0x020 + 1 + 2,DamageType=3,RangeMax = 8*32,Cooldown = 15,DmgBase = ARBaseAtk,DmgFactor=ARFactorAtk})
-		SetWeaponsDatX(124, {UpgradeType = 9,TargetFlag = 0x020 + 1 + 2,DamageType=1,RangeMax = 12*32,Cooldown = 45,DmgBase = SNBaseAtk,DmgFactor=SNFactorAtk})
+		SetWeaponsDatX(123, {UpgradeType = 8,TargetFlag = 0x020 + 1 + 2,DamageType=3,RangeMax = 7*32,Cooldown = 15,DmgBase = ARBaseAtk,DmgFactor=ARFactorAtk})
+		SetWeaponsDatX(124, {UpgradeType = 9,TargetFlag = 0x020 + 1 + 2,DamageType=1,RangeMax = 12*32,Cooldown = 60,DmgBase = SNBaseAtk,DmgFactor=SNFactorAtk})
 		SetWeaponsDatX(125, {UpgradeType = 10,TargetFlag = 0x020 + 1 + 2,DamageType=2,RangeMax = 3*32,Cooldown = 20,DmgBase = SGBaseAtk,DmgFactor=SGFactorAtk,Splash={3,5,15}})
-		SetWeaponsDatX(126, {UpgradeType = 11,TargetFlag = 0x020 + 1 + 2,DamageType=2,RangeMax = 6*32,Cooldown = 1,DmgBase = MGBaseAtk,DmgFactor=MGFactorAtk,Splash={1,5,20}})
+		SetWeaponsDatX(126, {UpgradeType = 11,TargetFlag = 0x020 + 1 + 2,DamageType=2,RangeMax = 5*32,Cooldown = 1,DmgBase = MGBaseAtk,DmgFactor=MGFactorAtk,Splash={1,5,20}})
 		
 
 
