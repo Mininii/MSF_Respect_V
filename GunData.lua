@@ -846,13 +846,13 @@ end
 			CenT3 = {102,102,23,27,68,30}
 			for j,k in pairs(CenT) do
 				G_CB_SetSpawn({GNm(j),CD(OnlyMarineMode,0)}, {k}, {"ACAS"}, {"CenCross"}, "MAX", 129, nil, nil, P7,1)
-				G_CB_SetSpawn({GNm(j),CD(OnlyMarineMode,1)}, {k}, {"ACAS"}, {"CenCross"}, "MAX", "Era_Patrol", nil, nil, P7,1)
+				G_CB_SetSpawn({GNm(j),CD(OnlyMarineMode,1)}, {k}, {"ACAS"}, {"CenCross"}, "MAX", "Era_Patrol2", nil, nil, P7,1)
 
 			end
 			if DLC_Project == 1 then
 				for j,k in pairs(CenT2) do
 				G_CB_SetSpawn({GNm(j),CD(OnlyMarineMode,0)}, {k}, {"ACAS"}, {"CenCross2"}, "MAX", 129, nil, nil, P8,1)
-				G_CB_SetSpawn({GNm(j),CD(OnlyMarineMode,1)}, {k}, {"ACAS"}, {"CenCross2"}, "MAX", "Era_Patrol", nil, nil, P8,1)
+				G_CB_SetSpawn({GNm(j),CD(OnlyMarineMode,1)}, {k}, {"ACAS"}, {"CenCross2"}, "MAX", "Era_Patrol2", nil, nil, P8,1)
 				
 
 				end

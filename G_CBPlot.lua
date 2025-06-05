@@ -456,6 +456,27 @@ CIf(FP,{TMemoryX(_Add(RPtr,40),AtLeast,150*16777216,0xFF000000)})
 			CAdd(FP,CPosY,32*256)
 			Simple_SetLocX(FP,20,CPosX,CPosY,CPosX,CPosY,{Simple_CalcLoc(0,-4,-4,4,4)})
 			CDoActions(FP, {TOrder(RUID, RPID, 1, Patrol, 202);})
+			CElseIfX_AddRepeatType(134,"Era_Patrol2")
+			
+			GetLocCenter(201, NPosX, NPosY)
+			
+			f_Read(FP,_Add(RPtr,10),CPos)
+			Convert_CPosXY()
+			Simple_SetLocX(FP,0,CPosX,CPosY,CPosX,CPosY,{Simple_CalcLoc(0,-4,-4,4,4)})
+			CiSub(FP,CPosX,NPosX)
+			CiSub(FP,CPosY,NPosY)
+			f_Sqrt(FP, SpeedRet, _Div(_Add(_Square(CPosX),_Square(CPosY)),_Mov(5)))
+			
+			CDoActions(FP, {TSetMemoryX(_Add(RPtr,8),SetTo,127*65536,0xFF0000),
+			TSetMemory(_Add(RPtr,13),SetTo,SpeedRet),
+			TSetMemoryX(_Add(RPtr,18),SetTo,SpeedRet,0xFFFF)})
+			Convert_CPosXY()
+			CNeg(FP,CPosX)
+			CAdd(FP,CPosX,32*64)
+			CNeg(FP,CPosY)
+			CAdd(FP,CPosY,32*256)
+			Simple_SetLocX(FP,20,CPosX,CPosY,CPosX,CPosY,{Simple_CalcLoc(0,-4,-4,4,4)})
+			CDoActions(FP, {TOrder(RUID, RPID, 1, Patrol, 202);})
 			CElseIfX_AddRepeatType(3,"Timer_Attack")
 			CDoActions(FP, {
 				TSetMemoryX(_Add(RPtr,9),SetTo,0,0xFF0000),

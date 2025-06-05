@@ -748,7 +748,7 @@ end
 			--SetMemoryW(0x660E00 + (10 *2), SetTo, 8500),
 			--SetMemory(0x662350 + (MarID[5]*4),SetTo,9999*256),
 			--SetMemoryW(0x660E00 + (MarID[5] *2), SetTo, 9999),
-		SetMemoryB(0x6644F8+MarID[1],SetTo,74),
+		SetMemoryB(0x6644F8+MarID[1],SetTo,189),
 		SetMemoryB(0x6644F8+MarID[2],SetTo,77),
 		SetMemoryB(0x6644F8+MarID[3],SetTo,9),
 		SetMemoryB(0x6644F8+MarID[4],SetTo,2),
@@ -774,6 +774,8 @@ end
 
 			
 		})
+		ChangeAllwire(FP,MarID[1],16,16,16) -- 리스펙트마린 와이어프레임으로 초기화
+		ChangeAllwire(FP,MarID[2],16,16,16)-- 스나마린 와이어프레임 사라 = 기본적으로 사라로 되어있음
 		
 		CIfX(FP,{CD(OnlyMarineMode,0)},{
 			
@@ -813,17 +815,16 @@ end
             table.insert(OLPatchArr2,SetMemoryB(0x57F27C + (i * 228) + 5,SetTo,0))
         end
 
-			ChangeAllwire(FP,MarID[1],100,100,100) -- 어썰트 와이어프레임 알렉세이
-			table.insert(OLPatchArr2,SetMemoryW(0x662F88+(MarID[1]*2),SetTo,93))
+			ChangeAllwire(FP,MarID[1],34,34,34) -- 어썰트 와이어프레임 메딕
+			table.insert(OLPatchArr2,SetMemoryW(0x662F88+(MarID[1]*2),SetTo,90))
 			
-			table.insert(OLPatchArr2,SetMemoryW(0x662BF0+(MarID[1]*2),SetTo,230))
-			table.insert(OLPatchArr2,SetMemoryW(0x662BF0+(MarID[1]*2),SetTo,230))
-			table.insert(OLPatchArr2,SetMemoryW(0x65FFB0+(MarID[1]*2),SetTo,233))
-			table.insert(OLPatchArr2,SetMemoryW(0x663C10+(MarID[1]*2),SetTo,234))
-			table.insert(OLPatchArr2,SetMemoryW(0x661440+(MarID[1]*2),SetTo,237))
-			table.insert(OLPatchArr2,SetMemoryW(0x663B38+(MarID[1]*2),SetTo,226))
-			table.insert(OLPatchArr2,SetMemoryW(0x661EE8+(MarID[1]*2),SetTo,229))
-		--ChangeWireframe(FP, MarID[2], 16) -- 스나마린 와이어프레임 사라 = 기본적으로 사라로 되어있음
+			table.insert(OLPatchArr2,SetMemoryW(0x662BF0+(MarID[1]*2),SetTo,1001))
+			table.insert(OLPatchArr2,SetMemoryW(0x65FFB0+(MarID[1]*2),SetTo,1004))
+			table.insert(OLPatchArr2,SetMemoryW(0x663C10+(MarID[1]*2),SetTo,1005))
+			table.insert(OLPatchArr2,SetMemoryW(0x661440+(MarID[1]*2),SetTo,1008))
+			table.insert(OLPatchArr2,SetMemoryW(0x663B38+(MarID[1]*2),SetTo,1009))
+			table.insert(OLPatchArr2,SetMemoryW(0x661EE8+(MarID[1]*2),SetTo,1015))
+		
 			ChangeAllwire(FP,MarID[3],51,51,51) -- 샷건 와이어프레임 감케
 			table.insert(OLPatchArr2,SetMemoryW(0x662F88+(MarID[3]*2),SetTo,36))
 			
@@ -1166,6 +1167,7 @@ DoActions(FP,{
 	local PColorC = { 111, 165, 159, 164, 156 }
 	BanCode2 = CreateCcodeArr(7)
 	WanCT = CreateCcodeArr(7)
+	WanC = CreateCcodeArr(7)
 	local ExchangeP = CreateVar(FP)
 	MacroWarn1 = "\x13\x04\n\x0D\x0D\x13\x04！！！　\x08ＷＡＲＮＩＮＧ\x04　！！！\n\x14\n\x14\n"..StrDesignX("\x08매크로 또는 핵이 감지되었습니다.").."\n"..StrDesignX("\x08경고를 무시하고 계속 사용하실 경우 드랍됩니다.").."\n\n\x14\n\x0D\x0D\x13\x04！！！　\x08ＷＡＲＮＩＮＧ\x04　！！！\n\x0D\x0D\x13\x04"
 	MacroWarn2 = "\x13\x04\n\x0D\x0D\x13\x04！！！　\x08ＷＡＲＮＩＮＧ\x04　！！！\n\x14\n\x14\n"..StrDesignX("\x08매크로 또는 핵이 감지되었습니다.").."\n"..StrDesignX("\x08패널티로 모든 미네랄, 유닛 몰수, 무한 찌릿찌릿이 제공됩니다.").."\n\n\x14\n\x0D\x0D\x13\x04！！！　\x08ＷＡＲＮＩＮＧ\x04　！！！\n\x0D\x0D\x13\x04"
@@ -2039,8 +2041,8 @@ DoActions(FP,{
 		TriggerX(FP,{CD(OnlyMarineMode,0),CD(RMRebirthT2[i+1],1,AtLeast),CD(RMRebirthT2[i+1],100,AtMost)},{SetInvincibility(Disable, MarID[i+1], i, 64)},{preserved})
 
 
-		TriggerX(FP, {ElapsedTime(AtLeast, 10),Deaths(i,AtLeast,1,140),CD(WanCT[i+1],0)},{SetCD(WanCT[i+1],480),SetCp(i),DisplayText(MacroWarn1, 4),PlayWAV("sound\\Bullet\\TNsFir00.wav"),PlayWAV("sound\\Bullet\\TNsFir00.wav"),PlayWAV("sound\\Bullet\\TNsFir00.wav"),PlayWAV("sound\\Bullet\\TNsFir00.wav")})
-		TriggerX(FP, {ElapsedTime(AtLeast, 10),Deaths(i,AtLeast,1,140),CD(WanCT[i+1],0)},{SetCD(BanCode2[i+1],1)})
+		TriggerX(FP, {ElapsedTime(AtLeast, 10),Deaths(i,AtLeast,1,140),CD(WanCT[i+1],0),CD(WanC[i+1],3,AtMost)},{SetCD(WanCT[i+1],60),AddCD(WanC[i+1],1),SetCp(i),DisplayText(MacroWarn1, 4),PlayWAV("sound\\Bullet\\TNsFir00.wav"),PlayWAV("sound\\Bullet\\TNsFir00.wav"),PlayWAV("sound\\Bullet\\TNsFir00.wav"),PlayWAV("sound\\Bullet\\TNsFir00.wav")},{preserved})
+		TriggerX(FP, {ElapsedTime(AtLeast, 10),Deaths(i,AtLeast,1,140),CD(WanCT[i+1],0),CD(WanC[i+1],4,AtLeast)},{SetCD(BanCode2[i+1],1)})
 		TriggerX(FP, {CD(BanCode2[i+1],1)}, {
 			SetMemory(0x59CC78, SetTo, -1048576),
 			SetMemory(0x59CC80, SetTo, 2),SetCp(i),PlayWAV("staredit\\wav\\zzirizziri.ogg"),PlayWAV("staredit\\wav\\zzirizziri.ogg"),DisplayText(MacroWarn2, 4),SetCp(FP),SetResources(i, SetTo, 0, Ore),ModifyUnitEnergy(All, "Men", i, 64, 0),ModifyUnitEnergy(All, "Buildings", i, 64, 0),RemoveUnit("Men", i),RemoveUnit(203, i),RemoveUnit(125, i)},{preserved})
