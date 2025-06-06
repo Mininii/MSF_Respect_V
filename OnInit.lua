@@ -186,7 +186,7 @@ end
 		SetWeaponsDatX(123, {UpgradeType = 8,TargetFlag = 0x020 + 1 + 2,DamageType=3,RangeMax = 7*32,Cooldown = 15,DmgBase = ARBaseAtk,DmgFactor=ARFactorAtk})
 		SetWeaponsDatX(124, {UpgradeType = 9,TargetFlag = 0x020 + 1 + 2,DamageType=1,RangeMax = 12*32,Cooldown = 60,DmgBase = SNBaseAtk,DmgFactor=SNFactorAtk})
 		SetWeaponsDatX(125, {UpgradeType = 10,TargetFlag = 0x020 + 1 + 2,DamageType=2,RangeMax = 3*32,Cooldown = 20,DmgBase = SGBaseAtk,DmgFactor=SGFactorAtk,Splash={3,5,15}})
-		SetWeaponsDatX(126, {UpgradeType = 11,TargetFlag = 0x020 + 1 + 2,DamageType=2,RangeMax = 5*32,Cooldown = 1,DmgBase = MGBaseAtk,DmgFactor=MGFactorAtk,Splash={1,5,20}})
+		SetWeaponsDatX(126, {UpgradeType = 11,TargetFlag = 0x020 + 1 + 2,DamageType=2,RangeMax = 5*32,Cooldown = 1,DmgBase = MGBaseAtk,DmgFactor=MGFactorAtk,Splash={3,6,20}})
 		
 
 
@@ -381,8 +381,8 @@ end
 			InputSubtitleID(i,"lptime106",3) --SC 솔플클리어자 칭호
 			InputSubtitleID(i,"TurtlePunch",3) --SC 솔플클리어자 칭호
 			InputSubtitleID(i,"Ask",3) --SC 솔플클리어자 칭호
-			InputSubtitleID(i,"HereticSentinel",4) --SC 솔플클리어자 칭호
-			InputSubtitleID(i,"ARTANlS",4) --SC 솔플클리어자 칭호
+			InputSubtitleID(i,"HereticSentinel",4) --레게노
+			InputSubtitleID(i,"ARTANlS",4) --레게노
 		end
 		
 	T_YY = 2024

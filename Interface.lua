@@ -600,6 +600,9 @@ end
 	CIf(FP,{Memory(0x628438, AtLeast, 1)})
 	f_Read(FP,0x628438,"X",Nextptrs,0xFFFFFF)
 	CMov(FP,CunitIndex,_Div(_Sub(Nextptrs,19025),_Mov(84)))
+	local LJump = def_sIndex()
+	NJump(FP,LJump,{CV(RepHeroIndex,108),CD(GMode,3,AtMost)})
+	TriggerX(FP,{CV(RepHeroIndex,108)},{SetMemoryB(0x669E28+126, SetTo, 16)},{preserved})
 	CDoActions(FP, {
 		TSetMemory(_Add(RepHeroIndex,EPDF(0x662860)) ,SetTo,1+65536),
 		TCreateUnit(1, RepHeroIndex, 1, RepPlayerID),
@@ -607,6 +610,8 @@ end
 		Set_EXCC2(DUnitCalc,CunitIndex,1,SetTo,1),
 		Set_EXCC2(DUnitCalc,CunitIndex,2,SetTo,CunitHP),
 	})
+	TriggerX(FP,{CV(RepHeroIndex,108)},{SetMemoryB(0x669E28+126, SetTo, 0)},{preserved})
+	NJumpEnd(FP,LJump)
 	CIfEnd()
 	
 	condbox = {}
@@ -752,13 +757,13 @@ end
 		SetMemoryB(0x6644F8+MarID[2],SetTo,77),
 		SetMemoryB(0x6644F8+MarID[3],SetTo,9),
 		SetMemoryB(0x6644F8+MarID[4],SetTo,2),
-			SetMemory(0x662350 + (MarID[1]*4),SetTo,9999*256),
-			SetMemoryW(0x660E00 + (MarID[1] *2), SetTo, 9999),
-			SetMemory(0x662350 + (MarID[2]*4),SetTo,4000*256),
-			SetMemoryW(0x660E00 + (MarID[2] *2), SetTo, 6000),
+			SetMemory(0x662350 + (MarID[1]*4),SetTo,9000*256),
+			SetMemoryW(0x660E00 + (MarID[1] *2), SetTo, 6000),
+			SetMemory(0x662350 + (MarID[2]*4),SetTo,2000*256),
+			SetMemoryW(0x660E00 + (MarID[2] *2), SetTo, 9000),
 			SetMemory(0x662350 + (MarID[3]*4),SetTo,9999*256),
 			SetMemoryW(0x660E00 + (MarID[3] *2), SetTo, 999),
-			SetMemory(0x662350 + (MarID[4]*4),SetTo,7777*256),
+			SetMemory(0x662350 + (MarID[4]*4),SetTo,6000*256),
 			SetMemoryW(0x660E00 + (MarID[4] *2), SetTo, 2500),
 			SetMemoryX(0x664080 + (MarID[1]*4),SetTo,0,0x8000),
 			SetMemoryX(0x664080 + (MarID[2]*4),SetTo,0,0x8000),
@@ -1012,8 +1017,8 @@ end
 		Trigger2X(FP, {CD(GMode,4)}, SCPatchArr)
 
 		TriggerX(FP, {CD(GMode,4),CD(OnlyMarineMode,1)}, {--온리마린 SC
-			SetMemoryW(0x657678+(125*2),Add,SGFactorAtk), --샷건 SC 딜 두배
-			SetMemoryW(0x660E00 + (MarID[3] *2), SetTo, 322),--탱커 쉴드 322로 하향
+			SetMemoryW(0x657678+(125*2),Add,SGFactorAtk//2), --샷건 SC 딜 1.5배
+			SetMemoryW(0x660E00 + (MarID[3] *2), SetTo, 733),--탱커 쉴드 733으로 하향
 			
 		})
 		TriggerX(FP, {CD(EVFCcode,1),CD(OnlyMarineMode,1)}, {
@@ -1023,7 +1028,7 @@ end
 			SetMemoryW(0x657678+(3 *2),Add,RMFactorAtk2),
 			--evf
 			SetMemoryW(0x657678+(123 *2),Add,ARFactorAtk),--에얄 공격력 2배
-			SetMemoryB(0x656FB8+(124 *1),SetTo,20),--스나 공속 상향
+			SetMemoryB(0x656FB8+(124 *1),SetTo,30),--스나 공속 상향
 			SetMemoryW(0x660E00 + (MarID[3] *2), SetTo, 3222),--탱커 쉴드 3222로 상향
 			SetMemoryB(0x657258 + 126, SetTo, 1),--망가 폭발형으로 변경
 			SetMemoryW(0x656888+(126*2),SetTo,15), --스플 안
@@ -1031,7 +1036,7 @@ end
 			SetMemoryW(0x657780+(126*2),SetTo,15), --스플 밖
 	})
 		TriggerX(FP, {CD(GMode,4),CD(OnlyMarineMode,1),CD(EVFCcode,1)}, {--온리마린 EVF SC
-			SetMemoryW(0x660E00 + (MarID[3] *2), SetTo, 999),--탱커 쉴드 999
+			SetMemoryW(0x660E00 + (MarID[3] *2), SetTo, 1500),--탱커 쉴드 999
 			
 		})
 

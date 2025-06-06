@@ -560,35 +560,25 @@ CMov(FP, 0x6509B0, FP)
 		NJumpXEnd(FP, WhiteList)
 		CSub(FP,0x6509B0,6)--19
 
-		for i = 0, 4 do
-			CIf(FP,{DeathsX(CurrentPlayer,Exactly,i,0,0xFF)})
-			TriggerX(FP,{Memory(0x582294+(4*i),AtLeast,1600);},{
-				SetMemory(0x6509B0, Add, 2),--21
-				SetDeaths(CurrentPlayer,SetTo,0,0),
-				SetDeathsX(CurrentPlayer,SetTo,0,1,0xFF00),--유닛아이디 1 추가로 인한 CP + 12 = 33
-				SetMemory(0x6509B0, Subtract, 2),
-			},{preserved})
-			
 			CIf(FP,{CD(OnlyMarineMode,1)})
 			CAdd(FP,0x6509B0,6)--25
-			
-			TriggerX(FP,{DeathsX(CurrentPlayer, Exactly, MarID[4], 0, 0xFF)},{--망가마린 공속무한
+			CIf(FP,{DeathsX(CurrentPlayer, Exactly, MarID[4], 0, 0xFF)},{
 				SetMemory(0x6509B0, Subtract, 4),--21
 				SetDeaths(CurrentPlayer,SetTo,0,0),
 				SetDeathsX(CurrentPlayer,SetTo,0,1,0xFF00),--유닛아이디 1 추가로 인한 CP + 12 = 33
-				SetMemory(0x6509B0, Add, 4),
-			},{preserved})
-			TriggerX(FP,{CD(EVFCcode,1),DeathsX(CurrentPlayer, Exactly, MarID[4], 0, 0xFF)},{--망가마린 쉴드젠
-				SetMemory(0x6509B0, Subtract, 1),--21
+				SetMemory(0x6509B0, Add, 3),})
+			TriggerX(FP,{CD(EVFCcode,1),Deaths(CurrentPlayer, AtMost, 2499*256, 0)},{--망가마린 쉴드젠
 				SetDeaths(CurrentPlayer, Add, 322*256, 0),
 				SetMemory(0x6509B0, Add, 1),
 			},{preserved})
+			CIfEnd()
+			
 
 				CIf(FP,{DeathsX(CurrentPlayer, Exactly, MarID[3], 0, 0xFF)})--탱커 체젠
 				CSub(FP,0x6509B0,23)
 				CIfX(FP,{CD(EVFCcode,0)})
 				TriggerX(FP, {CD(GMode,3,AtMost),Deaths(CurrentPlayer, AtMost, (9999-1)*256, 0)}, {SetDeaths(CurrentPlayer, Add, 999*256, 0)},{preserved})
-				TriggerX(FP, {CD(GMode,4),Deaths(CurrentPlayer, AtMost, (9999-1)*256, 0)}, {SetDeaths(CurrentPlayer, Add, 322*256, 0)},{preserved})
+				TriggerX(FP, {CD(GMode,4),Deaths(CurrentPlayer, AtMost, (9999-1)*256, 0)}, {SetDeaths(CurrentPlayer, Add, 733*256, 0)},{preserved})
 				CElseX()
 				TriggerX(FP, {Deaths(CurrentPlayer, AtMost, (9999-1)*256, 0)}, {SetDeaths(CurrentPlayer, Add, 999*256, 0)},{preserved})
 				CIfXEnd()
@@ -620,6 +610,15 @@ CMov(FP, 0x6509B0, FP)
 ]]
 			CSub(FP,0x6509B0,6)--19
 			CIfEnd()
+		for i = 0, 4 do
+			CIf(FP,{DeathsX(CurrentPlayer,Exactly,i,0,0xFF)})
+			TriggerX(FP,{Memory(0x582294+(4*i),AtLeast,1600);},{
+				SetMemory(0x6509B0, Add, 2),--21
+				SetDeaths(CurrentPlayer,SetTo,0,0),
+				SetDeathsX(CurrentPlayer,SetTo,0,1,0xFF00),--유닛아이디 1 추가로 인한 CP + 12 = 33
+				SetMemory(0x6509B0, Subtract, 2),
+			},{preserved})
+			
 
 			for j = 1, 5 do
 				
@@ -900,8 +899,8 @@ for i = 0, 4 do
 		TriggerX(FP,{CD(SELimit,4,AtMost)}, {AddCD(SELimit,1),RotatePlayer({PlayWAVX("staredit\\wav\\Marinedead.ogg"),PlayWAVX("staredit\\wav\\Marinedead.ogg")},HumanPlayers, FP)},{preserved})
 		CIf(FP,{CD(gMAXCcodeArr[2], 0)})
 		if DLC_Project == 1 then
-		f_TempRepeat({CD(GMode,4)}, 88, 2, 2, P8)
-		f_TempRepeat({CD(GMode,4)}, 21, 2, 2, P8)
+		f_TempRepeat({CD(GMode,4)}, 88, 2, 2, P8,nil,nil,1)
+		f_TempRepeat({CD(GMode,4)}, 21, 2, 2, P8,nil,nil,1)
 		end
 		
 
@@ -921,10 +920,10 @@ for i = 0, 4 do
 		TriggerX(FP,{CD(SELimit,4,AtMost)}, {AddCD(SELimit,1),RotatePlayer({PlayWAVX("staredit\\wav\\Marinedead.ogg"),PlayWAVX("staredit\\wav\\Marinedead.ogg")},HumanPlayers, FP)},{preserved})
 		CIf(FP,{CD(gMAXCcodeArr[2], 0)})
 		if DLC_Project == 1 then
-			f_TempRepeat({CD(GMode,4)}, 88, 1, 2, P8)
-			f_TempRepeat({CD(GMode,4)}, 21, 1, 2, P8)
-			f_TempRepeat({CD(GMode,4)}, 79, 1, 2, P8)
-			f_TempRepeat({CD(GMode,4)}, 95, 1, 2, P8)
+			f_TempRepeat({CD(GMode,4)}, 88, 1, 2, P8,nil,nil,1)
+			f_TempRepeat({CD(GMode,4)}, 21, 1, 2, P8,nil,nil,1)
+			f_TempRepeat({CD(GMode,4)}, 79, 1, 2, P8,nil,nil,1)
+			f_TempRepeat({CD(GMode,4)}, 95, 1, 2, P8,nil,nil,1)
 		end
 		
 
@@ -943,11 +942,11 @@ for i = 0, 4 do
 		TriggerX(FP,{CD(SELimit,4,AtMost)}, {AddCD(SELimit,1),RotatePlayer({PlayWAVX("staredit\\wav\\Marinedead.ogg"),PlayWAVX("staredit\\wav\\Marinedead.ogg")},HumanPlayers, FP)},{preserved})
 		CIf(FP,{CD(gMAXCcodeArr[2], 0)})
 		if DLC_Project == 1 then
-		f_TempRepeat({CD(GMode,4)}, 89, 1, 218, P8)
-		f_TempRepeat({CD(GMode,4)}, 61, 1, 218, P8)
-		f_TempRepeat({CD(GMode,4)}, 63, 1, 218, P8)
-		f_TempRepeat({CD(GMode,4)}, 67, 1, 218, P8)
-		f_TempRepeat({CD(GMode,4)}, 71, 1, 218, P8)
+		f_TempRepeat({CD(GMode,4)}, 89, 1, 218, P8,nil,nil,1)
+		f_TempRepeat({CD(GMode,4)}, 61, 1, 218, P8,nil,nil,1)
+		f_TempRepeat({CD(GMode,4)}, 63, 1, 218, P8,nil,nil,1)
+		f_TempRepeat({CD(GMode,4)}, 67, 1, 218, P8,nil,nil,1)
+		f_TempRepeat({CD(GMode,4)}, 71, 1, 218, P8,nil,nil,1)
 		end
 		CIfX(FP, {Deaths(i, Exactly, 2, 217)})
 		DisplayPrint(HumanPlayers,{"\x12"..StrD[1]..string.char(ColorCode[i+1]).."名取さな \x04의 \x1F스\x04페셜 \x1F마\x04린이 \x08폭사\x04당했어...",StrD[2]})
@@ -967,11 +966,11 @@ for i = 0, 4 do
 		f_Read(FP, _Sub(BackupCp,15), CPos)
 		Convert_CPosXY()
 		--218
-		f_TempRepeat({CD(GMode,4)}, 89, 1, 218, P8)
-		f_TempRepeat({CD(GMode,4)}, 61, 1, 218, P8)
-		f_TempRepeat({CD(GMode,4)}, 63, 1, 218, P8)
-		f_TempRepeat({CD(GMode,4)}, 67, 1, 218, P8)
-		f_TempRepeat({CD(GMode,4)}, 71, 1, 218, P8)
+		f_TempRepeat({CD(GMode,4)}, 89, 1, 218, P8,nil,nil,1)
+		f_TempRepeat({CD(GMode,4)}, 61, 1, 218, P8,nil,nil,1)
+		f_TempRepeat({CD(GMode,4)}, 63, 1, 218, P8,nil,nil,1)
+		f_TempRepeat({CD(GMode,4)}, 67, 1, 218, P8,nil,nil,1)
+		f_TempRepeat({CD(GMode,4)}, 71, 1, 218, P8,nil,nil,1)
 		end
 		CIfX(FP, {Deaths(i, Exactly, 2, 217)})
 		DisplayPrint(HumanPlayers,{"\x12"..StrD[1]..string.char(ColorCode[i+1]).."名取さな \x04의 \x17리\x04스펙트"..string.char(ColorCode[i+1]).." 마\x04린이 \x08폭사\x04당했어...",StrD[2]})
@@ -1010,10 +1009,10 @@ for i = 0, 4 do
 		TriggerX(FP,{CD(SELimit,4,AtMost)}, {AddCD(SELimit,1),RotatePlayer({PlayWAVX("staredit\\wav\\Marinedead.ogg"),PlayWAVX("staredit\\wav\\Marinedead.ogg")},HumanPlayers, FP)},{preserved})
 		CIf(FP,{CD(gMAXCcodeArr[2], 0)})
 		if DLC_Project == 1 then
-			f_TempRepeat({CD(GMode,4)}, 79, 1, 2, P8)
-			f_TempRepeat({CD(GMode,4)}, 95, 1, 2, P8)
-			f_TempRepeat({CD(GMode,4)}, 80, 1, 2, P8)
-			f_TempRepeat({CD(GMode,4)}, 34, 1, 2, P8)
+			f_TempRepeat({CD(GMode,4)}, 79, 1, 2, P8,nil,nil,1)
+			f_TempRepeat({CD(GMode,4)}, 95, 1, 2, P8,nil,nil,1)
+			f_TempRepeat({CD(GMode,4)}, 80, 1, 2, P8,nil,nil,1)
+			f_TempRepeat({CD(GMode,4)}, 34, 1, 2, P8,nil,nil,1)
 		end
 		CIfX(FP, {Deaths(i, Exactly, 2, 217)})
 		DisplayPrint(HumanPlayers,{"\x12"..StrD[1]..string.char(ColorCode[i+1]).."名取さな \x04의 ",MarText[j],"이 \x08폭사\x04당했어...",StrD[2]})
@@ -1099,7 +1098,7 @@ end
 
 	CMov(FP,ExchangeOre,HPT)
 	
-	CTrigger(FP, {CD(OnlyMarineMode,1)}, {AddV(ExchangeOre,ExchangeOre)}, {preserved})
+	CTrigger(FP, {CD(EVFCcode,1)}, {AddV(ExchangeOre,ExchangeOre)}, {preserved})
 	CTrigger(FP, {CD(GMode,4)}, {AddV(ExchangeOre,ExchangeOre)}, {preserved})
 	CDoActions(FP, {TSetResources(Force1, Add, ExchangeOre, Ore)})
 	DisplayPrint(HumanPlayers,{"\x13"..StrD[1],HeroTextFunc,"\x04을(를) \x07처치하였다! \x1F＋ ",ExchangeOre," \x03Ｏｒｅ"..StrD[2]})
@@ -1118,9 +1117,10 @@ end
 		
 
 		local GunTable = {CV(HeroIndex,42)}
-		function OtherGunSet(GunID,CUTable,CenterXY)
+		function OtherGunSet(GunID,CUTable,CenterXY,Type,NQOP)
+			
 			for j,k in pairs(CUTable) do
-				f_TempRepeat({CV(HeroIndex,GunID)}, k[1], k[2], nil, P8, CenterXY)
+				f_TempRepeat({CV(HeroIndex,GunID)}, k[1], k[2], Type, P8, CenterXY,nil,NQOP)
 			end
 			table.insert(GunTable,CV(HeroIndex,GunID))
 		end
@@ -1141,8 +1141,22 @@ end
 		f_TempRepeatX({CV(HeroIndex,188)}, 69, PFNM, 187, P8)
 
 
+GraArr = {52,65,66,40,87,74,3,34,2,93,5}
+AirArr = {7,60,70,57,62,64,12,29,8,58,80}
+	CIf(FP,{CV(HeroIndex,108)})
+		CFor(FP,0,5,1)
+		RandNum = f_CRandNum(#GraArr)
+		for j,k in pairs(GraArr) do
+			f_TempRepeat({CV(RandNum,j-1)}, k, 2, 187, P8, nil,nil,1)
+		end
+		RandNum = f_CRandNum(#AirArr)
+		for j,k in pairs(AirArr) do
+			f_TempRepeat({CV(RandNum,j-1)}, k, 2, 187, P8, nil,nil,1)
+		end
+		CForEnd()
+	CIfEnd()
+			table.insert(GunTable,CV(HeroIndex,108))
 		
-
 		OtherGunSet(134,{
 			{40,30},
 			{62,30},
@@ -1398,11 +1412,11 @@ if NameTest == 1 then
 		--str55 = "\x15。+.˚Misty E'ra 'Mui'\x12\x10M\x04isty \x10E\x04'ra '\x10M\x04ui'\x10。+.˚"
 		--str55 = 
 
-		--"\t\t\x10。˙+˚ELIXIR。+.˚\x12\x1E。˙+˚E\x04LIXI\x1ER。+.˚\t\t\t\t\t\t\t\t\t     "
+		--"		\x06。˙+˚Lirulu。+.˚\x12\x08。˙+˚\x08L\x04irulu\x08。+.˚					        "
 		--"\x1E。+.˚Story of Maple\x12\x11S\x04tory of \x11M\x04aple\x11。+.˚\t\t\t\t\t\t       "
 		--"\t\x0E。˙+˚My Head。+.˚\x12\x11。˙+˚\x11M\x04y \x11H\x04ead\x11。+.˚\t\t\t\t\t\t\t       "
 			
-		CreateTestCrystal(129,"\t\t\x11® \x03M\x04arine\x03。+.˚\x12\x11。˙+˚\x11A\x04ssault",{"Q","W","A","S"})
+		CreateTestCrystal(129,"\t\t\x06。˙+˚Lirulu。+.˚\x12\x08。˙+˚\x08L\x04irulu\x08。+.˚",{"Q","W","A","S"})
 		CreateTestCrystal(130,"\t\t\x1B® \x03M\x04arine\x03。+.˚\x12\x1B。˙+˚\x1BS\x04niper",{"E","R","D","F"})
 		CreateTestCrystal(219,"\t\t\x10® \x03M\x04arine\x03。+.˚\x12\x10。˙+˚\x10S\x04hotgun",{"T","Y","G","H"})
 		CreateTestCrystal(220,"\t\t\x18® \x03M\x04arine\x03。+.˚\x12\x18。˙+˚\x18M\x04achineGun",{"U","I","J","K"})

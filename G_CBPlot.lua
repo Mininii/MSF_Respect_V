@@ -620,7 +620,6 @@ CWhile(FP,{CVar(FP,Spawn_TempW[2],AtLeast,1)})
 			SetMemory(0x66EC48+(541*4), SetTo, 247),
 		})
 		FuncAlloc=FuncAlloc+2
-		Simple_SetLocX(FP,0,CPosX,CPosY,CPosX,CPosY)
 		CMov(FP,QueueOX,CPosX)
 		CMov(FP,QueueOY,CPosY)
 		CMov(FP,RUID,Gun_TempSpawnSet1)
@@ -1402,7 +1401,11 @@ function G_CB_SetSpawn(Condition,G_CB_CUTable,G_CB_SNTable,G_CB_SLTable,G_CB_LMT
             G_CB_ShapeTable[j] = _G[G_CB_SLTable[j]]
         else
             G_CB_ShapeTable[j] = k[G_CB_SLTable[j]+1]
-			G_CB_FNTable[j] = 1
+			if G_CB_LMTable == "MAX" then
+				G_CB_FNTable[j] = 0
+			else
+				G_CB_FNTable[j] = 1
+			end
         end
     end
 	if #G_CB_FNTable == 0 then G_CB_FNTable = nil end

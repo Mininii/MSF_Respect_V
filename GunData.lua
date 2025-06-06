@@ -755,12 +755,27 @@ end
 
 	CIf_GCase(130)--감커
 	CenT2={88,21,86,84,98,58}
+	CenT3={80,8,64,62,60,108}
+
+
+
+
+	
 	for j,k in pairs(CenT2) do
 		CIf(FP,GNm(j))
 		G_CB_TSetSpawn({CD(GMode,1)},{k},{CenNM1},1,{LMTable = 1,RepeatType=130,CenterXY={0,0},OwnerTable=P6})
 		G_CB_TSetSpawn({CD(GMode,1)},{k},{CenNM2},1,{LMTable = 1,RepeatType=130,CenterXY={0,0},OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,2,AtLeast)},{k},{Cen1},1,{LMTable = 1,RepeatType=130,CenterXY={0,0},OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,2,AtLeast)},{k},{Cen2},1,{LMTable = 1,RepeatType=130,CenterXY={0,0},OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,2)},{k},{Cen1},1,{LMTable = 1,RepeatType=130,CenterXY={0,0},OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,2)},{k},{Cen2},1,{LMTable = 1,RepeatType=130,CenterXY={0,0},OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,3)},{k},{Cen1},1,{LMTable = 1,RepeatType=130,CenterXY={0,0},OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,3)},{k},{Cen2},1,{LMTable = 1,RepeatType=130,CenterXY={0,0},OwnerTable=P6})
+		if CenT3[j] == 108 then
+		G_CB_TSetSpawn({CD(GMode,4)},{CenT3[j]},{CenNM1},1,{LMTable = 1,RepeatType=130,CenterXY={0,0},OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,4)},{CenT3[j]},{CenNM2},1,{LMTable = 1,RepeatType=130,CenterXY={0,0},OwnerTable=P6})
+		else
+		G_CB_TSetSpawn({CD(GMode,4)},{CenT3[j]},{Cen1},1,{LMTable = 1,RepeatType=130,CenterXY={0,0},OwnerTable=P6})
+		G_CB_TSetSpawn({CD(GMode,4)},{CenT3[j]},{Cen2},1,{LMTable = 1,RepeatType=130,CenterXY={0,0},OwnerTable=P6})
+		end
 		CIfEnd()
 	end
 

@@ -28,7 +28,7 @@
 		ARBaseAtk = 150
 		ARFactorAtk = 80
 		SNBaseAtk = 0
-		SNFactorAtk = 300
+		SNFactorAtk = 400
 		SGBaseAtk = 0
 		SGFactorAtk = 55
 		MGBaseAtk = 0
@@ -396,7 +396,6 @@
 	SetUnitAbility(65,64,3,50000,15000,22,500,false,2,32,4,100000,"Freyja",6000) --강질럿
 	SetUnitAbility(66,66,4,60000,18000,30,888,false,1,32*5,4,100000,"Kamilia",6000) --강드라
 
-	
 
 	SetUnitAbility(7,13,2,70000,30000,15,1150,false,1,260,8,150000,"Era",15000) --에시비
 	SetUnitAbility(60,100,4,50000,30000,8,450,{5,50,100},1,32*5,9,130000,"Nina",19000) --강커세어
@@ -432,6 +431,9 @@
 	SetUnitAbility(124,91,1,120000,30000,15,1800,false,1,32*5,5,110000,"Turret",15000) --
 	SetUnitAbility(11,117,4,77777,65535,15,1111,false,1,32*5,9,nil,"Prom",0) --
 	SetUnitAbility(69,118,4,77777,65535,15,1111,false,1,32*5,9,nil,"Aari",0) --
+
+	
+	SetUnitAbility(108,99,5,373737,65535,30,2950,false,1,32*2,5,250000,"Lirulu",25000) -- SC 한정 유닛
 
 --
 

@@ -313,7 +313,8 @@ function CreateUnitQueue()
             if i == 3 then RS1 = Set RS2=Set end
             TriggerX(FP,{Switch(RandSwitch1,RS1),Switch(RandSwitch2,RS2)},{SetCtrig1X("X",FuncAlloc,CAddr("Mask",1),nil,SetTo,16+i),SetCtrig1X("X",FuncAlloc+1,CAddr("Mask",1),nil,SetTo,16+i)},{preserved})
         end
-	CDoActions(FP, {
+		Era_OrCond=CreateCcode()
+	CDoActions(FP, {SetCD(Era_OrCond,0),
 		SetMemoryB(0x6644F8+4,SetTo,158),
 		SetMemoryB(0x6644F8+6,SetTo,200),
 		SetMemoryB(0x6C9858+158,SetTo,2),
@@ -322,24 +323,32 @@ function CreateUnitQueue()
 		TSetMemory(_Add(QueueUID,EPDF(0x662860)) ,SetTo,1+65536),
 	})
 		TriggerX(FP,{CVar(FP,QueuePID[2],Exactly,0xFFFFFFFF)},{SetCVar(FP,QueuePID[2],SetTo,7)},{preserved})
-		TriggerX(FP,{CV(QueueType,132),CV(QueueUID,68)},{
+		for j,k in pairs({129,134,133,132}) do
+		TriggerX(FP,{CV(QueueType,k)},{
 			SetMemoryX(0x664080 + (68*4),SetTo,4,4),SetMemoryB(0x663150 + (68),SetTo,12),
 			SetMemoryX(0x664080 + (23*4),SetTo,4,4),SetMemoryB(0x663150 + (23),SetTo,12),
 		},{preserved})
-		TriggerX(FP,{CV(QueueType,129),CV(QueueUID,68)},{
-			SetMemoryX(0x664080 + (68*4),SetTo,4,4),SetMemoryB(0x663150 + (68),SetTo,12),
-			SetMemoryX(0x664080 + (23*4),SetTo,4,4),SetMemoryB(0x663150 + (23),SetTo,12),
-		},{preserved})
+		end
+
+		TriggerX(FP,{CV(QueueUID,108)},{SetMemoryB(0x669E28+126, SetTo, 16)},{preserved})
+
 		CTrigger(FP,{TTCVar(FP,QueueType[2],NotSame,2)},{TCreateUnitWithProperties(1,QueueUID,1,QueuePID,{energy = 100})},1,LocIndex)
         CTrigger(FP,{CVar(FP,QueueType[2],Exactly,2)},{TCreateUnitWithProperties(1,QueueUID,1,QueuePID,{energy = 100, burrowed = true})},1,LocIndex+1)
-		TriggerX(FP,{CV(QueueType,132),CV(QueueUID,68)},{
+		
+		TriggerX(FP,{CV(QueueUID,108)},{SetMemoryB(0x669E28+126, SetTo, 0)},{preserved})
+		for j,k in pairs({129,134,133,132}) do
+		TriggerX(FP,{CV(QueueType,k)},{SetCD(Era_OrCond,1),
 			SetMemoryX(0x664080 + (68*4),SetTo,0,4),SetMemoryB(0x663150 + (68),SetTo,4),
 			SetMemoryX(0x664080 + (23*4),SetTo,0,4),SetMemoryB(0x663150 + (23),SetTo,4),
 		},{preserved})
-		TriggerX(FP,{CV(QueueType,129),CV(QueueUID,68)},{
-			SetMemoryX(0x664080 + (68*4),SetTo,0,4),SetMemoryB(0x663150 + (68),SetTo,4),
-			SetMemoryX(0x664080 + (23*4),SetTo,0,4),SetMemoryB(0x663150 + (23),SetTo,4),
-		},{preserved})
+		end
+		CIf(FP,{CD(Era_OrCond,1)})
+		CDoActions(FP,{
+		TSetMemoryX(_Add(Nextptrs,9), SetTo, 0,0xFF000000),
+		TSetMemoryX(_Add(Nextptrs,8), SetTo, 127*65536,0xFF0000),
+		})
+		CIfEnd()
+		
 	DoActions(FP, {
 		SetMemoryB(0x6644F8+4,SetTo,76),
 		SetMemoryB(0x6644F8+6,SetTo,83),
