@@ -2450,10 +2450,10 @@ end
 		ModifyUnitShields(All, MarID[3], Force1, 64, 100)
 	},{preserved})
 	local HealT = CreateCcode()
+	DoActionsX(FP,{SetCDeaths(FP,Add,1,HealT),ModifyUnitHitPoints(All, 125, Force1, 6, 100)})
 	TriggerX(FP,{CDeaths(FP,AtLeast,50,HealT),CD(OnlyMarineMode,1)},{
 		ModifyUnitShields(All, MarID[2], Force1, 64, 100)
 	},{preserved})
-	DoActionsX(FP,{SetCDeaths(FP,Add,1,HealT),ModifyUnitHitPoints(All, 125, Force1, 6, 100)})
 	TriggerX(FP,CDeaths(FP,AtLeast,50,HealT),{SetCDeaths(FP,SetTo,0,HealT),
 	ModifyUnitHitPoints(All,"Men",Force1,6,100),
 	ModifyUnitShields(All,"Men",Force1,6,100)},{preserved})

@@ -2974,7 +2974,10 @@ Trigger2X(FP, {CD(gMAXCcodeArr[1],1),Bring(Force1, AtMost, 5, "Men", 64)}, {Rota
 		end
 		CIfEnd()
 	CIfEnd()
-	
+	if TestStart == 1  then
+		DisplayPrint(HumanPlayers,{"Var_TempTable[4] : ",Var_TempTable[4]})
+	end
+
 	CTrigger(FP,{GNm(51,AtLeast)},{Gun_SetLine(54,SetTo,1),RotatePlayer({DisplayTextX(GunCaseErrT,4),PlayWAVX("sound\\Misc\\Buzz.wav"),PlayWAVX("sound\\Misc\\Buzz.wav")},HumanPlayers,FP)},1)
 
 	CTrigger(FP,{CD(GunCaseCheck,0)},{Gun_SetLine(54,SetTo,1),RotatePlayer({DisplayTextX(GunCaseErrT,4),PlayWAVX("sound\\Misc\\Buzz.wav"),PlayWAVX("sound\\Misc\\Buzz.wav")},HumanPlayers,FP)},1)
