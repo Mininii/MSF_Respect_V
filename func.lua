@@ -331,9 +331,15 @@ function CreateUnitQueue()
 		end
 
 		TriggerX(FP,{CV(QueueUID,108)},{SetMemoryB(0x669E28+126, SetTo, 16)},{preserved})
+		
+		TriggerX(FP, {CV(QueueUID,MarID[3]),CD(OnlyMarineMode,1)}, {SetMemory(0x66EC48+(33*4), SetTo, 70)},{preserved})
+		TriggerX(FP, {CV(QueueUID,MarID[4]),CD(OnlyMarineMode,1)}, {SetMemory(0x66EC48+(8*4), SetTo, 70)},{preserved})
 
 		CTrigger(FP,{TTCVar(FP,QueueType[2],NotSame,2)},{TCreateUnitWithProperties(1,QueueUID,1,QueuePID,{energy = 100})},1,LocIndex)
         CTrigger(FP,{CVar(FP,QueueType[2],Exactly,2)},{TCreateUnitWithProperties(1,QueueUID,1,QueuePID,{energy = 100, burrowed = true})},1,LocIndex+1)
+
+		TriggerX(FP, {CV(QueueUID,MarID[3]),CD(OnlyMarineMode,1)}, {SetMemory(0x66EC48+(33*4), SetTo, 20)},{preserved})
+		TriggerX(FP, {CV(QueueUID,MarID[4]),CD(OnlyMarineMode,1)}, {SetMemory(0x66EC48+(8*4), SetTo, 6)},{preserved})
 		
 		TriggerX(FP,{CV(QueueUID,108)},{SetMemoryB(0x669E28+126, SetTo, 0)},{preserved})
 		for j,k in pairs({129,134,133,132}) do
