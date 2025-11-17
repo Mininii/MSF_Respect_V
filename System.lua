@@ -772,13 +772,9 @@ CMov(FP, 0x6509B0, FP)
 
 		if DLC_Project == 1 then
 			CIf(FP,{CD(GMode,4)})--DLC SC 에너미스톰 유닛 이동속도 파리급으로 상향
-			CTrigger(FP, {CD(OnlyMarineMode,0)}, {
+			CTrigger(FP, {}, {
 				TSetMemory(_Sub(BackupCp,25-13),SetTo,8000),
 				TSetMemoryX(_Sub(BackupCp,25-18),SetTo,2000,0xFFFF),TSetMemoryX(_Add(SubUnitPtr,8),SetTo,(127*65536),0xFF0000)
-			}, {preserved})
-			CTrigger(FP, {CD(OnlyMarineMode,1)}, {
-				TSetMemory(_Sub(BackupCp,25-13),SetTo,3500),
-				TSetMemoryX(_Sub(BackupCp,25-18),SetTo,500,0xFFFF),TSetMemoryX(_Add(SubUnitPtr,8),SetTo,(127*65536),0xFF0000)
 			}, {preserved})
 			CIfEnd()
 		end
@@ -1078,7 +1074,7 @@ end
 	Convert_CPosXY()
 	f_TempRepeatX({}, 13, 1, 2, P6, {CPosX,CPosY})
 	CIfEnd()
-	Trigger2X(FP, {CV(HeroIndex,124),CD(HongEnable,1),CD(EVFCcode,1)},{KillUnit(25, Force2),KillUnit(30, Force2)})
+	--Trigger2X(FP, {CV(HeroIndex,124),CD(HongEnable,1),CD(EVFCcode,1)},{KillUnit(25, Force2),KillUnit(30, Force2)})
 	for j,k in pairs(UnitPointArr) do
 		Trigger2X(FP, {
 			CVX(HeroIndex, k[1], 0xFF)}, {SetV(HPT, k[2]/5),print_utf8_A(HTArr, k[3]..string.rep("\x0D",0x40-(#k[3])))},{preserved})
@@ -1118,9 +1114,13 @@ end
 
 		local GunTable = {CV(HeroIndex,42)}
 		function OtherGunSet(GunID,CUTable,CenterXY,Type,NQOP)
-			
+			local XType1 = Type
+			local XType2 = Type
+			if XType1 == nil then XType1 = 0 end
+			if XType2 == nil then XType2 = 5 end
 			for j,k in pairs(CUTable) do
-				f_TempRepeat({CV(HeroIndex,GunID)}, k[1], k[2], Type, P8, CenterXY,nil,NQOP)
+				f_TempRepeat({CV(HeroIndex,GunID),CD(EVFCcode,0)}, k[1], k[2], XType1, P8, CenterXY,nil,NQOP)
+				f_TempRepeat({CV(HeroIndex,GunID),CD(EVFCcode,1)}, k[1], k[2], XType2, P8, CenterXY,nil,NQOP)
 			end
 			table.insert(GunTable,CV(HeroIndex,GunID))
 		end
@@ -1128,17 +1128,23 @@ end
 		OtherGunSet(143,{{55,10},{53,10},{54,10},{46,10},{56,10},{104,10},{51,10},{48,10}})
 		OtherGunSet(144,{{55,10},{53,10},{54,10},{46,10},{56,10},{104,10},{51,10},{48,10}})
 		OtherGunSet(146,{{55,10},{53,10},{54,10},{46,10},{56,10},{104,10},{51,10},{48,10}})
-		CIf(FP,{CD(OnlyMarineMode,0)})
 		OtherGunSet(149,{{11,10},{69,10}})
 		OtherGunSet(188,{{11,10},{69,10}})
-		CIfEnd()
 		PFNM = CreateVar(FP)
 		CMov(FP,PFNM,_Mod(GTime,60))
 		TriggerX(FP, {CV(PFNM,50,AtLeast)}, {SetV(PFNM,50)},{preserved})
+
+		CIfX(FP,{CD(EVFCcode,1)})
+		f_TempRepeatX({CV(HeroIndex,149)}, 11, PFNM, 188, P8)
+		f_TempRepeatX({CV(HeroIndex,149)}, 69, PFNM, 188, P8)
+		f_TempRepeatX({CV(HeroIndex,188)}, 11, PFNM, 188, P8)
+		f_TempRepeatX({CV(HeroIndex,188)}, 69, PFNM, 188, P8)
+		CElseX()
 		f_TempRepeatX({CV(HeroIndex,149)}, 11, PFNM, 187, P8)
 		f_TempRepeatX({CV(HeroIndex,149)}, 69, PFNM, 187, P8)
 		f_TempRepeatX({CV(HeroIndex,188)}, 11, PFNM, 187, P8)
 		f_TempRepeatX({CV(HeroIndex,188)}, 69, PFNM, 187, P8)
+		CIfXEnd()
 
 
 GraArr = {52,65,66,40,87,74,3,34,2,93,5}
@@ -1147,11 +1153,13 @@ AirArr = {7,60,70,57,62,64,12,29,8,58,80}
 		CFor(FP,0,5,1)
 		RandNum = f_CRandNum(#GraArr)
 		for j,k in pairs(GraArr) do
-			f_TempRepeat({CV(RandNum,j-1)}, k, 2, 187, P8, nil,nil,1)
+			f_TempRepeat({CV(RandNum,j-1),CD(EVFCcode,0)}, k, 2, 187, P8, nil,nil,1)
+			f_TempRepeat({CV(RandNum,j-1),CD(EVFCcode,1)}, k, 2, 188, P8, nil,nil,1)
 		end
 		RandNum = f_CRandNum(#AirArr)
 		for j,k in pairs(AirArr) do
-			f_TempRepeat({CV(RandNum,j-1)}, k, 2, 187, P8, nil,nil,1)
+			f_TempRepeat({CV(RandNum,j-1),CD(EVFCcode,0)}, k, 2, 187, P8, nil,nil,1)
+			f_TempRepeat({CV(RandNum,j-1),CD(EVFCcode,1)}, k, 2, 188, P8, nil,nil,1)
 		end
 		CForEnd()
 	CIfEnd()
@@ -1221,13 +1229,27 @@ AirArr = {7,60,70,57,62,64,12,29,8,58,80}
 		CElseX()
 		CSub(FP,WTime,_Mov(2048),_Add(_Mul(_Mod(_Div(GTime,60),10),200),24))
 		CIfXEnd()
-		f_TempRepeatX({CD(OnlyMarineMode,0)}, 94, 1, nil, P8, {WTime,LTime})
-		f_TempRepeatX({CD(OnlyMarineMode,0)}, 62, 1, 187, P8, {WTime,LTime})
-		f_TempRepeatX({CD(OnlyMarineMode,0)}, 57, 1, 187, P8, {WTime,LTime})
-		f_TempRepeatX({CD(OnlyMarineMode,0)}, 64, 1, 187, P8, {WTime,LTime})
-		f_TempRepeatX({CD(OnlyMarineMode,0)}, 70, 1, 187, P8, {WTime,LTime})
-		f_TempRepeatX({CD(OnlyMarineMode,0)}, 12, 1, 187, P8, {WTime,LTime})
-		f_TempRepeatX({CD(OnlyMarineMode,0)}, 8, 1, 187, P8, {WTime,LTime})
+
+		CIfX(FP,{CD(EVFCcode,1)})
+		f_TempRepeatX({}, 94, 1, nil, P8, {WTime,LTime})
+		f_TempRepeatX({}, 62, 1, 188, P8, {WTime,LTime})
+		f_TempRepeatX({}, 57, 1, 188, P8, {WTime,LTime})
+		f_TempRepeatX({}, 64, 1, 188, P8, {WTime,LTime})
+		f_TempRepeatX({}, 70, 1, 188, P8, {WTime,LTime})
+		f_TempRepeatX({}, 12, 1, 188, P8, {WTime,LTime})
+		f_TempRepeatX({}, 8, 1, 188, P8, {WTime,LTime})
+		CElseX()
+		f_TempRepeatX({}, 94, 1, nil, P8, {WTime,LTime})
+		f_TempRepeatX({}, 62, 1, 187, P8, {WTime,LTime})
+		f_TempRepeatX({}, 57, 1, 187, P8, {WTime,LTime})
+		f_TempRepeatX({}, 64, 1, 187, P8, {WTime,LTime})
+		f_TempRepeatX({}, 70, 1, 187, P8, {WTime,LTime})
+		f_TempRepeatX({}, 12, 1, 187, P8, {WTime,LTime})
+		f_TempRepeatX({}, 8, 1, 187, P8, {WTime,LTime})
+		CIfXEnd()
+
+
+
 		CMov(FP,G_CB_X,WTime)
 		CMov(FP,G_CB_Y,LTime)
 		G_CB_SetSpawn({CD(GMode,1)}, {94}, "ACAS","ObbEffCir", nil, nil, nil, nil, P6)
@@ -1322,10 +1344,17 @@ AirArr = {7,60,70,57,62,64,12,29,8,58,80}
 		CElseX()
 		CSub(FP,WTime,_Mov(2048),_Add(_Mul(_Mod(_Div(GTime,60),10),200),24))
 		CIfXEnd()
+
 		f_TempRepeatX({CD(GMode,4)}, 94, 1, nil, P6, {WTime,LTime})
 		f_TempRepeatX({CD(GMode,4)}, 94, 1, nil, P6, {WTime,LTime2})
+		CIfX(FP,{CD(EVFCcode,1)})
+		f_TempRepeatX({CD(GMode,4)}, 11, FNum, 188, P7, {WTime,LTime})
+		f_TempRepeatX({CD(GMode,4)}, 69, FNum, 188, P8, {WTime,LTime2})
+		CElseX()
 		f_TempRepeatX({CD(GMode,4)}, 11, FNum, 187, P7, {WTime,LTime})
 		f_TempRepeatX({CD(GMode,4)}, 69, FNum, 187, P8, {WTime,LTime2})
+		CIfXEnd()
+
 		CIfEnd()
 	end
 	CIfEnd()
@@ -1526,7 +1555,7 @@ DoActions(FP, MoveUnit(1, "Men", Force1, 39, 1))
 CForEnd()
 CIfEnd()
 --TriggerX(FP, {ElapsedTime(AtLeast, 240),CD(EVFCcode,1)}, {SetCD(HongEnable,1)})
-Trigger2X(FP, {CD(HongEnable,1),CD(EVFCcode,1)},{Order("Men", Force2, 64, Move, 6),ModifyUnitHitPoints(All, "Men", Force2, 64, 1),RotatePlayer({PlayWAVX("staredit\\wav\\hongparksa.ogg"),PlayWAVX("staredit\\wav\\hongparksa.ogg"),PlayWAVX("staredit\\wav\\hongparksa.ogg"),PlayWAVX("staredit\\wav\\hongparksa.ogg"),PlayWAVX("staredit\\wav\\hongparksa.ogg"),DisplayTextX("\n\n\n\n\x13\x04――――――――――――――――――――――――――――――――――――――――――――――――――――――\n\x13\x04！！！　\x07ＨＯＮＧＨＯＮＧＨＯＮＧＨＯＮＧＨＯＮＧ\x04　！！！\n\n\n\x13\x07누군가가 \x03DJMAX \x1C유니버스\x04에 \x08홍박사 바이러스\x04를 \x07심었습니다!!! \n\n\n\x13\x04！！！　\x07ＨＯＮＧＨＯＮＧＨＯＮＧＨＯＮＧＨＯＮＧ\x04　！！！\n\x13\x04――――――――――――――――――――――――――――――――――――――――――――――――――――――\x0d\x0d\x0d\x0d\x14\x14\x14\x14\x14\x14\x14\x14", 4)}, HumanPlayers, FP)})
+--Trigger2X(FP, {CD(HongEnable,1),CD(EVFCcode,1)},{Order("Men", Force2, 64, Move, 6),ModifyUnitHitPoints(All, "Men", Force2, 64, 1),RotatePlayer({PlayWAVX("staredit\\wav\\hongparksa.ogg"),PlayWAVX("staredit\\wav\\hongparksa.ogg"),PlayWAVX("staredit\\wav\\hongparksa.ogg"),PlayWAVX("staredit\\wav\\hongparksa.ogg"),PlayWAVX("staredit\\wav\\hongparksa.ogg"),DisplayTextX("\n\n\n\n\x13\x04――――――――――――――――――――――――――――――――――――――――――――――――――――――\n\x13\x04！！！　\x07ＨＯＮＧＨＯＮＧＨＯＮＧＨＯＮＧＨＯＮＧ\x04　！！！\n\n\n\x13\x07누군가가 \x03DJMAX \x1C유니버스\x04에 \x08홍박사 바이러스\x04를 \x07심었습니다!!! \n\n\n\x13\x04！！！　\x07ＨＯＮＧＨＯＮＧＨＯＮＧＨＯＮＧＨＯＮＧ\x04　！！！\n\x13\x04――――――――――――――――――――――――――――――――――――――――――――――――――――――\x0d\x0d\x0d\x0d\x14\x14\x14\x14\x14\x14\x14\x14", 4)}, HumanPlayers, FP)})
 
 CIfEnd()
 end
