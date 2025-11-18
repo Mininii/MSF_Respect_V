@@ -860,20 +860,17 @@ end
 			CenT2 = {60,70,57,62,64,7}
 			CenT3 = {102,102,23,27,68,30}
 			for j,k in pairs(CenT) do
-				G_CB_SetSpawn({GNm(j),CD(OnlyMarineMode,0)}, {k}, {"ACAS"}, {"CenCross"}, "MAX", 129, nil, nil, P7,1)
-				G_CB_SetSpawn({GNm(j),CD(OnlyMarineMode,1)}, {k}, {"ACAS"}, {"CenCross"}, "MAX", "Era_Patrol2", nil, nil, P7,1)
+				G_CB_SetSpawn({GNm(j)}, {k}, {"ACAS"}, {"CenCross"}, "MAX", 129, nil, nil, P7,1)
 
 			end
 			if DLC_Project == 1 then
 				for j,k in pairs(CenT2) do
-				G_CB_SetSpawn({GNm(j),CD(OnlyMarineMode,0)}, {k}, {"ACAS"}, {"CenCross2"}, "MAX", 129, nil, nil, P8,1)
-				G_CB_SetSpawn({GNm(j),CD(OnlyMarineMode,1)}, {k}, {"ACAS"}, {"CenCross2"}, "MAX", "Era_Patrol2", nil, nil, P8,1)
+				G_CB_SetSpawn({GNm(j)}, {k}, {"ACAS"}, {"CenCross2"}, "MAX", 129, nil, nil, P8,1)
 				
 
 				end
 				for j,k in pairs(CenT3) do
-				G_CB_SetSpawn({GNm(j),CD(GMode,4),CD(OnlyMarineMode,0)}, {k}, {"ACAS"}, {"CenCross3"}, "MAX", "Era_Attack_HP50", nil, nil, P8,1)
-				G_CB_SetSpawn({GNm(j),CD(GMode,4),CD(OnlyMarineMode,1)}, {k}, {"ACAS"}, {"CenCross3"}, "MAX", "Era_Patrol_HP50", nil, nil, P8,1)
+				G_CB_SetSpawn({GNm(j),CD(GMode,4)}, {k}, {"ACAS"}, {"CenCross3"}, "MAX", "Era_Attack_HP50", nil, nil, P8,1)
 				end
 				
 			end
@@ -1149,15 +1146,9 @@ end
 	CIf_GCase(150)--오버미
 		for j,k in pairs(KimrhegbArr) do
 			if DLC_Project==1 then
-				CIfX(FP,{CD(OnlyMarineMode,0)})
 				G_CB_SetSpawn({CD(GMode,1),GNm(j-1)}, {k,94}, KimrhegbArr3[j][1],KimrhegbArr3[j][2], "MAX", 168, nil, nil, P6,1)
 				G_CB_SetSpawn({CD(GMode,2),GNm(j-1)}, {k,94}, KimrhegbArr2[j][1],KimrhegbArr2[j][2], "MAX", 168, nil, nil, P6,1)
 				G_CB_SetSpawn({CD(GMode,3,AtLeast),GNm(j-1)}, {k,94}, KimrhegbArr4[j][1],KimrhegbArr4[j][2], "MAX", 168, nil, nil, P6,1)
-				CElseX()
-				G_CB_SetSpawn({CD(GMode,1),GNm(j-1)}, {k,94}, KimrhegbArr3[j][1],KimrhegbArr3[j][2], "MAX", 187, nil, nil, P6,1)
-				G_CB_SetSpawn({CD(GMode,2),GNm(j-1)}, {k,94}, KimrhegbArr2[j][1],KimrhegbArr2[j][2], "MAX", 187, nil, nil, P6,1)
-				G_CB_SetSpawn({CD(GMode,3,AtLeast),GNm(j-1)}, {k,94}, KimrhegbArr4[j][1],KimrhegbArr4[j][2], "MAX", 187, nil, nil, P6,1)
-				CIfXEnd()
 			else
 				G_CB_SetSpawn({CD(GMode,1),GNm(j-1)}, {k,94}, KimrhegbArr3[j][1],KimrhegbArr3[j][2], "MAX", 187, nil, nil, P6,1)
 				G_CB_SetSpawn({CD(GMode,2,AtLeast),GNm(j-1)}, {k,94}, KimrhegbArr2[j][1],KimrhegbArr2[j][2], "MAX", 187, nil, nil, P6,1)
