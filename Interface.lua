@@ -304,7 +304,7 @@
 		CMov(FP,0x6509B0,FP)--상위플레이어 단락
 
     for i = 0, 4 do
-		TriggerX(FP,{HumanCheck(i, 0)},{SetCDeaths(FP,Add,10,PExitFlag)}) -- 나갔을 경우 1회에 한해 인구수 계산기 작동
+		TriggerX(FP,{CD(GS,1),HumanCheck(i, 0)},{SetCDeaths(FP,Add,10,PExitFlag)}) -- 나갔을 경우 1회에 한해 인구수 계산기 작동
         DoActions(i,{SetCp(i),SetAllianceStatus(Force1,Ally),--팀킬방지
         RunAIScript("Turn ON Shared Vision for Player 1");
         RunAIScript("Turn ON Shared Vision for Player 2");
@@ -313,7 +313,7 @@
         RunAIScript("Turn ON Shared Vision for Player 5");
         RunAIScript("Turn ON Shared Vision for Player 6");
         })
-		TriggerX(i,{HumanCheck(i, 0)},{SetCDeaths(FP,Add,10,PExitFlag)}) -- 나갔을 경우 1회에 한해 인구수 계산기 작동
+		TriggerX(i,{CD(GS,1),HumanCheck(i, 0)},{SetCDeaths(FP,Add,10,PExitFlag)}) -- 나갔을 경우 1회에 한해 인구수 계산기 작동
     end
 	DoActions(P6,{
 	RunAIScript("Turn ON Shared Vision for Player 6");

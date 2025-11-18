@@ -2,42 +2,6 @@
 
 	iTblJump = def_sIndex()
 	CJump(FP, iTblJump)
-	t01 = "\x07。\x18˙\x0F+\x1C˚  0000000000 \x04(00000\x0D\x04) \x1C。\x0F+\x18.\x07˚"
-	t03 = "\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D"
-	iStrSize1 = GetiStrSize(0,t01)
-	S1 = MakeiTblString(1394,"None",'None',MakeiStrLetter("\x0D",iStrSize1+5),"Base",1) -- 단축키없음
-	iTbl3 = GetiTblId(FP,1396,S1) --DMG
-	iTbl4 = GetiTblId(FP,1397,S1) --DMG
-	iTbl5 = GetiTblId(FP,764,S1) --DMG
-	iTbl9 = GetiTblId(FP,1299,S1) --실명
-	iTbl10 = GetiTblId(FP,831,S1) --탐지기
-	Str1, Str1a, Str1s = SaveiStrArrX(FP,t01)
-	Str3, Str3a, Str3s = SaveiStrArrX(FP,t03)
-	t04 = "\x07。\x18˙\x0F+\x1C˚\x19 R\x04espect \x17V! \x19(つ>ㅅ<)つ \x1C。\x0F+\x18.\x07˚"--일반
-	--t05 = "\x07。\x18˙\x0F+\x1C˚\x19 R\x04espect \x17V! \x19(つXㅅ<)つ \x1C。\x0F+\x18.\x07˚"--디텍터
-	t06 = "\x07。\x18˙\x0F+\x1C˚\x19 R\x04espect \x17V! \x19(つ3ㅅ3)つ \x1C。\x0F+\x18.\x07˚"--패로사이트
-	--iTbl7 = GetiTblId(FP,1319,S1) --DMG
-	--iTbl8 = GetiTblId(FP,831,S1) --DMG
-	--Str4, Str4a, Str4s = SaveiStrArrX(FP,t04)
-	--Str5, Str5a, Str5s = SaveiStrArrX(FP,t05)
-	T290 = "\x07。\x18˙\x0F+\x1C˚\x1F 행\x04이오닉 \x1C충\x04격파 \x19(つ>ㅅ<)つ \x1C。\x0F+\x18.\x07˚\x02 "
-	T426 = "\x07。\x18˙\x0F+\x1C˚\x19(つ>ㅅ<)つ \x1C。\x0F+\x18.\x07˚\x02"
-	T1365 = "\x07。\x18˙\x0F+\x1C˚\x19 흥\x04이오닉 \x08어\x04썰트 \x19(つ>ㅅ<)つ \x1C。\x0F+\x18.\x07˚\x02 "
-	T1414 = "\x07。\x18˙\x0F+\x1C˚\x1F 행\x04이오닉 \x1C스\x04톰 \x19(つ>ㅅ<)つ \x1C。\x0F+\x18.\x07˚\x02 "
-	T1366 = "\x07。\x18˙\x0F+\x1C˚\x1F \x10망\x04이 \x08레이저\x16빔 \x19(つ\x08X\x19ㅅ<)つ \x1C。\x0F+\x18.\x07˚\x02"
-	TBLData = {
-		{1319,t04},
-		--{831,t05},
-		{290,T290},
-		{426,T426},
-		{1365,T1365},
-		{1414,T1414},
-		{218,T426},
-		{827,t06},
-		{1366,T1366},
-
-	}
-
 	
 
 	CJumpEnd(FP, iTblJump)
@@ -1529,4 +1493,156 @@ CIfEnd()
 Trigger2X(FP, {CD(HongEnable,1),CD(EVFCcode,1)},{Order("Men", Force2, 64, Move, 6),ModifyUnitHitPoints(All, "Men", Force2, 64, 1),RotatePlayer({PlayWAVX("staredit\\wav\\hongparksa.ogg"),PlayWAVX("staredit\\wav\\hongparksa.ogg"),PlayWAVX("staredit\\wav\\hongparksa.ogg"),PlayWAVX("staredit\\wav\\hongparksa.ogg"),PlayWAVX("staredit\\wav\\hongparksa.ogg"),DisplayTextX("\n\n\n\n\x13\x04――――――――――――――――――――――――――――――――――――――――――――――――――――――\n\x13\x04！！！　\x07ＨＯＮＧＨＯＮＧＨＯＮＧＨＯＮＧＨＯＮＧ\x04　！！！\n\n\n\x13\x07누군가가 \x03DJMAX \x1C유니버스\x04에 \x08홍박사 바이러스\x04를 \x07심었습니다!!! \n\n\n\x13\x04！！！　\x07ＨＯＮＧＨＯＮＧＨＯＮＧＨＯＮＧＨＯＮＧ\x04　！！！\n\x13\x04――――――――――――――――――――――――――――――――――――――――――――――――――――――\x0d\x0d\x0d\x0d\x14\x14\x14\x14\x14\x14\x14\x14", 4)}, HumanPlayers, FP)})
 
 CIfEnd()
+
+
+
+CanC = CreateVar(FP)
+CanCT = CreateCcode()
+
+
+CIf(FP,{--캔발동
+	CV(CanC,0,AtMost);
+	CDeaths(FP,AtMost,0,CanCT);
+	Memory(0x628438,AtMost,0);
+},{
+	KillUnit(37,Force2);
+	KillUnit(38,Force2);
+	KillUnit(39,Force2);
+	KillUnit(41,Force2);
+	KillUnit(42,Force2);
+	KillUnit(43,Force2);
+	KillUnit(44,Force2);
+	KillUnit(48,Force2);
+	KillUnit(53,Force2);
+	KillUnit(54,Force2);
+	KillUnit(55,Force2);
+	KillUnit(56,Force2);
+	SetCDeaths(FP,SetTo,24*7,CanCT);
+	AddV(CanC,1);})
+Trigger2X(FP,{},{
+	RotatePlayer({
+		DisplayTextX("\x08ＷＡＲＮＩＮＧ　！　ＣＣＭＵ　ＤＥＴＥＣＴＥＤ　！　ＷＡＲＮＩＮＧ", 0);
+		DisplayTextX("\x08ＷＡＲＮＩＮＧ　！　３　ＬＥＦＴ　！　ＷＡＲＮＩＮＧ", 0);
+		PlayWAVX("sound\\Bullet\\TNsHit00.wav"),
+		PlayWAVX("staredit\\wav\\warn.wav"),
+		PlayWAVX("sound\\Terran\\GOLIATH\\TGoPss01.WAV"),
+		PlayWAVX("sound\\Terran\\GOLIATH\\TGoPss01.WAV")
+		},HumanPlayers,FP);
+},{preserved})
+CIfEnd()
+
+CIf(FP,{--캔발동
+	CV(CanC,1,Exactly);
+	CDeaths(FP,AtMost,0,CanCT);
+	Memory(0x628438,AtMost,0);
+},{
+	KillUnit(37,Force2);
+	KillUnit(38,Force2);
+	KillUnit(39,Force2);
+	KillUnit(41,Force2);
+	KillUnit(42,Force2);
+	KillUnit(43,Force2);
+	KillUnit(44,Force2);
+	KillUnit(48,Force2);
+	KillUnit(53,Force2);
+	KillUnit(54,Force2);
+	KillUnit(55,Force2);
+	KillUnit(56,Force2);
+	SetCDeaths(FP,SetTo,24*7,CanCT);
+	AddV(CanC,1);})
+Trigger2X(FP,{},{
+	RotatePlayer({
+		DisplayTextX("\x08ＷＡＲＮＩＮＧ　！　ＣＣＭＵ　ＤＥＴＥＣＴＥＤ　！　ＷＡＲＮＩＮＧ", 0);
+		DisplayTextX("\x08ＷＡＲＮＩＮＧ　！　２　ＬＥＦＴ　！　ＷＡＲＮＩＮＧ", 0);
+		PlayWAVX("sound\\Bullet\\TNsHit00.wav"),
+		PlayWAVX("staredit\\wav\\warn.wav"),
+		PlayWAVX("sound\\Terran\\GOLIATH\\TGoPss01.WAV"),
+		PlayWAVX("sound\\Terran\\GOLIATH\\TGoPss01.WAV")
+		},HumanPlayers,FP);
+		SetScore(Force1, SetTo, 0, Kills);
+},{preserved})
+CIfEnd()
+CIfOnce(FP, {--캔발동
+	CV(CanC,2,AtLeast);
+	CDeaths(FP,AtMost,0,CanCT);
+	Memory(0x628438,AtMost,0);
+},{
+	KillUnit(37,Force2);
+	KillUnit(38,Force2);
+	KillUnit(39,Force2);
+	KillUnit(41,Force2);
+	KillUnit(42,Force2);
+	KillUnit(43,Force2);
+	KillUnit(44,Force2);
+	KillUnit(48,Force2);
+	KillUnit(53,Force2);
+	KillUnit(54,Force2);
+	KillUnit(55,Force2);
+	KillUnit(56,Force2);
+	AddV(CanC,1);
+	SetCDeaths(FP,SetTo,24*7,CanCT);})
+
+	Trigger2X(FP,{},{
+		RotatePlayer({
+		DisplayTextX("\x08ＷＡＲＮＩＮＧ　！　ＣＣＭＵ　ＤＥＴＥＣＴＥＤ　！　ＷＡＲＮＩＮＧ", 0);
+		DisplayTextX("\x08ＷＡＲＮＩＮＧ　！　１　ＬＥＦＴ　！　ＷＡＲＮＩＮＧ", 0);
+		PlayWAVX("sound\\Bullet\\TNsHit00.wav"),
+		PlayWAVX("staredit\\wav\\warn.wav"),
+		PlayWAVX("sound\\Terran\\GOLIATH\\TGoPss01.WAV"),
+		PlayWAVX("sound\\Terran\\GOLIATH\\TGoPss01.WAV")
+			},HumanPlayers,FP);
+			KillUnit(125, Force1);
+			
+	})
+CIfEnd()
+
+CIfOnce(FP, {--캔발동
+	CV(CanC,3,AtLeast);
+	CDeaths(FP,AtMost,0,CanCT);
+	Memory(0x628438,AtMost,0);
+},{
+	KillUnit(37,Force2);
+	KillUnit(38,Force2);
+	KillUnit(39,Force2);
+	KillUnit(41,Force2);
+	KillUnit(42,Force2);
+	KillUnit(43,Force2);
+	KillUnit(44,Force2);
+	KillUnit(48,Force2);
+	KillUnit(53,Force2);
+	KillUnit(54,Force2);
+	KillUnit(55,Force2);
+	KillUnit(56,Force2);
+	AddV(CanC,1);
+	SetCDeaths(FP,SetTo,24*7,CanCT);})
+
+	Trigger2X(FP,{},{
+		RotatePlayer({
+		DisplayTextX("\x08ＤＥＦＥＡＴ　！　ＣＣＭＵ　ＤＥＴＥＣＴＥＤ　！　ＤＥＦＥＡＴ", 0);
+		DisplayTextX("\x08ＤＥＦＥＡＴ　！　ＧＡＭＥ　ＯＶＥＲ　！　ＤＥＦＥＡＴ", 0);
+			PlayWAVX("staredit\\wav\\CanOver.ogg"),
+			PlayWAVX("staredit\\wav\\CanOver.ogg"),
+			PlayWAVX("staredit\\wav\\CanOver.ogg"),
+			PlayWAVX("sound\\Bullet\\TNsHit00.wav"),
+			PlayWAVX("sound\\Bullet\\TNsHit00.wav"),
+			PlayWAVX("sound\\Terran\\GOLIATH\\TGoPss05.WAV"),
+			PlayWAVX("sound\\Terran\\GOLIATH\\TGoPss05.WAV")
+			},HumanPlayers,FP);
+			RotatePlayer({Defeat()}, Force1, FP)
+			
+	})
+CIfEnd()
+DoActions2X(FP,{SubCD(CanCT,1)})
+
+
+	DoActions(FP,{ -- 나간플레이어 유닛 삭제
+		KillUnit(MarID[1], P12),
+		KillUnit(MarID[2], P12),
+		KillUnit(MarID[3], P12),
+		KillUnit(MarID[4], P12),
+		KillUnit(MarID[5], P12),
+		KillUnit(MarID[6], P12),
+		KillUnit(125, P12),
+		KillUnit(124, P12),
+	})
 end
