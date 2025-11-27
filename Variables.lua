@@ -204,6 +204,7 @@
 	ERF = CreateCcode()
 	ESG = CreateCcode()
 	EMG = CreateCcode()
+	CellPSIFlag = CreateCcode()
 	CombiSetting = CreateCcodeArr(5)
 	
 	SMPtr = CreateVarArr(5, FP)

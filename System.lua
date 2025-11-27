@@ -1705,8 +1705,8 @@ DoActions2X(FP,{SubCD(CanCT,1)})]]
 		KillUnit(MarID[3], P12),
 		KillUnit(MarID[4], P12),
 		KillUnit(MarID[5], P12),
-		KillUnit(MarID[6], P12),
 		KillUnit(125, P12),
 		KillUnit(124, P12),
 	})
+	TriggerX(FP,{CD(CellPSIFlag,1)},{KillUnit(217, Force2)},{preserved})
 end

@@ -658,14 +658,15 @@ end
 	local HPUnitAct={}
 	
 	for j,k in pairs(BuildPlaceArr) do
-		local HP = (k[3]/20)
-		if HP >= 167772 then HP = 167772 end
+		local HP = (k[3]) * 3
+		if HP >= 8380000 then HP = 8380000 end
 		if HP <= 10000 then HP = 10000 end
 		table.insert(HPUnitAct,SetMemory(0x662350 + (k[2]*4),SetTo,HP*256))
-		table.insert(HPUnitAct,ModifyUnitHitPoints(All, k[2], AllPlayers, 64, 100))
-		table.insert(HPUnitAct,SetMemoryW(0x660E00 + (k[2] *2), SetTo, 0))
-		table.insert(HPUnitAct,ModifyUnitShields(All, k[2], AllPlayers, 64, 0))
-		table.insert(HPUnitAct,SetMemoryB(0x6647B0 + k[2],SetTo,0))
+		--table.insert(HPUnitAct,ModifyUnitHitPoints(All, k[2], AllPlayers, 64, 100))
+		--table.insert(HPUnitAct,SetMemoryW(0x660E00 + (k[2] *2), SetTo, 0))
+		--table.insert(HPUnitAct,ModifyUnitShields(All, k[2], AllPlayers, 64, 0))
+		--table.insert(HPUnitAct,SetMemoryB(0x6647B0 + k[2],SetTo,0))
+		table.insert(HPUnitCond2,CVX(IUID, k[2], 0xFF))
 
 	end
 	for j,k in pairs(UnitPointArr) do
@@ -692,7 +693,7 @@ end
 
 
 		
-
+ 
 	DoActions(FP, {SetMemory(0x662350 + (124*4),SetTo,350000*256)})
 	DoActions2(FP, HPUnitAct)
 	CFor(FP,19025+25,19025+25+(84*1700),84)
@@ -700,6 +701,10 @@ end
 		CMov(FP,IUID,0)
 		f_Read(FP, CI, IUID, nil, 0xFF)
 
+		CIf(FP,{TTOR(HPUnitCond2)})
+			f_Read(FP, _Add(IUID,EPDF(0x662350)), IUHP)
+			CDoActions(FP, {TSetMemory(_Sub(CI,23), SetTo, IUHP)})
+		CIfEnd()
 		CIf(FP,{TTOR(HPUnitCond)})
 			f_Read(FP, _Sub(CI,23), IUHP)
 			CDoActions(FP, {TSetMemory(_Sub(CI,23), SetTo, _Mul(IUHP,4))})
