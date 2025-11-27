@@ -3,6 +3,41 @@
 	iTblJump = def_sIndex()
 	CJump(FP, iTblJump)
 	
+    t01 = "\x07。\x18˙\x0F+\x1C˚  0000000000 \x04(00000\x0D\x04) \x1C。\x0F+\x18.\x07˚"
+    t03 = "\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D\x0D"
+    iStrSize1 = GetiStrSize(0,t01)
+    S1 = MakeiTblString(1394,"None",'None',MakeiStrLetter("\x0D",iStrSize1+5),"Base",1) -- 단축키없음
+    iTbl3 = GetiTblId(FP,1396,S1) --DMG
+    iTbl4 = GetiTblId(FP,1397,S1) --DMG
+    iTbl5 = GetiTblId(FP,764,S1) --DMG
+    iTbl9 = GetiTblId(FP,1299,S1) --실명
+    iTbl10 = GetiTblId(FP,831,S1) --탐지기
+    Str1, Str1a, Str1s = SaveiStrArrX(FP,t01)
+    Str3, Str3a, Str3s = SaveiStrArrX(FP,t03)
+    t04 = "\x07。\x18˙\x0F+\x1C˚\x19 R\x04espect \x17V! \x19(つ>ㅅ<)つ \x1C。\x0F+\x18.\x07˚"--일반
+    --t05 = "\x07。\x18˙\x0F+\x1C˚\x19 R\x04espect \x17V! \x19(つXㅅ<)つ \x1C。\x0F+\x18.\x07˚"--디텍터
+    t06 = "\x07。\x18˙\x0F+\x1C˚\x19 R\x04espect \x17V! \x19(つ3ㅅ3)つ \x1C。\x0F+\x18.\x07˚"--패로사이트
+    --iTbl7 = GetiTblId(FP,1319,S1) --DMG
+    --iTbl8 = GetiTblId(FP,831,S1) --DMG
+    --Str4, Str4a, Str4s = SaveiStrArrX(FP,t04)
+    --Str5, Str5a, Str5s = SaveiStrArrX(FP,t05)
+    T290 = "\x07。\x18˙\x0F+\x1C˚\x1F 행\x04이오닉 \x1C충\x04격파 \x19(つ>ㅅ<)つ \x1C。\x0F+\x18.\x07˚\x02 "
+    T426 = "\x07。\x18˙\x0F+\x1C˚\x19(つ>ㅅ<)つ \x1C。\x0F+\x18.\x07˚\x02"
+    T1365 = "\x07。\x18˙\x0F+\x1C˚\x19 흥\x04이오닉 \x08어\x04썰트 \x19(つ>ㅅ<)つ \x1C。\x0F+\x18.\x07˚\x02 "
+    T1414 = "\x07。\x18˙\x0F+\x1C˚\x1F 행\x04이오닉 \x1C스\x04톰 \x19(つ>ㅅ<)つ \x1C。\x0F+\x18.\x07˚\x02 "
+    T1366 = "\x07。\x18˙\x0F+\x1C˚\x1F \x10망\x04이 \x08레이저\x16빔 \x19(つ\x08X\x19ㅅ<)つ \x1C。\x0F+\x18.\x07˚\x02"
+    TBLData = {
+        {1319,t04},
+        --{831,t05},
+        {290,T290},
+        {426,T426},
+        {1365,T1365},
+        {1414,T1414},
+        {218,T426},
+        {827,t06},
+        {1366,T1366},
+
+    }
 
 	CJumpEnd(FP, iTblJump)
 
