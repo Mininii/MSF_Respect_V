@@ -778,13 +778,8 @@ end
 		G_CB_TSetSpawn({CD(GMode,2)},{k},{Cen2},1,{LMTable = 1,RepeatType=130,CenterXY={0,0},OwnerTable=P6})
 		G_CB_TSetSpawn({CD(GMode,3)},{k},{Cen1},1,{LMTable = 1,RepeatType=130,CenterXY={0,0},OwnerTable=P6})
 		G_CB_TSetSpawn({CD(GMode,3)},{k},{Cen2},1,{LMTable = 1,RepeatType=130,CenterXY={0,0},OwnerTable=P6})
-		if CenT3[j] == 108 then
-		G_CB_TSetSpawn({CD(GMode,4)},{CenT3[j]},{CenNM1},1,{LMTable = 1,RepeatType=130,CenterXY={0,0},OwnerTable=P6})
-		G_CB_TSetSpawn({CD(GMode,4)},{CenT3[j]},{CenNM2},1,{LMTable = 1,RepeatType=130,CenterXY={0,0},OwnerTable=P6})
-		else
 		G_CB_TSetSpawn({CD(GMode,4)},{CenT3[j]},{Cen1},1,{LMTable = 1,RepeatType=130,CenterXY={0,0},OwnerTable=P6})
 		G_CB_TSetSpawn({CD(GMode,4)},{CenT3[j]},{Cen2},1,{LMTable = 1,RepeatType=130,CenterXY={0,0},OwnerTable=P6})
-		end
 		CIfEnd()
 	end
 
