@@ -55,6 +55,16 @@
 		{41,"staredit\\wav\\BGM_Away.ogg",60*1000},
 		{42,"staredit\\wav\\BGM_1234.ogg",85*1000},
 		{43,"staredit\\wav\\BGM_Maple.ogg",42*1000},
+
+		{44,"staredit\\wav\\BGM_BLING.ogg",87*1000},
+		{45,"staredit\\wav\\BGM_DAISUKE.ogg",84*1000},
+		{46,"staredit\\wav\\BGM_DEJAVU.ogg",65*1000},
+		{47,"staredit\\wav\\BGM_GAS.ogg",63*1000},
+		{48,"staredit\\wav\\BGM_INDESKY.ogg",53*1000},
+		{49,"staredit\\wav\\BGM_MESORIS.ogg",50*1000},
+		{50,"staredit\\wav\\BGM_MUSCLE.ogg",71*1000},
+		{51,"staredit\\wav\\BGM_OSHAMA.ogg",88*1000},
+
 		
 	})
 	

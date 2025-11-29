@@ -435,7 +435,113 @@ CenCross3 = CS_OverlapX(CSMakeLine(4, 192, 0, 1024, 0),CSMakeLine(4, 96, 45, 102
 
 	ObbEffCir = CSMakeCircle(8, 64, 0, PlotSizeCalc(8, 3), 0)
 	
+	-- Tetris L Shape (ㄱ자)
+	-- Top Bar: 200x50, Leg: 50x200. Total points approx 100.
+	local TetrisLPath = CSMakePath({-100, 100}, {100, 100}, {100, -100}, {50, -100}, {50, 50}, {-100, 50})
+	-- Top Bar: 200x50, Leg: 50x200. Total points approx 100-150.
+	TetrisL2 = CS_RatioXY(CS_FillPathXY(TetrisLPath, 0, 12, 12), 4, 4) -- 메소리스 1젠
+	TetrisL1 = CS_RatioXY(CS_ConnectPathX(TetrisLPath, 8, 1), 4, 4) -- 메소리스 2젠
 
+	-- Fire Emoji Shape 🔥 (400x400, Filled, ~200 points)
+	local FirePath = CSMakePath(
+		{10, -190}, {90, -170}, {160, -80}, {170, 40}, {100, 140}, {0, 200}, 
+		{-30, 110}, {-70, 150}, {-130, 50}, {-150, -50}, {-90, -160}
+	)
+	FireShape = CS_RatioXY(CS_FillPathXY(FirePath, 0, 22, 22), 3, 3)
 
+	-- Spiral Shape 🌀 (Archimedean Spiral, ~180 points)
+	local SpiralPath = {}
+	for i = 0, 180 do
+		local theta = (i / 180) * 6 * 2 * math.pi -- 6 turns
+		local r = (i / 180) * 200 -- Max radius 200
+		table.insert(SpiralPath, {r * math.cos(theta), r * math.sin(theta)})
+	end
+	SpiralShape = CS_RatioXY(CSMakePath(SpiralPath), 3, 3)
+
+	-- Broken Heart Shape 💔 (Outline, ~150-200 points)
+	local BHLeftPath = CSMakePath(
+		{-10, 50}, {-50, 90}, {-110, 60}, {-130, 0}, {-80, -100}, {-10, -180}, 
+		{-25, -100}, {15, -50}, {-25, 20}
+	)
+	local BHRightPath = CSMakePath(
+		{10, 50}, {-5, 20}, {35, -50}, {-5, -100}, {10, -180}, 
+		{80, -100}, {130, 0}, {110, 60}, {50, 90}
+	)
+	
+	local BHLeft = CS_ConnectPathX(BHLeftPath, 8, 1)
+	local BHRight = CS_ConnectPathX(BHRightPath, 8, 1)
+	
+	BrokenHeart = CS_Rotate(CS_RatioXY(CS_Merge(BHLeft, BHRight, 5, 0), 4, 4), 180)
+
+	-- Blue Fire Shape 🔵🔥 (Outline, Double Layer, ~50 points)
+	local BlueFirePath = CSMakePath(
+		{0, -190}, {40, -90}, {90, -130}, {130, 0}, {50, 160}, 
+		{-50, 160}, {-130, 0}, {-70, -120}
+	)
+	local BFOuter = CS_ConnectPathX(BlueFirePath, 40, 1)
+	local BFInner = CS_RatioXY(BFOuter, 0.6, 0.6)
+	BlueFire = CS_RatioXY(CS_Merge(BFOuter, BFInner, 5, 0), 3, 3)
+	-- Right Triangle (Outline, ~30 points)
+	-- Right Triangle (Outline, ~30 points)
+	local RTPath = CSMakePath({0, 0}, {100, 0}, {0, 100})
+	RightTri1 = CS_RatioXY(CS_FillPathXY(RTPath, 0, 12, 12), 3, 3)
+	RightTri2 = CS_RatioXY(CS_ConnectPathX(RTPath, 12, 1), 3, 3)
+
+	-- Rhombus (Outline, ~170 points)
+	local RhombusPath = CSMakePath({0, 150}, {100, 0}, {0, -150}, {-100, 0})
+	RhombusShape1 = CS_RatioXY(CS_ConnectPathX(RhombusPath, 4.2, 1), 3, 3)
+	RhombusShape2 = CS_RatioXY(CS_FillPathXY(RhombusPath, 0, 12, 12) , 3, 3)
+
+	-- Parallelogram (Outline, ~180 points)
+	local ParaPath = CSMakePath({-150, -50}, {50, -50}, {150, 50}, {-50, 50})
+	ParaShape1 = CS_RatioXY(CS_ConnectPathX(ParaPath, 3.8, 1), 3, 3)
+	ParaShape2 = CS_RatioXY(CS_FillPathXY(ParaPath, 0, 12, 12) , 3, 3)
+
+	-- 5 Horizontal Waves (Stacked Vertically, Total ~170 points)
+	local WaveSpacing = 80 -- Vertical spacing variable
+	local WaveList = {}
+	for j = 0, 4 do
+		local Points = {}
+		for i = 0, 34 do
+			local x = (i / 34) * 500 - 250
+			local angle = (i / 34) * 2 * 2 * math.pi -- 2 cycles
+			local y = 30 * math.sin(angle) + ((j - 2) * WaveSpacing)
+			table.insert(Points, {x, y})
+		end
+		table.insert(WaveList, CSMakePath(Points))
+	end
+	WaveShape = CS_RatioXY(CS_OverlapX(table.unpack(WaveList)), 3, 3)
+-- GAS Shape (G, A, S)
+-- G
+local G_Path = CSMakePath({30, -40}, {-30, -40}, {-30, 40}, {30, 40}, {30, 0}, {0, 0})
+
+-- A
+local A_Path1 = CSMakePath({-30, 40}, {0, -40}, {30, 40})
+local A_Path2 = CSMakePath({-15, 0}, {15, 0})
+
+-- S
+local S_Path = CSMakePath({30, -40}, {-30, -40}, {-30, 0}, {30, 0}, {30, 40}, {-30, 40})
+
+local G_Shape = CS_ConnectPathX(G_Path, 5, nil)
+local A_Shape = CS_OverlapX(CS_ConnectPathX(A_Path1, 5, nil), CS_ConnectPathX(A_Path2, 5, nil))
+local S_Shape = CS_ConnectPathX(S_Path, 5, nil)
+
+-- Combine
+local G_Final = CS_MoveXY(G_Shape, -100, 0)
+local A_Final = CS_MoveXY(A_Shape, 0, 0)
+local S_Final = CS_MoveXY(S_Shape, 100, 0)
+
+GAS_ShapeSC = CS_RatioXY(CS_OverlapX(G_Final, A_Final, S_Final), 5, 5)
+
+local G_Shape = CS_ConnectPathX(G_Path, 15, nil)
+local A_Shape = CS_OverlapX(CS_ConnectPathX(A_Path1, 15, nil), CS_ConnectPathX(A_Path2, 15, nil))
+local S_Shape = CS_ConnectPathX(S_Path, 15, nil)
+
+-- Combine
+local G_Final = CS_MoveXY(G_Shape, -100, 0)
+local A_Final = CS_MoveXY(A_Shape, 0, 0)
+local S_Final = CS_MoveXY(S_Shape, 100, 0)
+
+GAS_ShapeMX = CS_RatioXY(CS_OverlapX(G_Final, A_Final, S_Final), 5, 5)
 
 end

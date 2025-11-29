@@ -1709,4 +1709,82 @@ DoActions2X(FP,{SubCD(CanCT,1)})]]
 		KillUnit(124, P12),
 	})
 	TriggerX(FP,{CD(CellPSIFlag,1)},{KillUnit(217, Force2)},{preserved})
+
+
+function CIf_TrapGunTrig(PlayerID,GunID,LocID,TimerMax,BGMTypes)
+	local BGMAct
+	if BGMTypes~=nil then
+		BGMAct = SetV(BGMType,BGMTypes)
+	else
+		BGMAct = nil
+	end
+	local TGunCcode = CreateCcode()
+	GunTrigGLoc = LocID
+	GunTrigGCcode = TGunCcode
+	TriggerX(FP, Bring(PlayerID, Exactly, 0, GunID, LocID), {SetCD(TGunCcode,1),BGMAct})--RotatePlayer({DisplayTextX("\x13GunID : "..GunID.." LocID : "..LocID)}, HumanPlayers, FP)
+	CIf(FP,{CD(TGunCcode,1,AtLeast),CD(TGunCcode,TimerMax,AtMost)},{AddCD(TGunCcode,1)})
+
+	GetLocCenter(LocID-1, G_CB_X, G_CB_Y)
+	
+	return TGunCcode
+end
+function Set_TrapGun(Player,GunID,Loc,ShNm,CUT,BGMNm) -- NMCUT={1,2,3,4} EffArr = {1,2}
+	CIf_TrapGunTrig(Player,GunID, Loc, 1200, BGMNm)
+	DoActions2(FP, {RotatePlayer({DisplayTextX(StrDesignX("\x04어떤 \x08십년\x04이 \x1B함정\x04을 건드려 \x03DJMAX \x1C유니버스\x04를 \x11쑥대밭\x04으로 \x10만들었습니다!!!"),4)}, HumanPlayers, FP)}, 1)
+
+		G_CB_TSetSpawn({CD(GunTrigGCcode,0,AtLeast)}, CUT[1], ShNm[1], 1, {OwnerTable=P6,LMTable="MAX"})
+		G_CB_TSetSpawn({CD(GunTrigGCcode,350,AtLeast)}, CUT[2], ShNm[2], 1, {OwnerTable=P6,LMTable="MAX"})
+
+
+	CIfEnd()
+
+end
+CIf(FP,{CD(GMode,3,AtLeast)}) -- 함정은 MX난이도 이상에서만 발동
+--[[
+
+		{44,"staredit\\wav\\BGM_BLING.ogg",87*1000},
+		{45,"staredit\\wav\\BGM_DAISUKE.ogg",84*1000},
+		{46,"staredit\\wav\\BGM_DEJAVU.ogg",65*1000},
+		{47,"staredit\\wav\\BGM_GAS.ogg",63*1000},
+		{48,"staredit\\wav\\BGM_INDESKY.ogg",53*1000},
+		{49,"staredit\\wav\\BGM_MESORIS.ogg",50*1000},
+		{50,"staredit\\wav\\BGM_MUSCLE.ogg",71*1000},
+		{51,"staredit\\wav\\BGM_OSHAMA.ogg",88*1000},
+]]
+	--location 50 independent sky
+	Set_TrapGun(Force2,"Buildings",50,{FireShape,FireShape},{{88,77},{86,78}},48)
+	--location 55 daisuke
+	Set_TrapGun(Force2,"Buildings",55,{BrokenHeart,BrokenHeart},{{84,76},{79,98}},45)
+	--location 54 mesoris
+	Set_TrapGun(Force2,"Buildings",54,{TetrisL2,TetrisL1},{{58,95},{81,80}},49)
+	--location 56 dejavu
+	Set_TrapGun(Force2,"Buildings",56,{ParaShape1,ParaShape2},{{93,29},{34,12}},46)
+	--location 57 bling
+	Set_TrapGun(Force2,"Buildings",57,{WaveShape,WaveShape},{{5,8},{3,29}},44)
+	--location 53 oshama
+	Set_TrapGun(Force2,"Buildings",53,{RhombusShape1,RhombusShape2},{{7,52},{60,87}},51)
+	--location 52 Muscle
+	Set_TrapGun(Force2,"Buildings",52,{SpiralShape,SpiralShape},{{40,62},{64,74}},50)
+	--location 51 GAS
+	
+	
+	CIfX(FP,{CD(GMode,4,AtLeast)}) -- GAS 난이도별 구분
+	Set_TrapGun(Force2,149,51,{GAS_ShapeSC,GAS_ShapeSC},{{102,23},{27,68}},47)
+	CElseX()
+	Set_TrapGun(Force2,149,51,{GAS_ShapeMX,GAS_ShapeMX},{{102,23},{27,68}},47)
+	CIfXEnd()
+
+
+--ParaShape1,ParaShape2
+
+	--FireShape
+	--SpiralShape
+	--
+
+
+
+CIfEnd()
+
+
+
 end
