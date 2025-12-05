@@ -142,13 +142,13 @@ end
 	
 	if DLC_Project == 1 then
 		if X4_Mode == 1 then
-			SetUnitsDatX(125,{Playerable = 2, HP=167772,MinCost=2000,BuildTime=15,Reqptr=271,AdvFlag={0x4000+0x8000,0x4000+0x8000}})--플레이어만 사용가능, 요구조건을 무조건?으로
+			SetUnitsDatX(125,{Playerable = 2, HP=167772,MinCost=2000,BuildTime=15,Reqptr=271,AdvFlag={0x4000+0x8000+0x10000,0x4000+0x8000+0x10000}})--플레이어만 사용가능, 요구조건을 무조건?으로
 		else
-			SetUnitsDatX(125,{Playerable = 2, HP=45000,MinCost=2000,BuildTime=15,Reqptr=271,AdvFlag={0x4000+0x8000,0x4000+0x8000}})--플레이어만 사용가능, 요구조건을 무조건?으로
+			SetUnitsDatX(125,{Playerable = 2, HP=45000,MinCost=2000,BuildTime=15,Reqptr=271,AdvFlag={0x4000+0x8000+0x10000,0x4000+0x8000+0x10000}})--플레이어만 사용가능, 요구조건을 무조건?으로
 		end
-		SetUnitsDatX(32,{SizeL = 8, SizeU = 7, SizeR = 4, SizeD = 11,Class=17,HP=3000,MinCost=0,SuppCost=1,AdvFlag={0x4000,0x4000+0x10000+0x10000},SeekRange=6})--플레이어만 사용가능, 요구조건을 무조건?으로
-		SetUnitsDatX(20,{SizeL = 8, SizeU = 7, SizeR = 4, SizeD = 11,Class=17,HP=6000,Shield = 3000,SuppCost=1,MinCost=0,AdvFlag={0x4000,0x4000+0x10000+0x10000},SeekRange=7})--플레이어만 사용가능, 요구조건을 무조건?으로
-		SetUnitsDatX(10,{SizeL = 8, SizeU = 7, SizeR = 4, SizeD = 11,Class=94,HP=15000,Shield = 15000,MinCost=0,SuppCost=1,AdvFlag={0x4000,0x4000+0x10000+0x10000}})--플레이어만 사용가능, 요구조건을 무조건?으로
+		SetUnitsDatX(32,{SizeL = 8, SizeU = 7, SizeR = 4, SizeD = 11,Class=17,HP=3000,MinCost=0,SuppCost=1,AdvFlag={0x4000+0x10000,0x4000+0x8000+0x10000},SeekRange=6})--플레이어만 사용가능, 요구조건을 무조건?으로
+		SetUnitsDatX(20,{SizeL = 8, SizeU = 7, SizeR = 4, SizeD = 11,Class=17,HP=6000,Shield = 3000,SuppCost=1,MinCost=0,AdvFlag={0x4000+0x10000,0x4000+0x8000+0x10000},SeekRange=7})--플레이어만 사용가능, 요구조건을 무조건?으로
+		SetUnitsDatX(10,{SizeL = 8, SizeU = 7, SizeR = 4, SizeD = 11,Class=94,HP=15000,Shield = 15000,MinCost=0,SuppCost=1,AdvFlag={0x4000+0x10000,0x4000+0x8000+0x10000}})--플레이어만 사용가능, 요구조건을 무조건?으로
 		for i =0,4 do
 			SetUnitsDatX(MarID[i+1],{SizeL = 8, SizeU = 7, SizeR = 4, SizeD = 11,Class=94,HP=20000,Shield=20000,SuppCost=1,MinCost=0,AdvFlag={0x4000+0x8000+0x10000,0x4000+0x8000+0x10000}})--플레이어만 사용가능, 요구조건을 무조건?으로
 		end
@@ -163,11 +163,14 @@ end
 		SetUnitsDatX(82,{Playerable = 2, Reqptr=5,SuppCost=1,MinCost=NMCost,GasCost=0,BuildTime=1})--바로뽑기. 리스펙트처럼 노말일경우 스마, 하드일경우 영마두개
 		SetUnitsDatX(8,{Playerable = 2, Reqptr=5,SuppCost=1,MinCost=NMCost+HMCost,GasCost=0,BuildTime=1})--바로뽑기. 리스펙트처럼 노말일경우 스마, 하드일경우 영마두개
 		SetUnitsDatX(7,{Playerable = 2, Reqptr=5,SuppCost=1,MinCost=0,GasCost=0,BuildTime=1})--플레이어만 사용가능, 요구조건을 무조건?으로
-		SetWeaponsDatX(119, {TargetFlag = 0x020	 + 1 + 2 + 0x10,DamageType=3,RangeMax = 7*32,DmgBase = SMSkillBaseAtk,DmgFactor=SMSkillFactorAtk,Splash={3,3,3}})
 		SetWeaponsDatX(120, {TargetFlag = 0x020 + 1 + 2,DamageType=3,RangeMax = 7*32,DmgBase = RMSkillBaseAtk,DmgFactor=RMSkillFactorAtk})
+		SetWeaponsDatX(119, {TargetFlag = 0x020 + 1 + 2 + 0x10,DamageType=3,RangeMax = 7*32,DmgBase = SMSkillBaseAtk,DmgFactor=SMSkillFactorAtk,Splash={3,3,3}})
 		SetWeaponsDatX(121, {TargetFlag = 0x020 + 1 + 2 + 0x10,DamageType=3,RangeMax = 7*32,DmgBase = SMSkillBaseAtk2,DmgFactor=SMSkillFactorAtk2,Splash={5,10,15}})
 		SetWeaponsDatX(122, {TargetFlag = 0x020 + 1 + 2 + 0x10,DamageType=3,RangeMax = 7*32,DmgBase = SMSkillBaseAtk3,DmgFactor=SMSkillFactorAtk3,Splash={10,20,30}})
-		
+		SetWeaponsDatX(127, {TargetFlag = 0x020 + 1 + 2,DamageType=1,RangeMax = 12*32,Cooldown = 75,DmgBase = LNBaseAtk,DmgFactor=LNFactorAtk,Splash={64,96,192}})
+		SetWeaponsDatX(128, {TargetFlag = 0x020 + 1 + 2,DamageType=1,RangeMax = 6*32,DmgBase = LNSkillBaseAtk,DmgFactor=LNSkillFactorAtk,Splash=false})
+		SetUnitsDatX(72,{Class=94,HP=40000,Shield = 40000,SuppCost=1,MinCost=0,AdvFlag={0x4000+0x10000,0x4000+0x8000+0x10000},SeekRange=7})--플레이어만 사용가능, 요구조건을 무조건?으로
+
 		
 		--[[
 		"\x11A\x04ssault \x11M\x04arine",
@@ -213,7 +216,7 @@ end
 	SetUnitsDatX(109,{HP=500,MinCost=500,BuildTime=15,AdvFlag={0x8000,0x8000}})--플레이어만 사용가능, 요구조건을 무조건?으로
 	SetUnitsDatX(124,{HP=1500,MinCost=1000,BuildTime=15,AdvFlag={0x8000,0x8000}})--플레이어만 사용가능, 요구조건을 무조건?으로
 
-	SetUnitsDatX(72,{Playerable = 2, Reqptr=5,SuppCost=0,MinCost=0,GasCost=0,BuildTime=1})--플레이어만 사용가능, 요구조건을 무조건?으로
+	SetUnitsDatX(11,{Playerable = 2, Reqptr=5,SuppCost=0,MinCost=0,GasCost=0,BuildTime=1})--플레이어만 사용가능, 요구조건을 무조건?으로
 	for j,k in pairs(MedicTrig) do
 		SetUnitsDatX(k,{Playerable = 2, Reqptr=5, MinCost=350,GasCost=0,BuildTime = MedicTick[j],SuppCost = 0,RdySnd=999})--플레이어만 사용가능, 요구조건을 무조건?으로
 	end

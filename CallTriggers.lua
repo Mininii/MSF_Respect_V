@@ -227,6 +227,7 @@ Set_EXCC2(UnivCunit, CunitIndex, 10, SetTo, MHP);
 
 CIf(FP,{TTOR({
 	CV(MID,10),
+	CV(MID,72),
 	CV(MID,MarID[1]),
 	CV(MID,MarID[2]),
 	CV(MID,MarID[3]),
@@ -240,6 +241,9 @@ for i = 0, 4 do
 		CIfEnd()
 		CIf(FP,{CV(MID,MarID[i+1])})
 			CMov(FP,RMPtr[i+1],Nextptrs)
+		CIfEnd()
+		CIf(FP,{CV(MID,72)})
+			CMov(FP,LNPtr[i+1],Nextptrs)
 		CIfEnd()
 	CIfEnd()
 end

@@ -535,6 +535,7 @@ CMov(FP, 0x6509B0, FP)
 		for j, i in pairs(MarID) do
 			NJumpX(FP,WhiteList,{DeathsX(CurrentPlayer,Exactly,i,0,0xFF)})
 		end
+		NJumpX(FP,WhiteList,{DeathsX(CurrentPlayer,Exactly,72,0,0xFF)})
 		NJumpX(FP,WhiteList,{DeathsX(CurrentPlayer,Exactly,32,0,0xFF)})
 		NJumpX(FP,WhiteList,{DeathsX(CurrentPlayer,Exactly,20,0,0xFF)})
 		NJumpX(FP,WhiteList,{DeathsX(CurrentPlayer,Exactly,10,0,0xFF)})
@@ -543,6 +544,7 @@ CMov(FP, 0x6509B0, FP)
 		NJumpX(FP,WhiteList,{DeathsX(CurrentPlayer,Exactly,90,0,0xFF)},{SetMemory(0x6509B0, Add, 55-25),SetDeathsX(CurrentPlayer, SetTo, 0x100, 0, 0x100),SetMemory(0x6509B0, Add, 2),SetDeathsX(CurrentPlayer, SetTo, 0, 0, 0xFF),SetMemory(0x6509B0, Subtract, 57-25)})
 		NJumpX(FP,WhiteList,{DeathsX(CurrentPlayer,Exactly,121,0,0xFF)},{SetMemory(0x6509B0, Add, 55-25),SetDeathsX(CurrentPlayer, SetTo, 0x100, 0, 0x100),SetMemory(0x6509B0, Add, 2),SetDeathsX(CurrentPlayer, SetTo, 0, 0, 0xFF),SetMemory(0x6509B0, Subtract, 57-25)})
 		NJumpX(FP,WhiteList,{DeathsX(CurrentPlayer,Exactly,92,0,0xFF)},{SetMemory(0x6509B0, Add, 55-25),SetDeathsX(CurrentPlayer, SetTo, 0x100, 0, 0x100),SetMemory(0x6509B0, Add, 2),SetDeathsX(CurrentPlayer, SetTo, 0, 0, 0xFF),SetMemory(0x6509B0, Subtract, 57-25)})
+		NJumpX(FP,WhiteList,{DeathsX(CurrentPlayer,Exactly,118,0,0xFF)},{SetMemory(0x6509B0, Add, 55-25),SetDeathsX(CurrentPlayer, SetTo, 0x100, 0, 0x100),SetMemory(0x6509B0, Add, 2),SetDeathsX(CurrentPlayer, SetTo, 0, 0, 0xFF),SetMemory(0x6509B0, Subtract, 57-25)})
 	end
 
 	
@@ -627,8 +629,30 @@ CMov(FP, 0x6509B0, FP)
 
 				
 				CIf(FP,{CV(HealUpgrade[i+1],j)})
-
 				CAdd(FP,0x6509B0,6)--25
+
+
+
+				CIf(FP,{DeathsX(CurrentPlayer, Exactly, 72, 0, 0xFF)})
+
+				--명령아이디 57일 경우 107로 강제설정
+				CSub(FP,0x6509B0,6)--25
+				TriggerX(FP,{DeathsX(CurrentPlayer, Exactly,57*256,0,0xFF00)},{SetDeathsX(CurrentPlayer, SetTo,107*256,0,0xFF00)},{preserved})
+				CAdd(FP,0x6509B0,6)--25
+
+
+
+				CSub(FP,0x6509B0,23)
+				TriggerX(FP, {Deaths(CurrentPlayer, AtMost, (40000-1)*256, 0)}, {SetDeaths(CurrentPlayer, Add, (40000/AutoHealDiv)*j*256, 0)},{preserved})
+				TriggerX(FP, {Deaths(CurrentPlayer, AtLeast, 40000*256, 0)}, {SetDeaths(CurrentPlayer, SetTo, 40000*256, 0)},{preserved})
+				CAdd(FP,0x6509B0,22)
+				TriggerX(FP, {Deaths(CurrentPlayer, AtMost, (40000-1)*256, 0)}, {SetDeaths(CurrentPlayer, Add, (40000/AutoHealDiv)*j*256, 0)},{preserved})
+				TriggerX(FP, {Deaths(CurrentPlayer, AtLeast, (40000+1)*256, 0)}, {SetDeaths(CurrentPlayer, SetTo, 40000*256, 0)},{preserved})
+				CAdd(FP,0x6509B0,1)
+				CIfEnd()
+
+
+
 				CIf(FP,{DeathsX(CurrentPlayer, Exactly, 32, 0, 0xFF)})
 				CSub(FP,0x6509B0,23)
 				TriggerX(FP, {Deaths(CurrentPlayer, AtMost, (3000-1)*256, 0)}, {SetDeaths(CurrentPlayer, Add, (3000/AutoHealDiv)*j*256, 0)},{preserved})
@@ -645,6 +669,8 @@ CMov(FP, 0x6509B0, FP)
 				TriggerX(FP, {Deaths(CurrentPlayer, AtLeast, (3000+1)*256, 0)}, {SetDeaths(CurrentPlayer, SetTo, 3000*256, 0)},{preserved})
 				CAdd(FP,0x6509B0,1)
 				CIfEnd()
+
+				
 				CIf(FP,{DeathsX(CurrentPlayer, Exactly, 10, 0, 0xFF)})
 				CSub(FP,0x6509B0,23)
 				TriggerX(FP, {Deaths(CurrentPlayer, AtMost, (15000-1)*256, 0)}, {SetDeaths(CurrentPlayer, Add, (15000/AutoHealDiv)*j*256, 0)},{preserved})
@@ -654,6 +680,8 @@ CMov(FP, 0x6509B0, FP)
 				TriggerX(FP, {Deaths(CurrentPlayer, AtLeast, (15000+1)*256, 0)}, {SetDeaths(CurrentPlayer, SetTo, 15000*256, 0)},{preserved})
 				CAdd(FP,0x6509B0,1)
 				CIfEnd()
+
+
 				CIf(FP,{DeathsX(CurrentPlayer, Exactly, MarID[i+1], 0, 0xFF)})
 				CSub(FP,0x6509B0,23)
 				TriggerX(FP, {Deaths(CurrentPlayer, AtMost, (20000-1)*256, 0)}, {SetDeaths(CurrentPlayer, Add, (20000/AutoHealDiv)*j*256, 0)},{preserved})
@@ -665,6 +693,8 @@ CMov(FP, 0x6509B0, FP)
 				CIfEnd()
 				CSub(FP,0x6509B0,6)--19
 				CIfEnd()
+
+				
 			end
 			CIfEnd()
 		end
@@ -932,7 +962,7 @@ for i = 0, 4 do
 		f_LoadCp()
 		CIfEnd()
 		
-		CIf(FP,{DeathsX(CurrentPlayer, Exactly, 10, 0, 0xFF),},{SetScore(i, Add, 3, Custom)})
+		CIf(FP,{DeathsX(CurrentPlayer, Exactly, 10, 0, 0xFF),},{SetScore(i, Add, 10, Custom)})
 		f_SaveCp()
 		TriggerX(FP,{CD(SELimit,4,AtMost)}, {AddCD(SELimit,1),RotatePlayer({PlayWAVX("staredit\\wav\\Marinedead.ogg"),PlayWAVX("staredit\\wav\\Marinedead.ogg")},HumanPlayers, FP)},{preserved})
 		CIf(FP,{CD(gMAXCcodeArr[2], 0)})
@@ -953,7 +983,7 @@ for i = 0, 4 do
 		f_LoadCp()
 		CIfEnd()
 
-		CIf(FP,{DeathsX(CurrentPlayer, Exactly, MarID[i+1], 0, 0xFF),CD(OnlyMarineMode,0)},{SetScore(i, Add, 4, Custom)})
+		CIf(FP,{DeathsX(CurrentPlayer, Exactly, MarID[i+1], 0, 0xFF),CD(OnlyMarineMode,0)},{SetScore(i, Add, 16, Custom)})
 		f_SaveCp()
 		TriggerX(FP,{CD(SELimit,4,AtMost)}, {AddCD(SELimit,1),RotatePlayer({PlayWAVX("staredit\\wav\\Marinedead.ogg"),PlayWAVX("staredit\\wav\\Marinedead.ogg")},HumanPlayers, FP)},{preserved})
 		CIf(FP,{CD(gMAXCcodeArr[2], 0)})
@@ -976,6 +1006,35 @@ for i = 0, 4 do
 		CallTriggerX(FP, CallTombTrig, CD(gMAXCcodeArr[2],1),{SetV(TPL,i),SetV(TUID,MarID[i+1])})
 		f_LoadCp()
 		CIfEnd()
+
+		
+		CIf(FP,{DeathsX(CurrentPlayer, Exactly, 72, 0, 0xFF),CD(OnlyMarineMode,0)},{SetScore(i, Add, 50, Custom)})
+		f_SaveCp()
+		Trigger2X(FP,{CD(SELimit,4,AtMost)}, {RotatePlayer({PlayWAVX("staredit\\wav\\LENA_Die.ogg"),PlayWAVX("staredit\\wav\\LENA_Die.ogg"),PlayWAVX("staredit\\wav\\LENA_Die.ogg"),PlayWAVX("staredit\\wav\\LENA_Die.ogg"),PlayWAVX("staredit\\wav\\LENA_Die.ogg"),PlayWAVX("staredit\\wav\\LENA_Die.ogg"),PlayWAVX("staredit\\wav\\LENA_Die.ogg"),PlayWAVX("staredit\\wav\\LENA_Die.ogg"),PlayWAVX("staredit\\wav\\LENA_Die.ogg")},HumanPlayers, FP),AddCD(SELimit,1)},{preserved})
+		CIf(FP,{CD(gMAXCcodeArr[2], 0)})
+		if DLC_Project == 1 then
+		f_Read(FP, _Sub(BackupCp,15), CPos)
+		Convert_CPosXY()
+		--218
+		f_TempRepeat({CD(GMode,4)}, 89, 3, 218, P8,nil,nil,1)
+		f_TempRepeat({CD(GMode,4)}, 61, 3, 218, P8,nil,nil,1)
+		f_TempRepeat({CD(GMode,4)}, 63, 3, 218, P8,nil,nil,1)
+		f_TempRepeat({CD(GMode,4)}, 67, 3, 218, P8,nil,nil,1)
+		f_TempRepeat({CD(GMode,4)}, 71, 3, 218, P8,nil,nil,1)
+		end
+		CIfX(FP, {Deaths(i, Exactly, 2, 217)})
+		DisplayPrint(HumanPlayers,{"\x12"..StrD[1]..string.char(ColorCode[i+1]).."名取さな \x04의 \x18Ｌ\x1DＥＮＡ \x04가 \x08폭사\x04당했어...",StrD[2]})
+		CElseX()
+		DisplayPrint(HumanPlayers,{"\x12"..StrD[1],PName(i)," \x04의 \x18Ｌ\x1DＥＮＡ \x04가 \x08폭사\x04당했어...",StrD[2]})
+		CIfXEnd()
+		CIfEnd()
+		CallTriggerX(FP, CallTombTrig, CD(gMAXCcodeArr[2],1),{SetV(TPL,i),SetV(TUID,72)})
+		f_LoadCp()
+		CIfEnd()
+
+
+
+		
 
 
 
@@ -1522,7 +1581,23 @@ CCIText = "\n\n\n\n\x13\x04―――――――――――――――――�
 CCIText2 = "\n\n\n\n\x13\x04――――――――――――――――――――――――――――――――――――――――――――――――――――――\n\x13\x04！！！　\x02ＵＮＬＯＣＫ\x04　！！！\n\n\x13\x07。\x18˙\x0F+\x1C˚ \x11건\x04작보스 \x11g\x04lory\x11MAX \x1C。\x0F+\x18.\x07˚ \x04가 \x07본진에 출현\x04했습니다.\n\x13\x08주의 \x04: \x11건\x04작보스 \x04진행 중 마린이 \x105기 이하\x04이거나\n\x13\x07유닛 생성 큐\x04 수치가 \x082000 이상\x04일 경우 \x08패배\x04합니다.\n\n\x13\x04！！！　\x02ＵＮＬＯＣＫ\x04　！！！\n\x13\x04――――――――――――――――――――――――――――――――――――――――――――――――――――――\x0d\x0d\x0d\x0d\x14\x14\x14\x14\x14\x14\x14\x14"
 CCIText3 = "\x13\x07。\x18˙\x0F+\x1C˚ \x03N\x04ew\x03G\x04ame\x03S\x04tart 를 모두 파괴하여 \x1F양방향 포탈\x04이 \x07활성화\x04 되었습니다. \x1C。\x0F+\x18.\x07˚"
 
-TriggerX(FP, {CD(ChryCcode2,480,AtLeast)}, {SetInvincibility(Disable, 201, P8, 64),
+
+	TriggerX(FP, {CV(count,QueueMaxUnit,AtMost),CV(CreateUnitQueueNum,9,AtMost),CV(CreateUnitQueuePenaltyT,0)}, {
+		SetInvincibility(Disable, "Buildings", Force2, 64),
+	},{preserved})
+	TriggerX(FP, {CV(count,QueueMaxUnit+1,AtLeast)}, {
+		SetInvincibility(Enable, "Buildings", Force2, 64),
+	},{preserved})
+	TriggerX(FP, {CV(CreateUnitQueueNum,10,AtLeast)}, {
+		SetInvincibility(Enable, "Buildings", Force2, 64),
+	},{preserved})
+	TriggerX(FP, {CV(CreateUnitQueuePenaltyT,1,AtLeast)}, {
+		SetInvincibility(Enable, "Buildings", Force2, 64),
+	},{preserved})
+	
+TriggerX(FP, {CD(ChryCcode2,479,AtMost)}, {SetInvincibility(Enable, 201, P8, 64),},{preserved})
+TriggerX(FP, {CD(ChryCcode2,480,AtLeast)}, {SetInvincibility(Disable, 201, P8, 64),},{preserved})
+TriggerX(FP, {CD(ChryCcode2,480,AtLeast)}, {
 	RotatePlayer({DisplayTextX(CCIText, 4),PlayWAVX("staredit\\wav\\unlock.ogg"),PlayWAVX("staredit\\wav\\unlock.ogg"),PlayWAVX("staredit\\wav\\unlock.ogg"),PlayWAVX("staredit\\wav\\unlock.ogg")}, HumanPlayers, FP),
 })
 TriggerX(FP,{CD(GunCcode,0),Bring(Force2, AtMost, 0, "Buildings", 64)},{AddCD(WinCcode,1)},{preserved})

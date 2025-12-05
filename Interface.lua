@@ -735,6 +735,7 @@ end
 
 
 	if DLC_Project == 1 then
+		ChangeAllwire(FP,72,71,71,71) -- 레나마린
 		TriggerX(FP, (CD(GMode,2)), {
 			SetMemoryB(0x58F32C+(5*15)+13, SetTo, 2),
 			SetMemoryB(0x58F32C+(6*15)+13, SetTo, 1),
@@ -938,16 +939,16 @@ if DLC_Project == 1 then
 	for j = 1, 4 do
 			
 		for p = 1, 5 do
-			local TT = "\x13\x04마린키우기 \x17R\x04espect \x17V \x06L\x11I\x17B\x18E\x1CR\x0ET\x10Y\n\x13"..MSDiff[j].." "..string.char(ColorCode[p])..p.."인 \x17환전률 : \x1B"..ExRateT[j][p].."%\n\x13\x04Marine + \x1F"..HMCost.." Ore\x04 = \x1BH\x04ero \x1BM\x04arine\n\x13\x1BH\x04ero \x1BM\x04arine * 12 + \x1F"..SMCost.." Ore \x04= \x1DS\x04pecial \x1DM\x04arine (MAX 1)\n\x13\x1DS\x04pecial \x1DM\x04arine + \x1F"..RMCost.." Ore \x04= \x19R\x04espect \x19M\x04arine (MAX 1)"
+			local TT = "\x13\x04마린키우기 \x17R\x04espect \x17V \x06L\x11I\x17B\x18E\x1CR\x0ET\x10Y\n\x13"..MSDiff[j].." "..string.char(ColorCode[p])..p.."인 \x17환전률 : \x1B"..ExRateT[j][p].."%\n\x13\x04Marine + \x1F"..HMCost.." Ore\x04 = \x1BH\x04ero \x1BM\x04arine\n\x13\x1BH\x04ero \x1BM\x04arine * 12 + \x1F"..SMCost.." Ore \x04= \x1DS\x04pecial \x1DM\x04arine (MAX 1)\n\x13\x1DS\x04pecial \x1DM\x04arine + \x1F"..RMCost.." Ore \x04= \x19R\x04espect \x19M\x04arine (MAX 1)\n\x13\x08미공개 히든 조합 유닛 존재"
 			Trigger2X(FP, {CD(GMode,j),CV(SetPlayers,p),CD(OnlyMarineMode,0);}, {
 				RotatePlayer({SetMissionObjectivesX(TT)},HumanPlayers,FP);
 				SetCVar(FP,ExRate[2],SetTo,ExRateT[j][p]);})
 		end
 		for p = 1, 5 do
-			local TT = "\x13\x04마린키우기 \x17R\x04espect \x17V \x06L\x11I\x17B\x18E\x1CR\x0ET\x10Y\n\x13"..MSDiff[j].." "..string.char(ColorCode[p])..p.."인 \x17환전률 : \x1B"..ExRateT[j][p].."%\n\x13\x04Marine + \x1F"..HMCost.." Ore\x04 = \x1BH\x04ero \x1BM\x04arine\n\x13\x04Only Marine Mode에서는 스페셜마린, 리스펙트 마린이 제거되며\n\x13\x074종 마린이 추가됩니다."
+			local TT = "\x13\x04마린키우기 \x17R\x04espect \x17V \x06L\x11I\x17B\x18E\x1CR\x0ET\x10Y\n\x13"..MSDiff[j].." "..string.char(ColorCode[p])..p.."인 \x17환전률 : \x1B"..ExRateT2[j][p].."%\n\x13\x04Marine + \x1F"..HMCost.." Ore\x04 = \x1BH\x04ero \x1BM\x04arine\n\x13\x04Only Marine Mode에서는 스페셜마린, 리스펙트 마린이 제거되며\n\x13\x074종 마린이 추가됩니다."
 			Trigger2X(FP, {CD(GMode,j),CV(SetPlayers,p),CD(OnlyMarineMode,1);}, {
 				RotatePlayer({SetMissionObjectivesX(TT)},HumanPlayers,FP);
-				SetCVar(FP,ExRate[2],SetTo,ExRateT[j][p]);})
+				SetCVar(FP,ExRate[2],SetTo,ExRateT2[j][p]);})
 		end
 	
 			
@@ -1022,6 +1023,14 @@ end
 			SetMemoryW(0x657678+(2 *2),Add,SMFactorAtk), -- 추가공격력
 			SetMemoryW(0x656EB0+(3 *2),Add,RMBaseAtk), -- 공격력
 			SetMemoryW(0x657678+(3 *2),Add,RMFactorAtk), -- 추가공격력
+			SetMemoryW(0x656EB0+(127 *2),Add,LNBaseAtk), -- 공격력
+			SetMemoryW(0x657678+(127 *2),Add,LNFactorAtk), -- 추가공격력
+			SetMemoryW(0x656EB0+(128 *2),Add,LNSkillBaseAtk), -- 공격력
+			SetMemoryW(0x657678+(128 *2),Add,LNSkillFactorAtk), -- 추가공격력
+			
+			
+			
+			
 			
 		})
 		SCPatchArr = {}
@@ -1313,6 +1322,45 @@ DoActions(FP,{
 				AddCD(RMCr[i+1],1);
 				SetV(SMPtr[i+1],0),
 				DisplayText(StrDesign("\x1F광물\x04을 소모하여 \x1DS\x04pecial \x1DM\x04arine을 \x19R\x04espect \x19M\x04arine으로 \x19변환\x04하였습니다. - \x1F"..N_to_EmN(RMCost).." O r e"),4);
+				PreserveTrigger();
+			},
+			}
+
+
+			
+			Trigger { -- 조합 레나
+			--조합식 영마10개 + 스마1개 + 리마1개 + 300만원 -> 레나
+			players = {i},
+			conditions = {
+				Label(0);
+				CD(OnlyMarineMode,0);
+				Command(i,AtMost,0,72),
+				Bring(i,AtLeast,1,10,13); 
+				Bring(i,AtLeast,1,MarID[i+1],13); 
+				Bring(i,AtLeast,10,20,13); 
+				Accumulate(i,AtLeast,LNCost,Ore);
+				Accumulate(i,AtMost,0x7FFFFFFF,Ore);
+				CV(RebirthUp[i+1],3),
+				CV(HealUpgrade[i+1],5),
+				CV(SMUp[i+1],24),
+				CV(RMUp[i+1],9),
+				CD(LNCr[i+1],0),
+				MemoryB(0x58D2B0+(i*46)+0, AtLeast, 255),
+				MemoryB(0x58D2B0+(i*46)+7, AtLeast, 255),
+				MemoryB(0x58D2B0+(i*46)+15, AtLeast, 255),
+			},
+			actions = {
+				ModifyUnitEnergy(1,10,i,13,0);
+				ModifyUnitEnergy(1,MarID[i+1],i,13,0);
+				ModifyUnitEnergy(10,20,i,13,0);
+				RemoveUnitAt(1,10,13,i);
+				RemoveUnitAt(1,MarID[i+1],13,i);
+				RemoveUnitAt(10,20,13,i);
+				SetResources(i,Subtract,LNCost,Ore);
+				AddCD(LNCr[i+1],1);
+				SetV(SMPtr[i+1],0),
+				SetV(RMPtr[i+1],0),
+				DisplayText(StrDesign("\x1F광물\x04을 소모하여 마린들을 \x18Ｌ\x1DＥＮＡ\x04 로 \x19변환\x04하였습니다. - \x1F"..N_to_EmN(LNCost).." O r e"),4);
 				PreserveTrigger();
 			},
 			}
@@ -1629,7 +1677,6 @@ DoActions(FP,{
 		end
 		--TriggerX(FP,{MemoryX(InvUpPtrArr[i+1],Exactly,2^(0+(8*InvUpMaskRetArr[i+1])),2^(0+(8*InvUpMaskRetArr[i+1])))},{SetCVar(FP,CurInvUp[i+1][2],SetTo,2^0,2^0)},{preserved})
 	
-
 		CIf(FP,{TTCVar(FP,CurHealUpgrade[i+1][2],NotSame,HealUpgrade[i+1])})
 			CIfX(FP,{TAccumulate(i,AtLeast,HealCost[i+1],Ore)},{TSetResources(i,Subtract,HealCost[i+1],Ore)})
 				CMov(FP,HealUpgrade[i+1],CurHealUpgrade[i+1])
@@ -1855,13 +1902,15 @@ DoActions(FP,{
 		{ARCr[i+1],MarID[1],9999*256},
 		{RFCr[i+1],MarID[2],4000*256},
 		{SGCr[i+1],MarID[3],9999*256},
-		{MGCr[i+1],MarID[4],7777*256}}
+		{MGCr[i+1],MarID[4],7777*256},
+		{LNCr[i+1],72,40000*256},
+	}
 
 
 
 
 
-		for p = 1, 8 do
+		for p = 1, 9 do
 			CallTriggerX(FP, Call_MarCr,{CD(MCT[p][1],1,AtLeast),Memory(0x628438, AtLeast, 1)}, {SubCD(MCT[p][1],1),
 				SetV(MID,MCT[p][2]),
 				SetV(MPID,i),
@@ -1891,7 +1940,10 @@ DoActions(FP,{
 		CTrigger(FP, {TMemoryX(_Add(SMPtr[i+1],69),AtLeast,1*256,0xFF00)}, {SubCD(SMSkillT,1)}, 1)--스팀쓸경우 스킬 시전속도 증가
 			local SMSkill = CreateCcode()
 			TriggerX(FP,{CD(SMSkill,1)},{SetCD(SMSkillT,20),RemoveUnit(91, i),RemoveUnit(90, i),RemoveUnit(121, i)},{preserved})
-			CIf(FP,{CD(SMSkillT,0)},{SetCD(SMSkillT,20),RemoveUnit(91, i),RemoveUnit(90, i),RemoveUnit(121, i),SetMemory(0x6C9EF8+(41*4), SetTo, 427)})
+			TriggerX(FP,{CD(SMSkillT,0)},{RemoveUnit(91, i),RemoveUnit(90, i),RemoveUnit(121, i)},{preserved})
+			
+			DoActions2(FP, {Simple_SetLoc(0, 0, 0, 32*14, 32*14),MoveLocation(1, 10, i, 64),KillUnitAt(All,nilunit,1,FP),SetCp(i)})
+			CIf(FP,{Bring(Foes, AtLeast, 1, "Men", 1),CD(SMSkillT,0)},{SetCD(SMSkillT,20),RemoveUnit(91, i),RemoveUnit(90, i),RemoveUnit(121, i),SetMemory(0x6C9EF8+(41*4), SetTo, 427)})
 			f_Read(FP,_Add(SMPtr[i+1],10),CPos)
 			Convert_CPosXY()
 			Simple_SetLocX(FP, 0, CPosX, CPosY, CPosX, CPosY)
@@ -1973,7 +2025,9 @@ DoActions(FP,{
 
 
 		TriggerX(FP,{CD(RMSkill,1)},{SetCD(RMSkillT,20),RemoveUnit(92, i)},{preserved})
-		CIf(FP,{CD(RMSkillT,0)},{SetCD(RMSkillT,20),RemoveUnit(92, i)})
+		TriggerX(FP,{CD(RMSkillT,0)},{RemoveUnit(92, i)},{preserved})
+		DoActions2(FP, {Simple_SetLoc(0, 0, 0, 32*14, 32*14),MoveLocation(1, MarID[i+1], i, 64),KillUnitAt(All,nilunit,1,FP),SetCp(i)})
+		CIf(FP,{Bring(Foes, AtLeast, 1, "Men", 1),CD(RMSkillT,0)},{SetCD(RMSkillT,20),RemoveUnit(92, i)})
 		f_Read(FP,_Add(RMPtr[i+1],10),CPos)
 		Convert_CPosXY()
 		Simple_SetLocX(FP, 0, CPosX, CPosY, CPosX, CPosY)
@@ -2047,6 +2101,29 @@ DoActions(FP,{
 			})
 		CMov(FP,RMRebirthAct[i+1],0)
 		CIfEnd()
+
+
+		
+		local LNSkillT = CreateCcode()
+		CIfX(FP,{CV(LNPtr[i+1],1,AtLeast),CV(LNPtr[i+1],19025+(1699*84),AtMost)},{SubCD(LNSkillT,1)})
+		DoActions(FP, {RemoveUnit(73, i),ModifyUnitHangarCount(8, 1, 72, 	i, 64)}) -- 레나 홀드 활성활를 위한 인터셉터 채워주기
+		CTrigger(FP, {TMemoryX(_Add(LNPtr[i+1],69),AtLeast,1*256,0xFF00)}, {SubCD(LNSkillT,1)}, 1)--스팀쓸경우 스킬 시전속도 증가
+			TriggerX(FP,{CD(LNSkillT,0)},{RemoveUnit(118, i)},{preserved})
+			DoActions2(FP, {Simple_SetLoc(0, 0, 0, 32*14, 32*14),MoveLocation(1, 72, i, 64),KillUnitAt(All,nilunit,1,FP),SetCp(i)})
+			CIf(FP,{Bring(Foes, AtLeast, 1, "Men", 1),CD(LNSkillT,0)},{SetCD(LNSkillT,20),RemoveUnit(118, i),SetImageScript(140, 82)})
+			f_Read(FP,_Add(LNPtr[i+1],10),CPos)
+			Convert_CPosXY()
+			Simple_SetLocX(FP, 0, CPosX, CPosY, CPosX, CPosY)
+			CSPlot(LENASubWP, i, 118, 0, nil, 1, 32, FP, {}, {}, 1)
+
+			DoActions(FP, {Order(118, i, 64, Patrol, 64),SetImageScript(140, 161)})
+			CIfEnd()
+			--
+		
+			CIf(FP,{TMemoryX(_Add(LNPtr[i+1],19), Exactly,0,0xFF00),},{SetV(LNPtr[i+1],0)})
+			CIfEnd()
+		CElseX({KillUnit(118, i)})
+		CIfXEnd()
 		
 		
 
@@ -2122,13 +2199,13 @@ DoActions(FP,{
 
 		for j = 0, 4 do
 		TriggerX(i,{CDeaths(FP,Exactly,j,DelayMedic[i+1])},{SetMemoryB(0x57F27C+(228*i)+MedicTrig[j+1],SetTo,1)},{preserved})
-		TriggerX(i,{Command(i,AtLeast,1,72),CDeaths(FP,Exactly,j,DelayMedic[i+1])},{
+		TriggerX(i,{Command(i,AtLeast,1,11),CDeaths(FP,Exactly,j,DelayMedic[i+1])},{
 			DisplayText(DelayMedicT[j+1],4),
 			SetCDeaths(FP,Add,1,DelayMedic[i+1]),
-			GiveUnits(All,72,i,"Anywhere",P12),
-			ModifyUnitEnergy(1,72,P12,64,0);
+			GiveUnits(All,11,i,"Anywhere",P12),
+			ModifyUnitEnergy(1,11,P12,64,0);
 			--SetCDeaths(FP,Add,1,CUnitRefrash);
-			RemoveUnitAt(1,72,"Anywhere",P12)},{preserved})
+			RemoveUnitAt(1,11,"Anywhere",P12)},{preserved})
 		end
 		TriggerX(i,{CDeaths(FP,AtLeast,5,DelayMedic[i+1])},{SetCDeaths(FP,Subtract,5,DelayMedic[i+1])},{preserved})
 	

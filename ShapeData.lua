@@ -544,4 +544,28 @@ local S_Final = CS_MoveXY(S_Shape, 100, 0)
 
 GAS_ShapeMX = CS_RatioXY(CS_OverlapX(G_Final, A_Final, S_Final), 5, 5)
 
+L_SHIC = CSMakeCircle(4,64,0,CS_Level("Circle",4,6),CS_Level("Circle",4,5)) -- 원
+
+ L_SHA = CSMakeStar(4,135,128,0,CS_Level("Star",4,2),CS_Level("Star",4,1)) -- 오른쪽 눈
+L_SHB = CSMakeStar(4,135,128,45,CS_Level("Star",4,2),CS_Level("Star",4,1)) -- 왼쪽 눈
+L_SHC = CSMakePolygon(4,32,0,CS_Level("Polygon",4,3),CS_Level("Polygon",4,2)) -- 귀
+L_SH_1 = CSMakeLine(1,64,20,3,0) -- 귀 중앙 장식 (1)
+L_SH_2 = CSMakeLine(1,64,340,3,0) -- 귀 중앙 장식 (2)
+
+L_SH1 = CS_MoveXY(L_SHA,144,nil) -- 오른쪽 눈
+L_SH2 = CS_MoveXY(L_SHB,-144,nil) -- 왼쪽 눈
+L_SH3 = CS_RatioXY(L_SHC,nil,2.7) -- y축으로 귀를 늘림
+L_SHD = CS_Rotate(L_SH3,30) -- 오른쪽 귀
+L_SHE = CS_Rotate(L_SH3,330) -- 왼쪽 귀
+L_SH4 = CS_MoveXY(L_SHD,224,-512) -- 오른쪽 귀
+L_SH5 = CS_MoveXY(L_SHE,-224,-512) -- 왼쪽 귀
+L_SH6 = CS_Overlap(L_SH_1,L_SH_2) -- 귀 중앙 장식 합본
+L_SH_B = CS_Rotate(L_SH6,30) -- 오른쪽 귀 장식
+L_SH_C = CS_Rotate(L_SH6,330) -- 왼쪽 귀 장식
+L_SH7 = CS_MoveXY(L_SH_B,210,-480) -- 오른쪽 귀 장식
+L_SH8 = CS_MoveXY(L_SH_C,-210,-480) -- 왼쪽 귀 장식
+
+L_SH = CS_OverlapX(L_SHIC,L_SH1,L_SH2,L_SH4,L_SH5,L_SH7,L_SH8) -- 엑조디아 융합
+L_Sub = CS_RemoveStack(L_SH,20,0) -- 겹치는 점 제거
+LENASubWP = CS_RatioRA(L_Sub,0.5,nil) -- 레나 서브웨폰 완성본
 end

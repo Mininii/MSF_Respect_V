@@ -12,7 +12,7 @@
 	MedicTick = {1,2,3,4,5}
 	ObEff = 84
 	nilunit = 181
-	QueueMaxSize = 20000
+	QueueMaxSize = 3000
 	MSDiff = {
 		 "\x07NM S\x04tyle",
 		 "\x08HD S\x04tyle",
@@ -51,6 +51,8 @@
 		SMFactorAtk2 = 20 -- 파벳베이스 : 1/2 데미지로 설정할것
 		RMBaseAtk2 = 50
 		RMFactorAtk2 = 14
+		LNBaseAtk = 1000
+		LNFactorAtk = 100
 
 
 		
@@ -62,6 +64,8 @@
 		SMSkillFactorAtk3 = 35
 		RMSkillBaseAtk = 350
 		RMSkillFactorAtk = 100
+		LNSkillBaseAtk = 500
+		LNSkillFactorAtk = 65
 		
 	else
 		NMBaseAtk=5 -- 파벳베이스 : 1/2 데미지로 설정할것
@@ -81,12 +85,14 @@
 		RMCost = 300000--건작용
 		SMCost2 = 100000 -- 온리마린 딜개쌘거
 		RMCost2 = 50000 -- 온리마린 스플
+		LNCost = 3000000
 		RMtoSMCost = 2000
 	else
 		NMCost = 5000
 		HMCost = 20000
 		SMCost = 25000
 		RMCost = 10000
+		LNCost = 3000000
 		RMtoSMCost = 2000
 	end
 	OLModeMarCost = 60000
@@ -100,6 +106,8 @@
 		SMFactorAtk = SMFactorAtk * 2
 		RMBaseAtk = RMBaseAtk * 2
 		RMFactorAtk = RMFactorAtk * 2
+		LNBaseAtk = LNBaseAtk * 2
+		LNFactorAtk = LNFactorAtk * 2
 		
 		SMSkillBaseAtk = SMSkillBaseAtk * 2
 		SMSkillFactorAtk = SMSkillFactorAtk * 2
@@ -109,6 +117,8 @@
 		SMSkillFactorAtk3 = SMSkillFactorAtk3 * 2
 		RMSkillBaseAtk = RMSkillBaseAtk * 2
 		RMSkillFactorAtk = RMSkillFactorAtk * 2
+		LNSkillBaseAtk = LNSkillBaseAtk * 2
+		LNSkillFactorAtk = LNSkillFactorAtk * 2
 
 
 	end
@@ -120,6 +130,9 @@
 	UnitHPArr = CreateFArr(1700, FP)
 	if DLC_Project == 1 then 
 		ExRateT = {
+			{20,22,24,27,30},{11,12,13,15,17},{10,11,12,14,16},{10,11,12,13,14}
+		}
+		ExRateT2 = {
 			{20,22,24,27,30},{11,12,13,15,17},{10,11,12,14,16},{10,11,12,13,14}
 		}
 	else
@@ -180,6 +193,7 @@
 	RFCr = CreateCcodeArr(5)
 	SGCr = CreateCcodeArr(5)
 	MGCr = CreateCcodeArr(5)
+	LNCr = CreateCcodeArr(5)
 	CrCheck1 = CreateCcodeArr(5)
 	CrCheck2 = CreateCcodeArr(5)
 	CSPtr = CreateVar(FP)
@@ -209,6 +223,7 @@
 	
 	SMPtr = CreateVarArr(5, FP)
 	RMPtr = CreateVarArr(5, FP)
+	LNPtr = CreateVarArr(5, FP)
 	SMRebirthT = CreateVarArr(5,FP)
 	RMRebirthT = CreateVarArr(5,FP)
 	SMRebirthAct = CreateVarArr(5,FP)

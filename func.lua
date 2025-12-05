@@ -415,43 +415,6 @@ function CreateUnitQueue()
 		DisplayPrintEr(MapPlayers, {"RKillScoreMin : ",RKillScoreMin})
 	end
 	
-	TriggerX(FP, {CV(count,QueueMaxUnit,AtMost),CV(CreateUnitQueueNum,0)}, {
-		SetInvincibility(Disable, 131, FP, 64),
-		SetInvincibility(Disable, 132, FP, 64),
-		SetInvincibility(Disable, 133, FP, 64),
-		SetInvincibility(Disable, 122, FP, 64),
-		SetInvincibility(Disable, 113, FP, 64),
-		SetInvincibility(Disable, 114, FP, 64),
-		SetInvincibility(Disable, 160, FP, 64),
-		SetInvincibility(Disable, 167, FP, 64),
-		SetInvincibility(Disable, 154, FP, 64),
-		SetInvincibility(Disable, 116, FP, 64),
-	},{preserved})
-	TriggerX(FP, {CV(count,QueueMaxUnit+1,AtLeast)}, {
-		SetInvincibility(Enable, 131, FP, 64),
-		SetInvincibility(Enable, 132, FP, 64),
-		SetInvincibility(Enable, 133, FP, 64),
-		SetInvincibility(Enable, 122, FP, 64),
-		SetInvincibility(Enable, 113, FP, 64),
-		SetInvincibility(Enable, 114, FP, 64),
-		SetInvincibility(Enable, 160, FP, 64),
-		SetInvincibility(Enable, 167, FP, 64),
-		SetInvincibility(Enable, 154, FP, 64),
-		SetInvincibility(Enable, 116, FP, 64),
-	},{preserved})
-	TriggerX(FP, {CV(CreateUnitQueueNum,1,AtLeast)}, {
-		SetInvincibility(Enable, 131, FP, 64),
-		SetInvincibility(Enable, 132, FP, 64),
-		SetInvincibility(Enable, 133, FP, 64),
-		SetInvincibility(Enable, 122, FP, 64),
-		SetInvincibility(Enable, 113, FP, 64),
-		SetInvincibility(Enable, 114, FP, 64),
-		SetInvincibility(Enable, 160, FP, 64),
-		SetInvincibility(Enable, 167, FP, 64),
-		SetInvincibility(Enable, 154, FP, 64),
-		SetInvincibility(Enable, 116, FP, 64),
-
-	},{preserved})
 FixText(FP, 1)
 --자원공유트리거 실험용
 
@@ -474,6 +437,9 @@ for i= 0, 4 do
 	CIfEnd()
 end
 CIfEnd()
+
+
+
 
 TriggerX(FP,{CV(CreateUnitQueuePenaltyLock,0),CV(CreateUnitQueueNum,0)},{SubV(CreateUnitQueuePenaltyT,2)},{preserved})
 CIf(FP,{CV(CreateUnitQueuePenaltyLock,0),CV(CreateUnitQueueNum,1,AtLeast)})
