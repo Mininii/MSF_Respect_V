@@ -64,6 +64,7 @@
 		{49,"staredit\\wav\\BGM_MESORIS.ogg",50*1000},
 		{50,"staredit\\wav\\BGM_MUSCLE.ogg",71*1000},
 		{51,"staredit\\wav\\BGM_OSHAMA.ogg",88*1000},
+		{52,"staredit\\wav\\BGM_CottonCandySoda2.ogg",115*1000},
 
 		
 	})

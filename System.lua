@@ -1830,6 +1830,8 @@ CIf(FP,{CD(GMode,3,AtLeast)}) -- 함정은 MX난이도 이상에서만 발동
 	Set_TrapGun(Force2,"Buildings",50,{FireShape,FireShape},{{88,77},{86,78}},48)
 	--location 55 daisuke
 	Set_TrapGun(Force2,"Buildings",55,{BrokenHeart,BrokenHeart},{{84,76},{79,98}},45)
+	--location 55 cotton candy soda eurobeat
+	Set_TrapGun(Force2,109,58,{Stars5_Overlap,Stars5_Overlap},{{83,98},{25,28}},52)
 	--location 54 mesoris
 	Set_TrapGun(Force2,"Buildings",54,{TetrisL2,TetrisL1},{{58,95},{81,80}},49)
 	--location 56 dejavu
@@ -1840,6 +1842,7 @@ CIf(FP,{CD(GMode,3,AtLeast)}) -- 함정은 MX난이도 이상에서만 발동
 	Set_TrapGun(Force2,"Buildings",53,{RhombusShape1,RhombusShape2},{{7,52},{60,87}},51)
 	--location 52 Muscle
 	Set_TrapGun(Force2,"Buildings",52,{SpiralShape,SpiralShape},{{40,62},{64,74}},50)
+
 	--location 51 GAS
 	
 	

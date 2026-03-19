@@ -544,6 +544,15 @@ local S_Final = CS_MoveXY(S_Shape, 100, 0)
 
 GAS_ShapeMX = CS_RatioXY(CS_OverlapX(G_Final, A_Final, S_Final), 5, 5)
 
+
+Stars5_1 = CS_MoveXY(CSMakeStar(5, 135, 180, 45, PlotSizeCalc(10, 3), PlotSizeCalc(10, 2)), 180*4, -180*4)
+Stars5_2 = CS_MoveXY(CSMakeStar(5, 135, 180, 60, PlotSizeCalc(10, 4), PlotSizeCalc(10, 3)), 0, 180*4)
+Stars5_3 = CS_MoveXY(CSMakeStar(5, 135, 180, 75, PlotSizeCalc(10, 3), PlotSizeCalc(10, 2)), -180*4, -180*4)
+
+
+Stars5_Overlap = CS_OverlapX(Stars5_1, Stars5_2, Stars5_3)
+
+
 L_SHIC = CSMakeCircle(4,64,0,CS_Level("Circle",4,6),CS_Level("Circle",4,5)) -- 원
 
  L_SHA = CSMakeStar(4,135,128,0,CS_Level("Star",4,2),CS_Level("Star",4,1)) -- 오른쪽 눈

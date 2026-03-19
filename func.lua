@@ -337,6 +337,7 @@ function CreateUnitQueue()
 
 		CTrigger(FP,{TTCVar(FP,QueueType[2],NotSame,2)},{TCreateUnitWithProperties(1,QueueUID,1,QueuePID,{energy = 100})},1,LocIndex)
         CTrigger(FP,{CVar(FP,QueueType[2],Exactly,2)},{TCreateUnitWithProperties(1,QueueUID,1,QueuePID,{energy = 100, burrowed = true})},1,LocIndex+1)
+			CTrigger(FP,{TNVar(QueueUID,Exactly,94,0xFF)},{TSetMemoryX(_Add(Nextptrs,68),SetTo,250,0xFFFF)},{preserved})
 
 		TriggerX(FP, {CV(QueueUID,MarID[3]),CD(OnlyMarineMode,1)}, {SetMemory(0x66EC48+(33*4), SetTo, 20)},{preserved})
 		TriggerX(FP, {CV(QueueUID,MarID[4]),CD(OnlyMarineMode,1)}, {SetMemory(0x66EC48+(8*4), SetTo, 6)},{preserved})

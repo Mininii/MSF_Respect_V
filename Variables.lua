@@ -12,7 +12,7 @@
 	MedicTick = {1,2,3,4,5}
 	ObEff = 84
 	nilunit = 181
-	QueueMaxSize = 3000
+	QueueMaxSize = 30000
 	MSDiff = {
 		 "\x07NM S\x04tyle",
 		 "\x08HD S\x04tyle",
