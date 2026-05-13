@@ -141,6 +141,9 @@
 		}
 	end
 	--Vars
+	FacPos = CreateVarArr(5,FP)
+	FacRally = CreateVarArr(5,FP)
+	FacOrderID = CreateVarArr(5,FP)
 	RepPlayerID = CreateVar(FP)
 	CunitHP = CreateVar(FP)
 	HongEnable = CreateCcode()

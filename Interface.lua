@@ -637,8 +637,26 @@ end
 	CIfEnd()
 	
 	CTrigger(FP,{CV(RepHeroIndex,201)},{TSetMemoryX(_Add(Nextptrs,55),SetTo,0x04000000,0x04000000)},{preserved})--오버미코쿤 무적
+	CTrigger(FP,{CV(RepHeroIndex,113),CV(RepPlayerID,4,AtMost)},{TSetMemoryX(_Add(Nextptrs,55),SetTo,0x04000000,0x04000000)},{preserved})--팀원 팩토리 무적
+	
+	if FactoryMod == 1 then
+	CTrigger(FP,{CD(EVFCcode,0)},{KillUnit(113, P1),KillUnit(113, P2),KillUnit(113, P3),KillUnit(113, P4),KillUnit(113, P5),SetSwitch("Switch 172",Clear)},{preserved})--EVF 아니면 팩토리삭제
 
-	CIf(FP,{TTOR(condbox)},{AddCD(GunCcode,1)})--블라인드 맥일놈들(건작일경우)
+	CIf(FP,{CD(EVFCcode,1),CV(RepHeroIndex,113)}) -- 팩토리 포인터
+	for i = 0,4 do
+		CIf(FP,CVX(RepPlayerID,i,0xFF))
+		CMov(FP,FacPos[i+1],Nextptrs)
+		--DisplayPrint(HumanPlayers, {"배럭 등록 완료"})
+		CIfEnd()
+	end
+	CIfEnd()
+	end
+
+	CIf(FP,{TTOR(condbox)},{})--블라인드 맥일놈들(건작일경우)
+
+	
+		TriggerX(FP,{CVX(RepPlayerID,5,0xFF,AtLeast),CVX(RepPlayerID,7,0xFF,AtMost)},{AddCD(GunCcode,1)},{preserved})
+	
 		CDoActions(FP, {TSetMemoryX(_Add(Nextptrs,72), SetTo, 0xFF000000, 0xFF000000)})
 	CIfEnd()
 	DoActions(FP, {
@@ -695,6 +713,7 @@ end
 		},{preserved})
 	CForEnd()
 	CIfEnd()
+	
 	
 
 	CIf(FP,{CD(GMode,4)})
@@ -916,6 +935,9 @@ end
 	end
 	CDoActions(FP, {TCreateUnit(1, 96, 40, CurrentOP)})
 	for i = 0, 4 do
+		if FactoryMod == 1 then
+		CTrigger(FP,{HumanCheck(i, 0)},{ModifyUnitHitPoints(All, 113, i, 64, 0),ModifyUnitEnergy(All, 113, i, 64, 0)},{preserved})--해당플레이어가 없을경우 팩토리 체력 2로 설정해서 터트려
+		end
 		f_TempRepeat({HumanCheck(i, 1)}, 96, 1, "BanUnit", i, {2896,112})
 	end
 	if TestStart == 0 then
@@ -1017,6 +1039,7 @@ end
 			SetMemoryB(0x57F27C + (2 * 228) + 19,SetTo,0),
 			SetMemoryB(0x57F27C + (3 * 228) + 19,SetTo,0),
 			SetMemoryB(0x57F27C + (4 * 228) + 19,SetTo,0),
+
 		})
 		
 		TriggerX(FP, {CD(EVFCcode,1),CD(OnlyMarineMode,0)}, {
@@ -2132,6 +2155,261 @@ DoActions(FP,{
 
 		
 		CIfEnd()
+
+
+		
+
+		if FactoryMod == 1 then
+		CIf(FP,CD(EVFCcode,1))
+		CIf(FP,{Command(i,AtLeast,1,77);},{
+			GiveUnits(All,77,i,"Anywhere",P12);
+			RemoveUnitAt(All,77,"Anywhere",P12);}) -- 멀티스탑
+
+			CFor(FP, 19025+25, 19025+25+(1700*84),84)
+			local CI = CForVariable()
+			CTrigger(FP,{
+				TDeathsX(_Sub(CI,6), Exactly, i, 0,0xFF),
+				TTDeathsX(_Sub(CI,6), NotSame,5*256, 0,0xFF00),
+				TTDeathsX(_Sub(CI,6), NotSame,152*256, 0,0xFF00),
+				TDeathsX(_Sub(CI,6), AtLeast,1*256, 0,0xFF00),
+			TTOR({
+				_TDeathsX(CI,Exactly,32,0,0xFF),
+				_TDeathsX(CI,Exactly,20,0,0xFF),
+				_TDeathsX(CI,Exactly,10,0,0xFF),
+				_TDeathsX(CI,Exactly,72,0,0xFF),
+				_TDeathsX(CI,Exactly,MarID[1],0,0xFF),
+				_TDeathsX(CI,Exactly,MarID[2],0,0xFF),
+				_TDeathsX(CI,Exactly,MarID[3],0,0xFF),
+				_TDeathsX(CI,Exactly,MarID[4],0,0xFF),
+				_TDeathsX(CI,Exactly,MarID[5],0,0xFF),})},{TSetDeathsX(_Sub(CI,6),SetTo,1*256,0,0xFF00)},{preserved})
+			CForEnd()
+			
+				
+
+		CIfEnd()
+		
+		CIf(FP,{Command(i,AtLeast,1,15);},{
+			GiveUnits(All,15,i,"Anywhere",P12);
+			RemoveUnitAt(All,15,"Anywhere",P12);}) -- 멀티홀드
+			local TempPos = CreateVar(FP)
+			CFor(FP, 19025+25, 19025+25+(1700*84),84)
+			local CI = CForVariable()
+			CIf(FP,{TDeathsX(_Sub(CI,6), Exactly, i, 0,0xFF),
+			TTDeathsX(_Sub(CI,6), NotSame,5*256, 0,0xFF00),
+			TTDeathsX(_Sub(CI,6), NotSame,152*256, 0,0xFF00),
+			TDeathsX(_Sub(CI,6), AtLeast,1*256, 0,0xFF00),
+			TTOR({
+				_TDeathsX(CI,Exactly,32,0,0xFF),
+				_TDeathsX(CI,Exactly,20,0,0xFF),
+				_TDeathsX(CI,Exactly,10,0,0xFF),
+				_TDeathsX(CI,Exactly,72,0,0xFF),
+				_TDeathsX(CI,Exactly,MarID[1],0,0xFF),
+				_TDeathsX(CI,Exactly,MarID[2],0,0xFF),
+				_TDeathsX(CI,Exactly,MarID[3],0,0xFF),
+				_TDeathsX(CI,Exactly,MarID[4],0,0xFF),
+				_TDeathsX(CI,Exactly,MarID[5],0,0xFF),
+				
+			})})
+
+				f_Read(FP,_Sub(CI,15),TempPos)
+				CDoActions(FP,{
+					TSetDeaths(_Sub(CI,2),SetTo,0,0),
+					TSetDeathsX(_Sub(CI,6),SetTo,107*256,0,0xFF00),
+					TSetDeaths(_Sub(CI,19),SetTo,TempPos,0),
+					TSetDeaths(_Sub(CI,3),SetTo,TempPos,0),
+					TSetDeaths(_Sub(CI,21),SetTo,TempPos,0)})
+			CIfEnd()
+			CForEnd()
+		CIfEnd()
+
+		TriggerX(FP,{Command(i,AtLeast,1,78);},{
+			GiveUnits(All,78,i,"Anywhere",P12);
+			RemoveUnitAt(All,78,"Anywhere",P12);
+			Order(32, i, 64, Attack, 59+i),
+			Order(20, i, 64, Attack, 59+i),
+			Order(10, i, 64, Attack, 59+i),
+			Order(72, i, 64, Attack, 59+i),
+			Order(MarID[1], i, 64, Attack, 59+i),
+			Order(MarID[2], i, 64, Attack, 59+i),
+			Order(MarID[3], i, 64, Attack, 59+i),
+			Order(MarID[4], i, 64, Attack, 59+i),
+			Order(MarID[5], i, 64, Attack, 59+i),
+		},{preserved}) -- 멀티어택
+
+
+			
+		CIf(FP,{CV(FacPos[i+1],19025,AtLeast),CV(FacPos[i+1],19025+(84*1699),AtMost)},{})
+
+		CIf(FP,{TMemoryX(_Add(FacPos[i+1],69),AtLeast,1*256,0xFF00)},{TSetMemoryX(_Add(FacPos[i+1],69), SetTo, 0,0xFF00)}) -- 멀티스팀
+		
+		CFor(FP, 19025+25, 19025+25+(1700*84),84)
+		local CI = CForVariable()
+		CTrigger(FP,{TDeathsX(_Sub(CI,6), Exactly, i, 0,0xFF),TDeathsX(_Sub(CI,6), AtLeast,1*256, 0,0xFF00),
+		TTOR({
+				_TDeathsX(CI,Exactly,32,0,0xFF),
+				_TDeathsX(CI,Exactly,20,0,0xFF),
+				_TDeathsX(CI,Exactly,10,0,0xFF),
+				_TDeathsX(CI,Exactly,72,0,0xFF),
+				_TDeathsX(CI,Exactly,MarID[1],0,0xFF),
+				_TDeathsX(CI,Exactly,MarID[2],0,0xFF),
+				_TDeathsX(CI,Exactly,MarID[3],0,0xFF),
+				_TDeathsX(CI,Exactly,MarID[4],0,0xFF),
+				_TDeathsX(CI,Exactly,MarID[5],0,0xFF),})},{TSetMemoryX(_Add(CI,69-25), SetTo, 45*256, 0xFF00)},{preserved})
+		CForEnd()
+
+
+		DisplayPrintEr(i, {"\x07『 \x03TESTMODE OP \x04: 멀티 스팀팩이 발동되었습니다. \x07』"})
+		CIfEnd()
+
+		--CIf(FP,{TTMemoryX(_Add(FacPos[i+1],19), NotSame, FacOrderID[i+1],0xFF00)})
+		--f_Read(FP, _Add(FacPos[i+1],19), FacOrderID[i+1],nil,0xFF00,1)
+
+		--CIf(FP,{CVX(FacOrderID[i+1],107*0x100,0xFF00)}) -- 멀티홀드
+		--DisplayPrintEr(i, {"\x07『 \x03TESTMODE OP \x04: 멀티 홀드가 발동되었습니다. \x07』"})
+		--CIfEnd()
+		--CIf(FP,{CVX(FacOrderID[i+1],23*0x100,0xFF00)}) -- 멀티스탑. 스탑의경우 2인데 건물 명령은 낫띵 23으로 설정됨
+		--DisplayPrintEr(i, {"\x07『 \x03TESTMODE OP \x04: 멀티 스탑이 발동되었습니다. \x07』"})
+		--CIfEnd()
+
+		--CIfEnd()
+		CIf(FP,{TMemory(_Add(FacPos[i+1],62), AtLeast, 1)}) -- 랠리로 멀티커맨드
+			
+			f_Read(FP, _Add(FacPos[i+1],62), FacRally[i+1])
+			Convert_CPosXY(FacRally[i+1])
+			CDoActions(FP, {TSetMemory(_Add(FacPos[i+1],62), SetTo, 0)})
+			local TargetEPD = CreateVar(FP)
+			
+			CMov(FP,TargetEPD,0)
+			CFor(FP, 19025+10, 19025+10+(84*1700), 84)
+			local CI = CForVariable()
+				CTrigger(FP, {
+					TMemoryX(_Add(CI,9), AtLeast, 1*256,0xFF00),
+					TMemoryX(CI, AtLeast, _Sub(CPosX,9),0xFFFF),
+					TMemoryX(CI, AtMost, _Add(CPosX,9),0xFFFF),
+					TMemoryX(CI, AtLeast, _lShift(_Sub(CPosY,9), 16),0xFFFF0000),
+					TMemoryX(CI, AtMost, _lShift(_Add(CPosY,9), 16),0xFFFF0000),
+				}, {SetV(TargetEPD,_Sub(CI,10))},{preserved})
+			CForEnd()
+			
+			DisplayPrintEr(i, {"\x07『 \x03TESTMODE OP \x04: 멀티 커맨드가 발동되었습니다. X : ",CPosX,"  Y : ",CPosY," \x07』"})
+				CIfX(FP,{CV(TargetEPD,1,AtLeast)})
+				
+				if TestStart == 1 then
+				DisplayPrint(i, {"\x07『 \x03TESTMODE OP \x04: 해당 좌표에 위치한 유닛을 찾았습니다. : ",TargetEPD," \x07』"})
+				end
+
+				
+
+
+				CIfX(FP, {TTOR({
+					_TMemoryX(_Add(TargetEPD,25),Exactly,32,0xFF),
+					_TMemoryX(_Add(TargetEPD,25),Exactly,20,0xFF),
+					_TMemoryX(_Add(TargetEPD,25),Exactly,10,0xFF),
+					_TMemoryX(_Add(TargetEPD,25),Exactly,72,0xFF),
+					_TMemoryX(_Add(TargetEPD,25),Exactly,MarID[1],0xFF),
+					_TMemoryX(_Add(TargetEPD,25),Exactly,MarID[2],0xFF),
+					_TMemoryX(_Add(TargetEPD,25),Exactly,MarID[3],0xFF),
+					_TMemoryX(_Add(TargetEPD,25),Exactly,MarID[4],0xFF),
+					_TMemoryX(_Add(TargetEPD,25),Exactly,MarID[5],0xFF),
+				})})
+				if TestStart == 1 then
+					DisplayPrint(i, {"\x07『 \x03TESTMODE OP \x04: 대상이 아군 마린입니다. 대상을 따라갑니다. \x07』"})
+				end
+
+				local TempPos = CreateVar(FP)
+				CFor(FP, 19025+25, 19025+25+(1700*84),84)
+				local CI = CForVariable()
+				CIf(FP,{TDeathsX(_Sub(CI,6), Exactly, i, 0,0xFF),TTDeathsX(_Sub(CI,6), NotSame,5*256, 0,0xFF00),TTDeathsX(_Sub(CI,6), NotSame,152*256, 0,0xFF00),TDeathsX(_Sub(CI,6), AtLeast,1*256, 0,0xFF00),
+				TTOR({
+				_TDeathsX(CI,Exactly,32,0,0xFF),
+				_TDeathsX(CI,Exactly,20,0,0xFF),
+				_TDeathsX(CI,Exactly,10,0,0xFF),
+				_TDeathsX(CI,Exactly,72,0,0xFF),
+				_TDeathsX(CI,Exactly,MarID[1],0,0xFF),
+				_TDeathsX(CI,Exactly,MarID[2],0,0xFF),
+				_TDeathsX(CI,Exactly,MarID[3],0,0xFF),
+				_TDeathsX(CI,Exactly,MarID[4],0,0xFF),
+				_TDeathsX(CI,Exactly,MarID[5],0,0xFF),})})
+					f_Read(FP,_Sub(CI,15),TempPos)
+					CDoActions(FP,{
+						TSetDeaths(_Sub(CI,2),SetTo,_Add(_Mul(TargetEPD,4),0x58A364),0),
+						TSetDeathsX(_Sub(CI,6),SetTo,49*256,0,0xFF00),
+						TSetDeaths(_Sub(CI,19),SetTo,TempPos,0),
+						TSetDeaths(_Sub(CI,3),SetTo,TempPos,0),
+						TSetDeaths(_Sub(CI,21),SetTo,TempPos,0)
+					})
+
+				CIfEnd()
+				CForEnd()
+				--CElseIfX({TMemoryX(_Add(TargetEPD,19),Exactly,7,0xFF)}) -- 적유닛이다 공격!!
+				--if TestStart == 1 then
+				--	DisplayPrint(i, {"\x07『 \x03TESTMODE OP \x04: 대상이 적군입니다. 공격을 개시합니다. \x07』"})
+				--end
+			--	
+				--local TempPos = CreateVar(FP)
+				--CFor(FP, 19025+25, 19025+25+(1700*84),84)
+				--local CI = CForVariable()
+				--CIf(FP,{TDeathsX(_Sub(CI,6), Exactly, i, 0,0xFF),TTDeathsX(_Sub(CI,6), NotSame,5*256, 0,0xFF00),TTDeathsX(_Sub(CI,6), NotSame,152*256, 0,0xFF00),TDeathsX(_Sub(CI,6), AtLeast,1*256, 0,0xFF00),
+				--TTOR({
+				--	_TDeathsX(CI,Exactly,0,0,0xFF),
+				--	_TDeathsX(CI,Exactly,20,0,0xFF)})})
+				--	f_Read(FP,_Sub(CI,15),TempPos)
+				--CDoActions(FP, {
+				--	TSetDeathsX(_Sub(CI,6),SetTo,10*256,0,0xFF00),
+				--	TSetDeathsX(_Sub(CI,6),SetTo,1*65536,0,0xFF0000),
+				--	TSetDeaths(_Sub(CI,2),SetTo,_Add(_Mul(TargetEPD,4),0x58A364),0),
+				--	TSetDeathsX(_Sub(CI,4),SetTo,0,0,0xFF),
+				--	TSetDeathsX(_Sub(CI,4),SetTo,0,1,0xFF00),})
+				--CIfEnd()
+				--CForEnd()
+
+				
+
+				CElseX()
+				
+				if TestStart == 1 then
+					DisplayPrint(i, {"\x07『 \x03TESTMODE OP \x04: 하지만 대상이 마린이 아니므로 일반 무브가 적용됩니다. \x07』"})
+				end
+	
+				Simple_SetLocX(FP, 0, CPosX, CPosY, CPosX, CPosY)
+				DoActions(FP, {
+				Order(32, i, 64, Move, 1),
+				Order(20, i, 64, Move, 1),
+				Order(10, i, 64, Move, 1),
+				Order(72, i, 64, Move, 1),
+				Order(MarID[1], i, 64, Move, 1),
+				Order(MarID[2], i, 64, Move, 1),
+				Order(MarID[3], i, 64, Move, 1),
+				Order(MarID[4], i, 64, Move, 1),
+				Order(MarID[5], i, 64, Move, 1),
+				})
+				CIfXEnd()
+
+
+
+	
+				CElseX()
+				if TestStart == 1 then
+					DisplayPrint(i, {"\x07『 \x03TESTMODE OP \x04: 해당 좌표에 위치한 유닛을 찾을 수 없어 일반 무브가 적용됩니다. \x07』"})
+				end
+					Simple_SetLocX(FP, 0, CPosX, CPosY, CPosX, CPosY)
+					DoActions(FP, {
+					Order(32, i, 64, Move, 1),
+					Order(20, i, 64, Move, 1),
+					Order(10, i, 64, Move, 1),
+					Order(72, i, 64, Move, 1),
+					Order(MarID[1], i, 64, Move, 1),
+					Order(MarID[2], i, 64, Move, 1),
+					Order(MarID[3], i, 64, Move, 1),
+					Order(MarID[4], i, 64, Move, 1),
+					Order(MarID[5], i, 64, Move, 1),})
+				CIfXEnd()
+		CIfEnd()
+			
+		CIfEnd()
+		CIfEnd()
+
+		end
 		
 		TriggerX(FP,{CD(OnlyMarineMode,0),CD(SMRebirthT2[i+1],101,AtLeast)},{SetInvincibility(Enable, 10, i, 64)},{preserved})
 		TriggerX(FP,{CD(OnlyMarineMode,0),CD(RMRebirthT2[i+1],101,AtLeast)},{SetInvincibility(Enable, MarID[i+1], i, 64)},{preserved})
@@ -2243,7 +2521,6 @@ DoActions(FP,{
 						RemoveUnit(MedicTrig[4],i),
 						RemoveUnit(MedicTrig[5],i),
 						ModifyUnitHitPoints(All,"Men",i,"Anywhere",100),
-						ModifyUnitHitPoints(All,"Buildings",i,"Anywhere",100),
 						ModifyUnitShields(All,"Men",i,"Anywhere",100),
 						ModifyUnitShields(All,"Buildings",i,"Anywhere",100),
 					})
@@ -2349,7 +2626,7 @@ Trigger { -- 보호막 가동
 		--ModifyUnitShields(All,"Men",i,"Anywhere",100);
 		--ModifyUnitShields(All,"Buildings",i,"Anywhere",100);
 		ModifyUnitHitPoints(All,"Men",i,"Anywhere",100);
-		ModifyUnitHitPoints(All,"Buildings",i,"Anywhere",100);
+		--ModifyUnitHitPoints(All,"Buildings",i,"Anywhere",100);
 		PreserveTrigger();
 	},
 }

@@ -442,8 +442,11 @@ CIfEnd()
 
 
 
-TriggerX(FP,{CV(CreateUnitQueuePenaltyLock,0),CV(CreateUnitQueueNum,0)},{SubV(CreateUnitQueuePenaltyT,2)},{preserved})
-CIf(FP,{CV(CreateUnitQueuePenaltyLock,0),CV(CreateUnitQueueNum,1,AtLeast)})
+TriggerX(FP,{CV(CreateUnitQueuePenaltyLock,0),CV(CreateUnitQueueNum,499,AtMost)},{SubV(CreateUnitQueuePenaltyT,2)},{preserved})
+TriggerX(FP,{CV(CreateUnitQueuePenaltyLock,0),CV(CreateUnitQueueNum,299,AtMost)},{SubV(CreateUnitQueuePenaltyT,2)},{preserved})
+TriggerX(FP,{CV(CreateUnitQueuePenaltyLock,0),CV(CreateUnitQueueNum,99,AtMost)},{SubV(CreateUnitQueuePenaltyT,2)},{preserved})
+TriggerX(FP,{CV(CreateUnitQueuePenaltyLock,0),CV(CreateUnitQueueNum,0,AtMost)},{SubV(CreateUnitQueuePenaltyT,2)},{preserved})
+CIf(FP,{CV(CreateUnitQueuePenaltyLock,0),CV(CreateUnitQueueNum,500,AtLeast)})
 	local PTRet = CreateVar(FP)
 	CMov(FP,PTRet,_Div(CreateUnitQueueNum,200),1)
 	TriggerX(FP,{CV(PTRet,50,AtLeast)},{SetV(PTRet,50)},{preserved})

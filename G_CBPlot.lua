@@ -612,7 +612,9 @@ CWhile(FP,{CVar(FP,Spawn_TempW[2],AtLeast,1)})
 			TriggerX(FP,{CVar(FP,CreatePlayer[2],Exactly,0xFFFFFFFF)},{SetCVar(FP,CreatePlayer[2],SetTo,7)},{preserved})
 			CTrigger(FP,{TTCVar(FP,RepeatType[2],NotSame,2)},{TCreateUnitWithProperties(1,Gun_TempSpawnSet1,1,CreatePlayer,{energy = 100})},1,LocIndex)
 			CTrigger(FP,{CVar(FP,RepeatType[2],Exactly,2)},{TCreateUnitWithProperties(1,Gun_TempSpawnSet1,1,CreatePlayer,{energy = 100, burrowed = true})},1,LocIndex+1)
-			CTrigger(FP,{TNVar(Gun_TempSpawnSet1,Exactly,94,0xFF)},{},{preserved})
+			CTrigger(FP,{TNVar(Gun_TempSpawnSet1,Exactly,94,0xFF)},{TSetMemoryX(_Add(G_CB_Nextptrs,68),SetTo,250,0xFFFF)},{preserved})
+
+			
 		DoActions(FP, {
 			SetMemoryB(0x6644F8+4,SetTo,76),
 			SetMemoryB(0x6644F8+6,SetTo,83),

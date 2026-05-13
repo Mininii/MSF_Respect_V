@@ -139,6 +139,9 @@ end
 	SetUnitsDatX(27,{Playerable = 2, Reqptr=5,SuppCost=1,MinCost=0,GasCost=0,BuildTime=1})--플레이어만 사용가능, 요구조건을 무조건?으로
 	SetUnitsDatX(28,{Playerable = 2, Reqptr=5,SuppCost=1,MinCost=0,GasCost=0,BuildTime=1})--플레이어만 사용가능, 요구조건을 무조건?으로
 	SetUnitsDatX(29,{Playerable = 2, Reqptr=5,SuppCost=1,MinCost=0,GasCost=0,BuildTime=1})--플레이어만 사용가능, 요구조건을 무조건?으로
+	SetUnitsDatX(77,{Playerable = 2, Reqptr=5,SuppCost=1,MinCost=0,GasCost=0,BuildTime=1})--플레이어만 사용가능, 요구조건을 무조건?으로
+	SetUnitsDatX(78,{Playerable = 2, Reqptr=5,SuppCost=1,MinCost=0,GasCost=0,BuildTime=1})--플레이어만 사용가능, 요구조건을 무조건?으로
+	SetUnitsDatX(15,{Playerable = 2, Reqptr=5,SuppCost=1,MinCost=0,GasCost=0,BuildTime=1})--플레이어만 사용가능, 요구조건을 무조건?으로
 	
 	if DLC_Project == 1 then
 		if X4_Mode == 1 then
@@ -297,6 +300,7 @@ end
 			SetMemoryB(0x58D088+(46*i)+19,SetTo,1),
 			SetMemoryB(0x58D088+(46*i)+20,SetTo,1),
 			GiveUnits(1, 111, P12, 4, i),
+			GiveUnits(1, 113, P12, 4, i),
             GiveUnits(1, 125, P12, 2, i),
             Simple_CalcLoc(3, 0, 64, 0, 64),
 			SetCp(i),
@@ -310,7 +314,7 @@ end
 		DoActions(FP, {
             GiveUnits(1, 125, P12, 3, i),
 		},1)
-		TriggerX(FP, {HumanCheck(i, 0)}, {RemoveUnit(111, i),RemoveUnit(125, i),RemoveUnit(122, i),RemoveUnit(145, i)})
+		TriggerX(FP, {HumanCheck(i, 0)}, {RemoveUnit(111, i),RemoveUnit(113, i),RemoveUnit(125, i),RemoveUnit(122, i),RemoveUnit(145, i)})
 	end
 	
 	
@@ -593,6 +597,13 @@ DoActionsX(FP, { -- 기타 시작시 1회실행 트리거
 CbyteConvert(FP,VArr(HVA3,0),GetStrArr(0,"\x0D\x0D!H")) 
 
 
+	if FactoryMod ~= 1 then
+		DoActions(FP, {RemoveUnit(113, 0),RemoveUnit(113, 1),RemoveUnit(113, 2),RemoveUnit(113, 3),RemoveUnit(113, 4)})
+	end	
+	if FactoryMod == 1 then
+		DoActions(FP, {SetSwitch("Switch 172",Set)})
+	end	
+	
 	CFor(FP,19025,19025+(84*1700),84)
 	CI = CForVariable()
 	condbox = {}
@@ -606,6 +617,8 @@ CbyteConvert(FP,VArr(HVA3,0),GetStrArr(0,"\x0D\x0D!H"))
 	f_Read(FP,_Add(CI,25),RepHeroIndex,nil,0xFF,1)
 	f_Read(FP,_Add(CI,19),PlayerV,nil,0xFF,1)
 
+
+
 	CIf(FP,{CV(RepHeroIndex,111)})
 	for i = 0,4 do
 		CIf(FP,CVX(PlayerV,i,0xFF))
@@ -616,6 +629,7 @@ CbyteConvert(FP,VArr(HVA3,0),GetStrArr(0,"\x0D\x0D!H"))
 	
 	CIfEnd()
 	CIf(FP,{TTOR(condbox)})
+
 	f_Read(FP,_Add(CI,10),CPos)
 	CMov(FP,ArrX(UnitHPArr,UnitRepIndex),_Sub(_Div(_ReadF(_Add(CI,2)),256),50))
 	CMov(FP,ArrX(UnitPosArr,UnitRepIndex),CPos)

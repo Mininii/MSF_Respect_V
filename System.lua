@@ -1221,7 +1221,7 @@ AirArr = {7,60,70,57,62,64,12,29,8,58,80}
 		end
 		CForEnd()
 	CIfEnd()
-			table.insert(GunTable,CV(HeroIndex,108))
+			--table.insert(GunTable,CV(HeroIndex,108))
 		
 		OtherGunSet(134,{
 			{40,30},
