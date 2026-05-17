@@ -1221,7 +1221,7 @@ AirArr = {7,60,70,57,62,64,12,29,8,58,80}
 		end
 		CForEnd()
 	CIfEnd()
-			--table.insert(GunTable,CV(HeroIndex,108))
+			table.insert(GunTable,CV(HeroIndex,108))
 		
 		OtherGunSet(134,{
 			{40,30},
@@ -1289,28 +1289,27 @@ AirArr = {7,60,70,57,62,64,12,29,8,58,80}
 		CIfXEnd()
 
 		CIfX(FP,{CD(EVFCcode,1)})
-		f_TempRepeatX({}, 94, 1, nil, P8, {WTime,LTime})
-		f_TempRepeatX({}, 62, 1, 188, P8, {WTime,LTime})
-		f_TempRepeatX({}, 57, 1, 188, P8, {WTime,LTime})
-		f_TempRepeatX({}, 64, 1, 188, P8, {WTime,LTime})
-		f_TempRepeatX({}, 70, 1, 188, P8, {WTime,LTime})
-		f_TempRepeatX({}, 12, 1, 188, P8, {WTime,LTime})
-		f_TempRepeatX({}, 8, 1, 188, P8, {WTime,LTime})
+		f_TempRepeatX({}, 94, 1, nil, P6, {WTime,LTime},nil,1)
+		f_TempRepeatX({}, 62, 1, 188, P8, {WTime,LTime},nil,1)
+		f_TempRepeatX({}, 57, 1, 188, P8, {WTime,LTime},nil,1)
+		f_TempRepeatX({}, 64, 1, 188, P8, {WTime,LTime},nil,1)
+		f_TempRepeatX({}, 70, 1, 188, P8, {WTime,LTime},nil,1)
+		f_TempRepeatX({}, 12, 1, 188, P8, {WTime,LTime},nil,1)
+		f_TempRepeatX({}, 8, 1, 188, P8, {WTime,LTime},nil,1)
 		CElseX()
-		f_TempRepeatX({}, 94, 1, nil, P8, {WTime,LTime})
-		f_TempRepeatX({}, 62, 1, 187, P8, {WTime,LTime})
-		f_TempRepeatX({}, 57, 1, 187, P8, {WTime,LTime})
-		f_TempRepeatX({}, 64, 1, 187, P8, {WTime,LTime})
-		f_TempRepeatX({}, 70, 1, 187, P8, {WTime,LTime})
-		f_TempRepeatX({}, 12, 1, 187, P8, {WTime,LTime})
-		f_TempRepeatX({}, 8, 1, 187, P8, {WTime,LTime})
+		f_TempRepeatX({}, 94, 1, nil, P6, {WTime,LTime},nil,1)
+		f_TempRepeatX({}, 62, 1, 187, P8, {WTime,LTime},nil,1)
+		f_TempRepeatX({}, 57, 1, 187, P8, {WTime,LTime},nil,1)
+		f_TempRepeatX({}, 64, 1, 187, P8, {WTime,LTime},nil,1)
+		f_TempRepeatX({}, 70, 1, 187, P8, {WTime,LTime},nil,1)
+		f_TempRepeatX({}, 12, 1, 187, P8, {WTime,LTime},nil,1)
+		f_TempRepeatX({}, 8, 1, 187, P8, {WTime,LTime},nil,1)
 		CIfXEnd()
 
 
 
 		CMov(FP,G_CB_X,WTime)
 		CMov(FP,G_CB_Y,LTime)
-		G_CB_SetSpawn({CD(GMode,1)}, {94}, "ACAS","ObbEffCir", nil, nil, nil, nil, P6)
 		CIfEnd()
 		f_LoadCp()
 	CIfEnd()
