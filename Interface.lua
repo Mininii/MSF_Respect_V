@@ -2417,8 +2417,8 @@ DoActions(FP,{
 		TriggerX(FP,{CD(OnlyMarineMode,0),CD(RMRebirthT2[i+1],1,AtLeast),CD(RMRebirthT2[i+1],100,AtMost)},{SetInvincibility(Disable, MarID[i+1], i, 64)},{preserved})
 
 
-		TriggerX(FP, {ElapsedTime(AtLeast, 10),Deaths(i,AtLeast,1,140),CD(WanCT[i+1],0),CD(WanC[i+1],3,AtMost)},{SetCD(WanCT[i+1],60),AddCD(WanC[i+1],1),SetCp(i),DisplayText(MacroWarn1, 4),PlayWAV("sound\\Bullet\\TNsFir00.wav"),PlayWAV("sound\\Bullet\\TNsFir00.wav"),PlayWAV("sound\\Bullet\\TNsFir00.wav"),PlayWAV("sound\\Bullet\\TNsFir00.wav")},{preserved})
-		TriggerX(FP, {ElapsedTime(AtLeast, 10),Deaths(i,AtLeast,1,140),CD(WanCT[i+1],0),CD(WanC[i+1],4,AtLeast)},{SetCD(BanCode2[i+1],1)})
+		TriggerX(FP, {CD(EVFCcode,0),ElapsedTime(AtLeast, 10),Deaths(i,AtLeast,1,140),CD(WanCT[i+1],0),CD(WanC[i+1],3,AtMost)},{SetCD(WanCT[i+1],60),AddCD(WanC[i+1],1),SetCp(i),DisplayText(MacroWarn1, 4),PlayWAV("sound\\Bullet\\TNsFir00.wav"),PlayWAV("sound\\Bullet\\TNsFir00.wav"),PlayWAV("sound\\Bullet\\TNsFir00.wav"),PlayWAV("sound\\Bullet\\TNsFir00.wav")},{preserved})
+		TriggerX(FP, {CD(EVFCcode,0),ElapsedTime(AtLeast, 10),Deaths(i,AtLeast,1,140),CD(WanCT[i+1],0),CD(WanC[i+1],4,AtLeast)},{SetCD(BanCode2[i+1],1)})
 		TriggerX(FP, {CD(BanCode2[i+1],1)}, {
 			SetMemory(0x59CC78, SetTo, -1048576),
 			SetMemory(0x59CC80, SetTo, 2),SetCp(i),PlayWAV("staredit\\wav\\zzirizziri.ogg"),PlayWAV("staredit\\wav\\zzirizziri.ogg"),DisplayText(MacroWarn2, 4),SetCp(FP),SetResources(i, SetTo, 0, Ore),ModifyUnitEnergy(All, "Men", i, 64, 0),ModifyUnitEnergy(All, "Buildings", i, 64, 0),RemoveUnit("Men", i),RemoveUnit(203, i),RemoveUnit(125, i)},{preserved})
