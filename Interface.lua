@@ -101,7 +101,7 @@
     CIfX(FP,Never()) -- 상위플레이어 단락 시작
         for i = 0, 4 do
             CElseIfX(HumanCheck(i,1),{SetCVar(FP,CurrentOP[2],SetTo,i),SetMemoryB(0x57F27C + (i * 228) + 62,SetTo,1),SetMemoryB(0x57F27C + (i * 228) + 63,SetTo,1)})
-			Trigger2X(FP, {CV(PCheckV,2,AtLeast),ElapsedTime(AtMost, 120),Bring(i, AtLeast, 1, 96, 49),}, {
+			Trigger2X(FP, {CD(ShareOreMode,0),CV(PCheckV,2,AtLeast),ElapsedTime(AtMost, 120),Bring(i, AtLeast, 1, 96, 49),}, {
 				RotatePlayer({
 					PlayWAVX("sound\\Terran\\Advisor\\TAdUpd05.WAV"),
 					PlayWAVX("sound\\Terran\\Advisor\\TAdUpd05.WAV"),
@@ -561,7 +561,11 @@ end
 		SetMemoryB(0x57F27C + (4 * 228) + 51,SetTo,1),
 
 	})
-
+if Million100==1 then --1억모드 
+	for p = 1,5 do
+	TriggerX(FP,{CV(SetPlayers,p)},{SetResources(Force1, Add, 100000000//p, Ore), SetCD(ShareOreMode,1)},{preserved})
+	end
+end
 	
 	local AfterPatchExec = {}
 	PatchArr = {}
@@ -1605,8 +1609,9 @@ DoActions(FP,{
 		CTrigger(FP, {CD(ColorTimer,1),Memory(0x582294+(4*i),AtLeast,1200),Memory(0x582294+(4*i),AtMost,1500)}, {SetPlayerColor(i, SetTo, 42)}, {preserved})--TSetMemoryX(EXCC_TempVarArr[9],SetTo,P7*0x10000, 0xFF0000)
 		CTrigger(FP, {CD(ColorTimer,1),Memory(0x582294+(4*i),Exactly,1),}, {SetPlayerColor(i, SetTo, PColorC[i+1])}, {preserved})
 
-
+		if Million100 == 0 then
 		TriggerX(FP, {CD(ShareOreMode,1)}, {SetMemoryB(0x58D088 + (i * 46) + 18,SetTo,0),SetMemoryB(0x58D088 + (i * 46) + 19,SetTo,0),SetMemoryB(0x58D088 + (i * 46) + 20,SetTo,0)}, {preserved})
+		end
 		CDoActions(FP, {TSetDeathsX(i, Subtract, Dt, 12,0xFFFFFF)})
         DoActions(FP, {
             SetMemory(0x5822C4+(i*4),SetTo,1200);
