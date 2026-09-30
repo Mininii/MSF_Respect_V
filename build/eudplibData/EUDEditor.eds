@@ -1,0 +1,68 @@
+[main]
+input: ..\..\..\..\..\..\..\..\..\euddraft0.9.2.0\Respect V_BGM.scx
+output: ..\..\..\..\..\..\..\..\..\Program Files (x86)\StarCraft\Maps\마린키우기_RESPECT_V_Test.scx
+[DataEditor.py]
+[ExtraDataEditor.py]
+[chatEvent]
+__addr__ : 0x58D900
+__ptrAddr__ : 0x58D904
+__patternAddr__ : 0x58D908
+__lenAddr__ : 0x58D90C
+@빨강나가 : 2
+@파랑나가 : 3
+@연두나가 : 4
+@보라나가 : 5
+@주황나가 : 6
+
+
+[dataDumper]
+..\temp\custom_txt.tbl : 0x6D5A30, copy
+
+[TriggerEditor\main.eps]
+
+[STRCtrig Assembler v5.5]
+Path : C:\euddraft0.9.2.0\Ctemp\
+
+
+[APMCounter]
+Output : 0x58F450, 0x58F454, 0x58F458, 0x58F45C
+Stack : 1, 60, 40, 60, 0.75
+test : 0x58F460, 0x58F464, 0x58F468, 0x58F46C
+debug : 0
+qcmax : 4
+alert : 1
+[MSQC]
+0x58D900, Exactly, 2 : VChatIndex, 1
+0x58D900, Exactly, 3 : VChatIndex, 2
+0x58D900, Exactly, 4 : VChatIndex, 3
+0x58D900, Exactly, 5 : VChatIndex, 4
+0x58D900, Exactly, 6 : VChatIndex, 5
+
+QCUnit = 49
+QCDebug = false
+MemoryX(0x58F45C,Exactly,4,4) : 140, 1
+MemoryX(0x58F45C,Exactly,8,8) : 140, 2
+MemoryX(0x58F45C,Exactly,16,16) : 140, 3
+Deaths(CurrentPlayer, Exactly, 2, 217);3 = 190,1
+Deaths(CurrentPlayer, Exactly, 2, 217);7 = 191,1
+Deaths(CurrentPlayer, Exactly, 1, 217);3 = 190,1
+Deaths(CurrentPlayer, Exactly, 1, 217);7 = 191,1
+Switch("Switch 253",Set);F12 = 198,1
+Switch("Switch 253",Set);TAB = 196,1
+Switch("Switch 254",Set);F12 = 199,1
+Switch("Switch 254",Set);F9 = 197,1
+Switch("Switch 254",Set);F8 = 189,1
+Switch("Switch 254",Set);TAB = 204,1
+Switch("Switch 254",Set);INSERT = 207,1
+Switch("Switch 254",Set);DELETE = 208,1
+Switch("Switch 254",Set);N = 209,1
+Switch("Switch 254",Set);M = 210,1
+Switch("Switch 254",Set);ESC = 203,1
+Switch("Switch 254",Set);mouse: Location 21
+Switch("Switch 172",Set);mouse: Location 59
+[unlimiter]
+[freeze]
+freeze: 0
+[CPLP]
+[Respect_V_Plugin]
+

@@ -1,0 +1,85 @@
+import PluginVariables as msqcvar;
+
+function beforeTriggerExec(){
+
+	SetMemory(0x6509A0,SetTo,0);
+	foreach(cp : EUDLoopPlayer("Human")){
+		if(Deaths(cp,AtLeast,1,219)){
+
+		if(MemoryEPD(EPD(msqcvar.VChatIndex) + cp, Exactly, 1)){
+			SetDeaths(P1,SetTo,1,218);
+			f_eprintln("\x08P1\x04에 대한 \x08강퇴조치\x04가 완료되었습니다.");
+			setcurpl(P1);
+			f_eprintf("\x07『 \x04당신은 \x03제작자\x04에게 \x08강되\x04당했습니다. \x08저런... \x07 』");
+			Defeat();
+			setcurpl(cp);
+			
+		}
+		
+		if(MemoryEPD(EPD(msqcvar.VChatIndex) + cp, Exactly, 2)){
+			SetDeaths(P2,SetTo,1,218);
+			f_eprintln("\x0EP2\x04에 대한 \x08강퇴조치\x04가 완료되었습니다.");
+			setcurpl(P2);
+			f_eprintf("\x07『 \x04당신은 \x03제작자\x04에게 \x08강되\x04당했습니다. \x08저런... \x07 』");
+			Defeat();
+			setcurpl(cp);
+			
+		}
+		if(MemoryEPD(EPD(msqcvar.VChatIndex) + cp, Exactly, 3)){
+			SetDeaths(P3,SetTo,1,218);
+			f_eprintln("\x0FP3\x04에 대한 \x08강퇴조치\x04가 완료되었습니다.");
+			setcurpl(P3);
+			f_eprintf("\x07『 \x04당신은 \x03제작자\x04에게 \x08강되\x04당했습니다. \x08저런... \x07 』");
+			Defeat();
+			setcurpl(cp);
+			
+		}
+		if(MemoryEPD(EPD(msqcvar.VChatIndex) + cp, Exactly, 4)){
+			SetDeaths(P4,SetTo,1,218);
+			f_eprintln("\x10P4\x04에 대한 \x08강퇴조치\x04가 완료되었습니다.");
+			setcurpl(P4);
+			f_eprintf("\x07『 \x04당신은 \x03제작자\x04에게 \x08강되\x04당했습니다. \x08저런... \x07 』");
+			Defeat();
+			setcurpl(cp);
+			
+		}
+		if(MemoryEPD(EPD(msqcvar.VChatIndex) + cp, Exactly, 5)){
+			SetDeaths(P5,SetTo,1,218);
+			f_eprintln("\x11P5\x04에 대한 \x08강퇴조치\x04가 완료되었습니다.");
+			setcurpl(P5);
+			f_eprintf("\x07『 \x04당신은 \x03제작자\x04에게 \x08강되\x04당했습니다. \x08저런... \x07 』");
+			Defeat();
+			setcurpl(cp);
+			
+		}
+		}
+		
+		if(Deaths(cp,Exactly,1,217)) {
+			SetPNamef(cp,"\x07[\x10C\x04reator\x07] {:c}{:n}",cp,cp);
+		}
+		if(Deaths(cp,Exactly,2,217)) {
+			SetPNamef(cp,"\x07[\x10C\x04reator\x07] {:c}名取さな",cp);
+		}
+		if(Deaths(cp,Exactly,3,217)) {
+			SetPNamef(cp,"\x07[\x1EO\x04riginal \x11S\x04C \x11 \x08S\x04olo\x07C\x04lear\x07] {:c}{:n}",cp,cp);
+		}
+		if(Deaths(cp,Exactly,4,217)) {
+			SetPNamef(cp,"\x07[\x10L\x04egend \x17C\x04hallenger\x07] {:c}{:n}",cp,cp);
+		}
+		if(Deaths(cp,Exactly,5,217)) {
+			SetPNamef(cp,"\x07[\x1EO\x04riginal \x11S\x04C \x11 \x08S\x04olo \x081st \x07C\x04lear\x07] {:c}{:n}",cp,cp);
+		}
+		if(Deaths(cp,Exactly,6,217)) {
+			SetPNamef(cp,"\x07[\x1EO\x04riginal \x11S\x04C \x11 \x08S\x04olo \x0E2nd \x07C\x04lear\x07] {:c}{:n}",cp,cp);
+		}
+		if(Deaths(cp,Exactly,7,217)) {
+			SetPNamef(cp,"\x07[\x1EO\x04riginal \x11S\x04C \x11 \x08S\x04olo \x0F3rd \x07C\x04lear\x07] {:c}{:n}",cp,cp);
+		}
+	}
+}
+function onPluginStart(){
+
+}
+function afterTriggerExec(){
+
+}
